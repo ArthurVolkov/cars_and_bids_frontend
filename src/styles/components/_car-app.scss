@@ -1,0 +1,74 @@
+.car-app {
+
+    margin-top: 80px;
+
+    .car-filter {
+        position: relative;
+        display: flex;
+        padding: 10px 0;
+        border-radius: 10px;
+
+        > * {
+            margin: 0 5px;
+        }
+
+        > *:first-child {
+            margin-left: 0;
+            width: 120px;
+        }
+
+        > *:last-child {
+            margin-right: 0;
+        }
+
+        .el-input__inner {
+            border-radius: 2em;
+        }
+        .el-input.is-focus .el-input__inner {
+            border-color: $clr6;
+        }
+
+        .years-range {
+            position: absolute;
+            top: 55px;
+            width: 350px;
+            margin: 0;
+            background-color: white;
+            border: 1px solid $clr4;
+            border-radius: 2em;
+            outline: none;
+            padding: 15px 40px;
+            z-index: 20;
+        }
+    }
+}
+
+// .back-btn {
+//     cursor: pointer;
+//     border-radius: 5px;
+//     padding: 5px;
+//     background-color: $clr2;
+//     text-decoration: none;
+//     color: $clr1;
+//     width: 30%;
+//     font-weight: 600;
+//     text-align: center;
+// }
+
+.alert {
+    color: white;
+    padding: 10px;
+    font-size: 1.4em;
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    border-radius: 10px 0 0 10px;
+    background-color: grey;
+
+    &-success {
+        background-color: rgb(15, 122, 15);
+    }
+    &-danger {
+        background-color: rgb(122, 11, 11);
+    }
+}
