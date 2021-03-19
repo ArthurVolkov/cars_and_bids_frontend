@@ -6,6 +6,7 @@ export const userService = {
     signUp,
     login,
     getLoggedinUser,
+    getUsers,
     logout
 }
 
@@ -45,6 +46,12 @@ async function getLoggedinUser() {
     const loggedinUser = await httpService.get('auth/user')
     console.log('loggedinUser:', loggedinUser)
     return loggedinUser
+}
+
+async function getUsers() {
+    const users = await httpService.get('user/')
+    console.log('loggedinUsers:', users)
+    return users
 }
 
 

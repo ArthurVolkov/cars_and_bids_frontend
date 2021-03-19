@@ -50,12 +50,14 @@
         </div>
       </el-form>
     </el-card>
+    <pre> {{ users }} </pre>
   </section>
 </template>
 
 <script>
 
 import { showMsg } from '../services/eventBus.service.js'
+import { userService } from '../services/user.service.js'
 
 export default {
   data() {
@@ -65,6 +67,7 @@ export default {
         username: '',
         password: ''
       },
+      users: [],
       isRegistration: false
     }
   },
@@ -79,8 +82,11 @@ export default {
       return this.isRegistration ? 'Cancel' : 'Registration'
     },
     loggedinUser() {
-      console.log('this.$store.getters.loggedinUser:', this.$store.getters.loggedinUser)
+      //console.log('this.$store.getters.loggedinUser:', this.$store.getters.loggedinUser)
       return this.$store.getters.loggedinUser
+    },
+    isAdmin() {
+      return this.$store.getters.isAdmin
     }
   },
   methods: {
@@ -126,5 +132,8 @@ export default {
       this.isRegistration = !this.isRegistration
     },
   },
+  async created() {
+    this.users = await userService.getUsers();
+  }
 }
 </script>

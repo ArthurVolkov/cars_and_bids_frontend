@@ -13,7 +13,7 @@
       <h3>
         &#128172; Comments <span>{{ car.auction.bids.length }}</span>
       </h3>
-      <button class="round-main bid">Place Bid</button>
+      <button @click="placeBid" class="round-main bid">Place Bid</button>
       <button class="round-main watch">💛 Watch</button>
     </div>
 
@@ -180,6 +180,7 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons'
 import { faTruckMonster } from '@fortawesome/free-solid-svg-icons'
 import { faPalette } from '@fortawesome/free-solid-svg-icons'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
+import { userService } from '../services/user.service.js';
 
 library.add(faCarSide)
 library.add(faTrademark)
@@ -279,6 +280,11 @@ export default {
         showMsg('Cannot load car', 'danger')
       } finally {
         this.isLoading = false
+      }
+    },
+    async placeBid() {
+      if (!this.$store.getters.loggedinUser) {
+        this.$router.push('/login')
       }
     },
     getImgUrl(pic) {
