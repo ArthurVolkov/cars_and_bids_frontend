@@ -73,6 +73,7 @@ export default {
       return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
+      // const diff = this.now - this.car.auction.createdAt + this.car.auction.duration
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
       if (diff <= 0) return 'Finished'
       return moment.duration(diff).format()

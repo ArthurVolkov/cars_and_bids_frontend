@@ -1,21 +1,5 @@
 <template>
   <div v-if="car" class="car-details flex flex-col justify-center align-center">
-    <div class="details-bid-info flex align-center justify-between">
-      <h3>
-        ⏱ Time Left <span>{{ timeLeft }}</span>
-      </h3>
-      <h3>
-        Current Bid <span>{{ lastBid }}</span>
-      </h3>
-      <h3>
-        # Bids <span>{{ car.auction.bids.length }}</span>
-      </h3>
-      <h3>
-        &#128172; Comments <span>{{ car.auction.bids.length }}</span>
-      </h3>
-      <button class="round-main bid">Place Bid</button>
-      <button class="round-main watch">💛 Watch</button>
-    </div>
 
     <div class="short-info align-self-start">
       <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
@@ -33,6 +17,23 @@
         :src="getImgUrl(img)"
         alt=""
       />
+    </div>
+    
+    <div class="details-bid-info flex align-center justify-between">
+      <h3>
+        ⏱ Time Left <span>{{ timeLeft }}</span>
+      </h3>
+      <h3>
+        Current Bid <span>{{ lastBid }}</span>
+      </h3>
+      <h3>
+        # Bids <span>{{ car.auction.bids.length }}</span>
+      </h3>
+      <h3>
+        &#128172; Comments <span>{{ car.auction.bids.length }}</span>
+      </h3>
+      <button class="round-main bid">Place Bid</button>
+      <button class="round-main watch">💛 Watch</button>
     </div>
 
     <div class="main-info details-icon-grid">

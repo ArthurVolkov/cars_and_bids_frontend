@@ -84,24 +84,34 @@ button.filter-btn {
 button.round-main {
     height: 50px;
     padding: 5px 10px;
-    font-size: 1.5em;
+    font-size: 1.2em;
     border: none;
     border-radius: 2em;
     outline: none;
     font-weight: 600;
 
-    
     &.bid {
         padding: 7px 10px;
-        background-color: $clr6;
+        background-image: radial-gradient(
+            circle at center,
+            #ff385c 0%,
+            #e61e4d 27.5%,
+            #e31c5f 40%,
+            #d70466 57.5%,
+            #bd1e59 75%,
+            #bd1e59 100%
+        );
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
         color: $clr2;
     }
 
     &.watch {
-        background-color: $clr4;
+        background-color: $clr11;
         color: $clr2;
         &::first-letter {
-            font-size: .8em;
+            font-size: 0.8em;
         }
     }
 }

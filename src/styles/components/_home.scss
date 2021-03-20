@@ -1,0 +1,19 @@
+.home-page-container {
+    // margin-top: 90px;
+    // min-height: 100vh;
+
+    .main-hero {
+        min-height: 100vh;
+        position: relative;
+    }
+
+    .home-nav {
+        position:absolute;
+        width: 80%;
+        left: 10%;
+        top: 30vh;
+        grid-column: 2/-2;
+        background-color: aqua;
+        padding: 10px;
+    }
+}
