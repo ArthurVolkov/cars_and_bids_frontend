@@ -11,12 +11,13 @@
     .home-nav {
         position: absolute;
         height: 4rem;
-        width: 80%;
-        left: 10%;
-        top: 30vh;
+        width: 70%;
+        left: 15%;
+        top: 12vh;
         grid-column: 2/-2;
         background-color: $clr11;
         border-radius: 5em;
+        z-index: 50;
 
         
         *, *::placeholder {
