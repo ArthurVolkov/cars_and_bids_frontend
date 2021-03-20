@@ -5,7 +5,6 @@
     height: 80px;
     background-color: $clr4;
     z-index: 50;
-
     transition: .5s;
     .logo {
         font-size: 2rem;
@@ -34,6 +33,13 @@
 
         * {
             color: $clr10;
+        }
+    }
+    .header-container:last-child {
+        > :last-child {
+            >* {
+                margin-inline-start: 10px;
+            }
         }
     }
 }

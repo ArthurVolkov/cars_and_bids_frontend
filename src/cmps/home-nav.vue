@@ -19,7 +19,7 @@
     <el-select
       v-model="filterBy.bodyStyles"
       @change="setFilter"
-      placeholder="Body style"
+      placeholder="Body styles"
       class="body-style"
     >
       <el-option
@@ -47,15 +47,16 @@
       </el-option>
     </el-select>
 
-  <el-input
-    @input="setFilterName"
-    placeholder="Search..."
-    v-model="filterName"
-    class="search"
-    clearable
-  >
-  </el-input>
-  <button @click="findCars" class="round-main go">🔎 Go</button>
+    <el-input
+      @input="setFilterName"
+      placeholder="Search..."
+      v-model="filterName"
+      ref="search"
+      class="search"
+      clearable
+    >
+    </el-input>
+    <button @click="findCars" class="round-main go">🔎 Go</button>
   </section>
 </template>
 
@@ -106,7 +107,7 @@ export default {
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
     },
     setFilterName() {
-      console.log('in nav',this.filterName)
+      console.log('in nav', this.filterName)
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
     },
     findCars() {
@@ -116,11 +117,13 @@ export default {
   },
   created() {
     //this.filterDebounce = debounce(this.setFilter, 1000);
-
     for (let i = 2021; i >= 1970; i--) {
       this.years.push({ value: i, label: i });
     }
   },
+  mounted() {
+    this.$refs.search.focus();
+  }
 }
 </script>
 
