@@ -53,9 +53,10 @@ export const carStore = {
             state.cars.splice(idx, 1)
         },
         setFilter(state, { filterBy }) {
-            state.filterBy.years = filterBy.years;
-            state.filterBy.bodyStyles = filterBy.bodyStyles;
-            state.filterBy.vendors = filterBy.vendors;
+            console.log('MMMMMMMMMMMMMMMMM',filterBy)
+            if (filterBy.years) state.filterBy.years = filterBy.years;
+            if (filterBy.bodyStyles) state.filterBy.bodyStyles = filterBy.bodyStyles;
+            if (filterBy.vendors) state.filterBy.vendors = filterBy.vendors;
         },
         setFilterName(state, { name }) {
             state.filterBy.name = name;

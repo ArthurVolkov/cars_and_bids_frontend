@@ -9,7 +9,7 @@
 
     <h2>Explore cars by body styles</h2>
     <section class="group-container flex justify-between">
-      <div v-for="style in bodyStyles" :key="style.imgUrl">
+      <div v-for="style in bodyStyles" :key="style.imgUrl" @click="findCars(style.name)">
         <div class="img-container">
           <img :src="getImgUrl(style.imgUrl)" />
         </div>
@@ -96,6 +96,14 @@ export default {
     },
     getImgUrl(pic) {
       return require('../assets/' + pic)
+    },
+    findCars(name) {
+      const filterBy = {
+        bodyStyles: name
+      }
+      this.$store.commit({ type: 'setFilter', filterBy: filterBy })
+      this.$router.push('/car')
+      this.$store.dispatch({ type: 'loadCars' })
     }
   },
   mounted() {
