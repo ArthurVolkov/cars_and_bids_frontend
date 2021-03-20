@@ -41,89 +41,6 @@ img {
     object-fit: cover;
 }
 
-button {
-    cursor: pointer;
-    // border: none;
-    // border-radius: 5px;
-    // padding: 5px;
-    // margin: 5px;
-    // background-color: $clr2;
-    // text-decoration: none;
-    // font-weight: 600;
-    // color: $clr1;
-    // text-align: center;
-    // &:hover {
-    //     filter: brightness(80%);
-    // }
-}
-
-button.sort-btn {
-    padding: 0;
-    border: none;
-    width: 100px;
-    background-color: transparent;
-    font-weight: 500;
-    border-bottom: 1px solid $clr1;
-
-    &:hover {
-        border-bottom: 2px solid $clr1;
-        margin-bottom: -1px;
-    }
-}
-
-button.filter-btn {
-    background-color: white;
-    border: 1px solid $clr4;
-    border-radius: 5em;
-    outline: none;
-    &:hover {
-        // border-color: $clr3;
-    }
-}
-// button.filter-btn {
-//     background-color: white;
-//     border: 1px solid $clr4;
-//     border-radius: 5em;
-//     outline: none;
-//     &:hover {
-//         // border-color: $clr3;
-//     }
-// }
-
-button.round-main {
-    height: 50px;
-    padding: 5px 10px;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 2em;
-    outline: none;
-    font-weight: 600;
-
-    &.bid, &.go {
-        padding: 7px 10px;
-        background-image: radial-gradient(
-            circle at center,
-            #ff385c 0%,
-            #e61e4d 27.5%,
-            #e31c5f 40%,
-            #d70466 57.5%,
-            #bd1e59 75%,
-            #bd1e59 100%
-        );
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-position: center;
-        color: $clr2;
-    }
-
-    &.watch {
-        background-color: $clr11;
-        color: $clr2;
-        &::first-letter {
-            font-size: 0.8em;
-        }
-    }
-}
 // button.place-bid-btn {
 //     padding: 5px 10px;
 //     font-size: 1.5em;
@@ -142,3 +59,25 @@ a {
 // a:hover {
 //     filter: brightness(80%);
 // }
+
+// VUE-ANIMATIONS
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+}
+
+.slide-fade-enter-active {
+    transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active below version 2.1.8 */ {
+    transform: translateY(-20px);
+    opacity: 0;
+}

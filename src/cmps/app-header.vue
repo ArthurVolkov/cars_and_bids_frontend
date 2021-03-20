@@ -1,21 +1,23 @@
 <template>
-  <div v-if="isShown" class="header full main-layout">
-    <div class="header-container flex align-center justify-between">
-      <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
+  <transition name="fade">
+    <div v-if="isShown" class="header full main-layout">
+      <div class="header-container flex align-center justify-between">
+        <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
 
-      <el-input
-        @input="setFilterName"
-        placeholder="Search for car"
-        v-model="filterName"
-        clearable
-      >
-      </el-input>
-      <router-link to="/car" class="btn">Explore</router-link>
-      <router-link to="/car/edit" class="btn">Sell your Car</router-link>
-      <!-- <router-link to="/about">About</router-link> -->
-      <el-button @click="singUp" type="info" round>Sign Up</el-button>
+        <el-input
+          @input="setFilterName"
+          placeholder="Search for car"
+          v-model="filterName"
+          clearable
+        >
+        </el-input>
+        <router-link to="/car" class="btn">Explore</router-link>
+        <router-link to="/car/edit" class="btn">Sell your Car</router-link>
+        <!-- <router-link to="/about">About</router-link> -->
+        <el-button @click="singUp" type="info" round>Sign Up</el-button>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -30,7 +32,7 @@ export default {
   },
   computed: {
     isShown() {
-      return window.screenTop && this.isHomeRout ? false : true
+      return this.windowTop && this.isHomeRout ? false : true
     }
   },
   methods: {
@@ -41,7 +43,7 @@ export default {
     onScroll() {
       // console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-      console.log('this.windowTop:', this.windowTop) 
+      console.log('this.windowTop:', this.windowTop)
     },
     singUp() {
       this.$router.push('/login')
