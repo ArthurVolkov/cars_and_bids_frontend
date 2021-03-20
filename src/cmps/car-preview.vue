@@ -7,8 +7,8 @@
           <el-carousel-item
             v-for="(img, idx) in car.imgUrls"
             :key="idx"
-            height="200px"
           >
+            <!-- height="150px" -->
             <img :src="getImgUrl(img)" alt="" />
           </el-carousel-item>
         </el-carousel>

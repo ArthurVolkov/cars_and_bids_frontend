@@ -40,10 +40,6 @@ export default {
     },
   },
   name: "car-list",
-  data() {
-    return {
-    }
-  },
   methods: {
     // remove(car) {
     //   this.$emit('remove', car);
@@ -64,8 +60,6 @@ export default {
   },
   components: {
     carPreview,
-  },
-  created() {
   },
 };
 </script>

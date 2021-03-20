@@ -5,15 +5,81 @@
     .main-hero {
         min-height: 100vh;
         position: relative;
+        margin-bottom: 20px;
     }
 
     .home-nav {
-        position:absolute;
+        position: absolute;
+        height: 4rem;
         width: 80%;
         left: 10%;
         top: 30vh;
         grid-column: 2/-2;
-        background-color: aqua;
-        padding: 10px;
+        background-color: $clr11;
+        border-radius: 5em;
+
+        
+        *, *::placeholder {
+            // font-size: 1.05em;
+            font-weight: 600;
+            color: $clr2;
+        }
+
+        > * {
+            height: 80%;
+        }
+
+        
+        > *:first-child {
+            background-color: $clr11;
+            // font-size: 1em;
+            width: 150px;
+            border: none;
+            border-right: 1px solid $clr3;
+            border-radius: 5em 0 0 5em;
+        }
+        
+        > * {
+            border-right: 1px solid $clr3;
+        }
+        
+        .el-input, input {
+            background-color: $clr11;
+            height: 100%;
+            border: none;
+            outline: none;
+        }
+        
+        .years-range {
+            position: absolute;
+            font-size: .8em;
+            top: 70px;
+            left: 0;
+            height: 5em;
+            width: 350px;
+            margin: 0;
+            background-color: white;
+            border: 1px solid $clr4;
+            border-radius: 5em;
+            outline: none;
+            padding: 10px 40px;
+            z-index: 20;
+        }
+
+        .body-style {
+            // width: 160px;
+        }
+
+        .search {
+            width: 50%;
+        }
+
+        .go {
+            // height: 80%;
+            width: 150px;
+            margin: 6px;
+        }
     }
+
+   
 }

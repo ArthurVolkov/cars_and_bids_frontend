@@ -19,6 +19,9 @@ export const carStore = {
         carsToShow(state) {
             return state.cars
         },
+        carsToShowHome(state) {
+            return state.cars.slice(0, 5)
+        },
         commentsToShow(state) {
             return state.comments
         },

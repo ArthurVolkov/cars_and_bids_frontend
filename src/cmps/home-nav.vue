@@ -1,5 +1,5 @@
 <template>
-  <section class="home-nav flex justify-between">
+  <section class="home-nav flex justify-between align-center">
     <!-- <div class="flex flex-col justify-center align-center"> -->
 
     <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
@@ -18,11 +18,12 @@
       </el-slider>
     </div>
 
-    <div class="flex flex-col justify-center align-center">
+    <!-- <div class="flex flex-col justify-center align-center"> -->
       <el-select
         v-model="filterBy.bodyStyles"
         @change="setFilter"
         placeholder="Body style"
+        class="body-style"
       >
         <el-option
           v-for="item in bodyStyles"
@@ -32,14 +33,14 @@
         >
         </el-option>
       </el-select>
-    </div>
+    <!-- </div> -->
 
-    <div class="flex flex-col justify-center align-center">
+    <!-- <div class="flex flex-col justify-center align-center"> -->
       <!-- <label for="sort">Sort:</label> -->
       <el-select
         v-model="filterBy.vendors"
         @change="setFilter"
-        placeholder="vendors"
+        placeholder="Vendors"
         multiple
         collapse-tags
       >
@@ -51,16 +52,17 @@
         >
         </el-option>
       </el-select>
-    </div>
-    <button @click="setSort('ending-soon')" class="sort-btn">
-      Ending soon
-    </button>
-    <button @click="setSort('newly-listed')" class="sort-btn">
-      Newly listed
-    </button>
-    <button @click="setSort('lowest-mileage')" class="sort-btn">
-      Lowest mileage
-    </button>
+    <!-- </div> -->
+
+    <el-input
+      @input="setFilterName"
+      placeholder="Search for car"
+      v-model="filterName"
+      class="search"
+      clearable
+    >
+    </el-input>
+    <button class="round-main go">🔎 Go</button>
   </section>
 </template>
 
@@ -93,6 +95,7 @@ export default {
         vendors: [],
         sortBy: '',
       },
+      filterName: '',
       years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
@@ -114,10 +117,7 @@ export default {
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },
-    setSort(sortBy) {
-      this.filterBy.sortBy = sortBy
-      this.$store.commit({ type: 'setSort', sortBy: this.filterBy.sortBy })
-      this.$store.dispatch({ type: 'loadCars' })
+    setFilterName() {
 
     }
   },

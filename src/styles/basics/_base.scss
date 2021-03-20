@@ -74,12 +74,21 @@ button.sort-btn {
 button.filter-btn {
     background-color: white;
     border: 1px solid $clr4;
-    border-radius: 2em;
+    border-radius: 5em;
     outline: none;
     &:hover {
         // border-color: $clr3;
     }
 }
+// button.filter-btn {
+//     background-color: white;
+//     border: 1px solid $clr4;
+//     border-radius: 5em;
+//     outline: none;
+//     &:hover {
+//         // border-color: $clr3;
+//     }
+// }
 
 button.round-main {
     height: 50px;
@@ -90,7 +99,7 @@ button.round-main {
     outline: none;
     font-weight: 600;
 
-    &.bid {
+    &.bid, &.go {
         padding: 7px 10px;
         background-image: radial-gradient(
             circle at center,
