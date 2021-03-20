@@ -117,18 +117,20 @@ export default {
     }
   },
   created() {
-    //this.filterDebounce = debounce(this.setFilter, 1000);
+    this.filterBy = this.$store.getters.filterBy;
 
     for (let i = 2021; i >= 1970; i--) {
       this.years.push({ value: i, label: i });
     }
-
-    // const bodyStyles = ['All', 'Coupe', 'Convertible', 'Sedan', 'SUV/Crossover', 'Hatchback']
-    // this.bodyStyles = bodyStyles.map(item => { return { value: item, label: item } })
-
-    // const vendors = ["Abarth", "Alfa Romeo", "Aston Martin", "Audi", "Bentley", "BMW", "Bugatti", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daewoo", "Daihatsu", "Dodge", "Donkervoort", "DS", "Ferrari", "Fiat", "Fisker", "Ford", "Honda", "Hummer", "Hyundai", "Infiniti", "Iveco", "Jaguar", "Jeep", "Kia", "KTM", "Lada", "Lamborghini", "Lancia", "Land Rover", "Landwind", "Lexus", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "MG", "Mini", "Mitsubishi", "Morgan", "Nissan", "Opel", "Peugeot", "Porsche", "Renault", "Rolls-Royce", "Rover", "Saab", "Seat", "Skoda", "Smart", "SsangYong", "Subaru", "Suzuki", "Tesla", "Toyota", "Volkswagen", "Volvo"]
-    // this.vendors = vendors.map(item => { return { value: item, label: item } })
   },
+  destroyed() {
+    this.filterBy.byYears = [1970, 2021],
+    this.filterBy.years = [1970, 2021],
+    this.filterBy.bodyStyles = '',
+    this.filterBy.vendors =  [],
+    this.filterBy.sortBy = ''
+    this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
+  }
 }
 </script>
 

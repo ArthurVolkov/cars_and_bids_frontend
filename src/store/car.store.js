@@ -1,5 +1,4 @@
 import { carService } from "../services/car.service";
-import { reviewService } from "../services/review.service";
 
 export const carStore = {
     state: {
@@ -28,8 +27,8 @@ export const carStore = {
         loading(state) {
             return state.isLoading
         },
-        filterName(state) {
-            return state.filterBy.name
+        filterBy(state) {
+            return state.filterBy
         }
     },
     mutations: {
@@ -57,10 +56,8 @@ export const carStore = {
             state.filterBy.years = filterBy.years;
             state.filterBy.bodyStyles = filterBy.bodyStyles;
             state.filterBy.vendors = filterBy.vendors;
-            console.log(state.filterBy)
         },
         setFilterName(state, { name }) {
-            //console.log('filterBy:', filterBy)
             state.filterBy.name = name;
             console.log(state.filterBy)
         },

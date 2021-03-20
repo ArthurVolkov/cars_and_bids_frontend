@@ -86,7 +86,7 @@ export default {
         vendors: [],
         sortBy: '',
       },
-      filterName: '', //this.$store.getters.filterName,
+      filterName: '', 
       years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
@@ -117,6 +117,7 @@ export default {
   },
   created() {
     //this.filterDebounce = debounce(this.setFilter, 1000);
+    this.$store.commit({ type: 'setFilterName', name: '' })
     for (let i = 2021; i >= 1970; i--) {
       this.years.push({ value: i, label: i });
     }
