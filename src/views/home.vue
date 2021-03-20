@@ -9,21 +9,34 @@
 
     <h2>Explore cars by body styles</h2>
     <section class="group-container flex justify-between">
-      <div class="img-container">
-        <img src="../assets/images/sedan.jpg" />
-        <h3>Sedan</h3>
+      <div v-for="style in bodyStyles" :key="style.imgUrl">
+        <div class="img-container">
+          <img :src="getImgUrl(style.imgUrl)" />
+        </div>
+        <h3>{{ style.name }}</h3>
       </div>
-      <div class="img-container">
-        <img src="../assets/images/coupe.jpg" />
-        <h3>Coupe</h3>
+    </section>
+
+    <div class="sell-img-container">
+      <img src="../assets/images/sell-car.jpg" alt="" />
+      <div>
+        <h1>Cars & Bids</h1>
+        <h2>Is the best place</h2>
+        <h2>to sell your modern</h2>
+        <h2>enthusiast car</h2>
+        <button class="sell-btn">Sell your Car</button>
       </div>
-      <div class="img-container">
-        <img src="../assets/images/cabrio.jpg" />
-        <h3>Cabriolet</h3>
-      </div>
-      <div class="img-container">
-        <img src="../assets/images/suv.jpg" />
-        <h3>SUV/Crossover</h3>
+    </div>
+    
+    <h2>Hotest auctions everyday</h2>
+    <section class="sort-group-container flex justify-between">
+      <div
+        v-for="type in sortTypes"
+        :key="type.imgUrl"
+        class="img-container"
+      >
+        <img :src="getImgUrl(type.imgUrl)" />
+        <h3>{{ type.name }}</h3>
       </div>
     </section>
   </div>
@@ -42,7 +55,29 @@ export default {
   data() {
     return {
       windowTop: true,
-
+      bodyStyles: [{
+        imgUrl: 'images/sedan.jpg', name: 'Sedan'
+      },
+      {
+        imgUrl: 'images/coupe.jpg', name: 'Coupe'
+      },
+      {
+        imgUrl: 'images/cabrio.jpg', name: 'Cabriolet'
+      },
+      {
+        imgUrl: 'images/suv.jpg', name: 'SUV/Crossover'
+      }
+      ],
+      sortTypes: [{
+        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon'
+      },
+      {
+        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed'
+      },
+      {
+        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage'
+      },
+      ]
     }
   },
   computed: {
@@ -59,6 +94,9 @@ export default {
       this.windowTop = window.top.scrollY < 10 ? true : false
       console.log('this.windowTop:', this.windowTop)
     },
+    getImgUrl(pic) {
+      return require('../assets/' + pic)
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)
