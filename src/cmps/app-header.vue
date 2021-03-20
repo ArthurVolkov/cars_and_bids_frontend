@@ -1,22 +1,24 @@
 <template>
-    <div class="header full main-layout" :class="isDark">
-      <div class="header-container flex align-center justify-between">
-        <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
+  <div class="header full main-layout" :class="isDark">
+    <div class="header-container flex align-center justify-between">
+      <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
 
-        <el-input
+      <el-input
         v-if="!isDark"
-          @input="setFilterName"
-          placeholder="Search for car"
-          v-model="filterName"
-          clearable
-        >
-        </el-input>
+        @focus="setFilterName"
+        placeholder="Search for car"
+        v-model="filterName"
+        clearable
+      >
+      </el-input>
+      <div>
         <router-link to="/car" class="btn">Explore</router-link>
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <el-button @click="singUp" type="info" round>Sign Up</el-button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -36,13 +38,15 @@ export default {
   },
   methods: {
     setFilterName() {
-      this.$store.commit({ type: 'setFilterName', name: this.filterName })
-      this.$store.dispatch({ type: 'loadCars' })
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+
+      // this.$store.commit({ type: 'setFilterName', name: this.filterName })
+      // this.$store.dispatch({ type: 'loadCars' })
     },
     onScroll() {
-//      console.log('window.top.scrollY:', window.top.scrollY)
+      //      console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-//      console.log('this.windowTop:', this.windowTop)
+      //      console.log('this.windowTop:', this.windowTop)
     },
     singUp() {
       this.$router.push('/login')
