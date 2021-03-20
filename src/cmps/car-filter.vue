@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log('In Car Filter', this.filterBy.vendors)
+      //console.log('In Car Filter', this.filterBy.vendors)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },

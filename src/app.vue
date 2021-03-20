@@ -15,7 +15,7 @@ import userMsg from './cmps/user-msg'
 export default {
   name: "app-vue",
   created() {
-    console.log("Vue App was created!!!");
+    //console.log("Vue App was created!!!");
     this.$store.dispatch({ type: "loadCars" });
     this.$store.dispatch({ type: "getLoggedinUser" });
   },

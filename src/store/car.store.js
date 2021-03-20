@@ -85,19 +85,6 @@ export const carStore = {
                 context.commit({ type: 'setLoading', isLoading: false })
             }
         },
-        // async loadReviews(context, { filterBy }) {
-        //     context.commit({ type: 'setLoading', isLoading: true })
-        //     try {
-        //         const reviews = await reviewService.query(filterBy)
-        //         console.log('reviews in store:', reviews)
-        //         context.commit({ type: 'setReviews', reviews });
-        //     } catch (err) {
-        //         console.log('Store: Cannot load reviews', err);
-        //         throw new Error('Cannot load reviews');
-        //     } finally {
-        //         context.commit({ type: 'setLoading', isLoading: false })
-        //     }
-        // },
         async saveCar({ commit }, { car }) {
             const type = (car._id) ? 'updateCar' : 'addCar';
             try {
@@ -120,12 +107,17 @@ export const carStore = {
                 throw new Error('Cannot remove car');
             }
         },
-        async addReview(context, { review }) {
-            console.log('review:', review)
+        async addComment(context, { comment }) {
             try {
-                const savedReview = await reviewService.save(review)
-                console.log('savedReview:', savedReview)
-                // context.commit({type: 'addReview', review: savedReview})
+                await carService.saveComment(comment)
+            } catch (err) {
+                console.log('Store: Cannot save review', err);
+                throw new Error('Cannot save review');
+            }
+        },
+        async addBid(context, { bid }) {
+            try {
+                await carService.saveBid(bid)
             } catch (err) {
                 console.log('Store: Cannot save review', err);
                 throw new Error('Cannot save review');
