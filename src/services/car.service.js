@@ -82,7 +82,9 @@ export const carService = {
     getBodyStyleList,
     getVendorList,
     getTransmissionList,
-    getDrivetrainList
+    getDrivetrainList,
+    saveComment,
+    saveBid
     // saveReview
     // getCarsCountByUserId
 }
@@ -110,7 +112,7 @@ async function query(filterBy) {
 
 async function getById(carId) {
     const car = await httpService.get(`car/${carId}`)
-    console.log('car:', car)
+    //console.log('car:', car)
     return car
     // const car = await storageService.get('cars',carId)
     // return car
@@ -121,13 +123,20 @@ async function remove(carId) {
     return await storageService.delete('car', carId)
 }
 
+async function saveComment(comment) {
+    const res = await httpService.post('car/comment', comment)
+    return res
+}
+
+async function saveBid(bid) {
+    return await httpService.post('car/bid', bid)
+}
+
 async function save(car) {
     if (car._id) {
-        const editedCar = await httpService.put('car', car)
-        return editedCar
+        return await httpService.put('car', car)
     } else {
-        const addedCar = await httpService.post('car', car)
-        return addedCar
+        return await httpService.post('car', car)
     }
 }
 
@@ -182,28 +191,6 @@ function getEmptyCar() {
     }
 }
 
-// Create Test Data:
-// function _createCars() {
-//     var users = JSON.parse(localStorage.getItem('users')) || []
-//     if (!users || !users.length) {
-//         users = usersDemo;
-//         localStorage.setItem('users', JSON.stringify(users))
-//     }
-//     const cars = JSON.parse(localStorage.getItem(CAR_KEY)) || []
-//     if (!cars || !cars.length) {
-//         // for (let i=0;i<100;i++){
-//         //     cars.push(_createCar());
-//         // }
-//         save(_createDemoCar1());
-//         save(_createDemoCar2());
-//         save(_createDemoCar3());
-//         save(_createDemoCar4());
-//         save(_createDemoCar5());
-//         save(_createDemoCar6());
-//         localStorage.setItem(CAR_KEY, JSON.stringify(cars))
-//     }
-//     return cars;
-// }
 
 function _createCar() {
     const startPrice = makeRandomInt(20000, 40000)
@@ -232,19 +219,17 @@ function _createCar() {
             {
                 id: makeId(4),
                 txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
+                by: makeRandomUser(usersDemo),
+                createdAt: Date.now()
+            },
+            {
+                id: makeId(4),
+                txt: "if i had the cash Id still be bidding",
                 by: makeRandomUser(usersDemo)
             },
             {
                 id: makeId(4),
                 txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
                 by: makeRandomUser(usersDemo)
             }
         ],
@@ -312,7 +297,6 @@ function _createDemoCar1() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '11111'
     const car = {
-        //        _id: _id,
         vendor: 'BMW',
         model: '550i',
         bodyStyle: 'Sedan',
@@ -342,52 +326,14 @@ function _createDemoCar1() {
             lat: 41.950401,
             lng: -87.793808
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 14,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car
@@ -397,7 +343,6 @@ function _createDemoCar2() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '22222'
     const car = {
-        //        _id: _id,
         vendor: 'Audi',
         model: 'S6',
         bodyStyle: 'Sedan',
@@ -426,52 +371,14 @@ function _createDemoCar2() {
             lat: 37.992489,
             lng: -122.114357
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 46,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car
@@ -481,7 +388,6 @@ function _createDemoCar3() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '33333'
     const car = {
-        //        _id: _id,
         vendor: 'Porsche',
         model: 'Boxster',
         bodyStyle: 'Convertible',
@@ -510,52 +416,14 @@ function _createDemoCar3() {
             lat: 30.430460,
             lng: -97.804008
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 3,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car
@@ -565,7 +433,6 @@ function _createDemoCar4() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '44444'
     const car = {
-        //        _id: _id,
         vendor: 'BMW',
         model: 'M5',
         bodyStyle: 'Sedan',
@@ -594,52 +461,14 @@ function _createDemoCar4() {
             lat: 29.988130,
             lng: -95.175490
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 12,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car
@@ -649,7 +478,6 @@ function _createDemoCar5() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '55555'
     const car = {
-        //        _id: _id,
         vendor: 'Audi',
         model: 'S5',
         bodyStyle: 'Coupe',
@@ -678,52 +506,14 @@ function _createDemoCar5() {
             lat: 35.648659,
             lng: -78.385597
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 2,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car
@@ -733,7 +523,6 @@ function _createDemoCar6() {
     const startPrice = makeRandomInt(20000, 40000)
     const _id = '66666'
     const car = {
-        //        _id: _id,
         vendor: 'Mercedes-Benz',
         model: 'G550',
         bodyStyle: 'SUV',
@@ -762,52 +551,14 @@ function _createDemoCar6() {
             lat: 35.648659,
             lng: -78.385597
         },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                rate: makeRandomInt(1, 5),
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
+        comments: [],
+        auction: 
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 4,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
+            duration: 1000*60*60*24*7,
+            bids: []
         }
     }
     return car

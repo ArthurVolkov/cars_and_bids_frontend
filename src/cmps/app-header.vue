@@ -13,7 +13,7 @@
       <router-link to="/car" class="btn">Explore</router-link>
       <router-link to="/car/edit" class="btn">Sell your Car</router-link>
       <!-- <router-link to="/about">About</router-link> -->
-      <el-button type="info" round>Sign Up</el-button>
+      <el-button @click="singUp" type="info" round>Sign Up</el-button>
     </div>
   </div>
 </template>
@@ -42,6 +42,9 @@ export default {
       // console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
       console.log('this.windowTop:', this.windowTop) 
+    },
+    singUp() {
+      this.$router.push('/login')
     }
   },
   watch: {

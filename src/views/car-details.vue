@@ -105,7 +105,8 @@
         ></textarea>
         <button>Send</button>
       </form>
-
+      <input type="number" v-model.number="bid.price" />
+      <button @click="addBid"> place bid </button>
       <h3>Bids:</h3>
       <ul class="clean-list comments-list">
         <li v-for="bid in bidsToShow" :key="bid.id">
@@ -114,7 +115,7 @@
             <span>{{ bid.createdAt | moment("calendar") }}</span>
           </p>
           <div class="bid-price flex justify-center align-center">
-            {{ bid.bidPrice }}
+            {{ bid.price }}
           </div>
         </li>
       </ul>
@@ -129,8 +130,8 @@
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment._id">
           <p>
-            🤓 {{ comment.by.fullname }}
-            <!-- <span>{{ comment.createdAt | moment("calendar") }}</span> -->
+            🤓 {{ comment.by.fullname }} 
+            <!-- <span>  {{ comment.createdAt | moment("calendar") }} </span> -->
           </p>
           <div class="flex align-center">
             {{ comment.txt }}
@@ -181,6 +182,7 @@ import { faCogs } from '@fortawesome/free-solid-svg-icons'
 import { faTruckMonster } from '@fortawesome/free-solid-svg-icons'
 import { faPalette } from '@fortawesome/free-solid-svg-icons'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
+import { userService } from '../services/user.service.js';
 
 library.add(faCarSide)
 library.add(faTrademark)
@@ -198,18 +200,11 @@ export default {
     return {
       car: null,
       comment: {
-        id: '',
         txt: '',
-        createdAt: null,
-        by: null
-        //        carId: ''
       },
       comments: [],
       bid: {
-        id: '',
-        price: this.lastBid + 1,
-        createdAt: null,
-        by: null
+        price: 0,
       },
       bids: [],
       isLoading: false,
@@ -242,8 +237,8 @@ export default {
       } else {
         bid = this.car.auction.startPrice
       }
-      // return bid
-      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+      return bid
+      //return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
@@ -258,87 +253,54 @@ export default {
     }
   },
   methods: {
-    // async loadReviews() {
-    //   try {
-    //     console.log('this.car._id:', this.car._id)
-    //     const reviews = await this.$store.dispatch({ type: 'loadReviews', carId: this.car._id})
-    //     this.reviews = reviews
-    //   } catch (err) {
-    //     showMsg('Cannot load reviews', 'danger')
-    //   } 
-    // },
     async loadCar() {
       const carId = this.$route.params.carId;
       this.isLoading = true
       try {
-        const car = await carService.getById(carId)
-        this.car = car
-        console.log(this.car)
-        this.comments = car.comments
-        this.bids = car.auction.bids
+        this.car = await carService.getById(carId)
+        this.comments = this.car.comments.sort((comm1,comm2) => {return comm2.createdAt - comm1.createdAt}) 
+        this.bids = this.car.auction.bids.sort((bid1,bid2) => {return bid2.createdAt - bid1.createdAt})
       } catch (err) {
+        console.log(err)
         showMsg('Cannot load car', 'danger')
       } finally {
         this.isLoading = false
       }
     },
+    async placeBid() {
+      if (!this.$store.getters.loggedinUser) {
+        this.$router.push('/login')
+      }
+    },
     getImgUrl(pic) {
       return require('../assets/' + pic)
     },
-    // async loadReview() {
-
-    //   try {
-    //     const filterBy = { carId: this.car._id }
-    //     const reviews = await reviewService.query(filterBy)
-    //     this.reviews = reviews
-    //     console.log('reviews in car details:', reviews)
-    //   } catch (err) {
-    //     showMsg('Cannot load reviews', 'danger')
-    //   }
-    // },
     async addComment() {
       try {
-        this.comment.id = carService.makeId();
-        this.comment.createdAt = Date.now();
-        // TODO: Real user
-        this.comment.by = carService.makeRandomUser();
-        //        await this.$store.dispatch({ type: 'addReview', review: this.review })
-        //        this.loadCar()
-        this.comments.unshift(this.comment)
-        this.comment = {
-          id: '',
-          txt: '',
-          createdAt: null,
-          by: null
-        }
-        showMsg('Review saved successfuly')
+        this.comment.carId = this.car._id;
+        await this.$store.dispatch({ type: 'addComment', comment: this.comment })
+        await this.loadCar()
+        this.comment.txt = ''
+        showMsg('Comment saved successfuly')
       } catch (err) {
-        showMsg('Cannot save review', 'danger')
+        showMsg('Cannot save comment', 'danger')
       }
     },
     async addBid() {
       try {
-        this.bid.id = carService.makeId();
-        this.bid.createdAt = Date.now();
-        // TODO: Real user
-        this.bid.by = carService.makeRandomUser();
-        //        await this.$store.dispatch({ type: 'addReview', review: this.review })
-        //        this.loadCar()
-
+        console.log(this.bid.price)
+        console.log(this.lastBid)
         if (this.bid.price > this.lastBid) {
-          this.bids.unshift(this.bid)
-          this.bid = {
-            id: '',
-            price: this.lastBid + 1,
-            createdAt: null,
-            by: null
-          }
+          this.bid.carId = this.car._id;
+          await this.$store.dispatch({type: 'addBid', bid: this.bid})
+          this.bid.price = 0
+          this.loadCar() 
           showMsg('Bid placed successfuly')
         } else {
           showMsg('Bid price must be over ' + this.lastBid, 'danger')
         }
       } catch (err) {
-        showMsg('Cannot save review', 'danger')
+        showMsg('Cannot place vid', 'danger')
       }
     }
   },
@@ -358,8 +320,5 @@ export default {
   destroyed() {
     clearInterval(this.timeLeftInterval);
   },
-  components: {
-    //    chatRoom
-  }
-};
+}
 </script>
