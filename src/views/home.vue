@@ -7,8 +7,8 @@
       </transition>
     </div>
 
-    <h2>Explore cars by body style</h2>
-    <section class="group-container flex">
+    <h2>Explore cars by body styles</h2>
+    <section class="group-container flex justify-between">
       <div class="img-container">
         <img src="../assets/images/sedan.jpg" />
         <h3>Sedan</h3>

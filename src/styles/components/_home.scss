@@ -83,16 +83,23 @@
     }
 
     .group-container {
-        flex-wrap: wrap;
+        overflow: hidden;;
+
+        // flex-wrap: wrap;
         .img-container {
-            width: 300px;
-            margin: 16px;
+            width: 200px;
+            height: 120px;
+            margin: 16px 0;
             border-radius: 10px;
 
             img {
+
                 border-radius: 10px;
                 cursor: pointer;
             }
+        }
+        > *:not(:last-child) {
+            margin-right: 16px;
         }
     }
 }
