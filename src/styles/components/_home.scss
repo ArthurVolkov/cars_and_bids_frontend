@@ -83,10 +83,78 @@
     }
 
     .group-container {
-        flex-wrap: wrap;
+        overflow: hidden;
+        margin-bottom: 50px;
+
+        // flex-wrap: wrap;
+        .img-container {
+            width: 200px;
+            height: 120px;
+            margin: 16px 0;
+            border-radius: 10px;
+
+            img {
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        }
+        > *:not(:last-child) {
+            margin-right: 16px;
+        }
+    }
+
+    .sell-img-container {
+        border-radius: 10px;
+        position: relative;
+        margin-bottom: 30px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            border-radius: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.8) 0%,
+                rgba(0, 0, 0, 0.7) 30%,
+                rgba(0, 0, 0, 0.2) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+        }
+        img {
+            border-radius: 10px;
+        }
+
+        div {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            color: $clr11;
+            font-size: 1.3em;
+        }
+
+        .sell-btn {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: none;
+            color: $clr2;
+
+            border-radius: 10px;
+            // background-color: ;
+        }
+    }
+
+    .sort-group-container {
+        margin-bottom: 50px;
         .img-container {
             width: 300px;
-            margin: 16px;
+            height: 200px;
+            margin: 16px 0;
             border-radius: 10px;
 
             img {
