@@ -5,14 +5,27 @@
       <transition name="slide-fade">
         <home-nav v-if="isShown"></home-nav>
       </transition>
-
-      <section class="group-container">
-        <div>
-          <h1>Chose any </h1>
-        </div>
-      </section>
     </div>
- 
+
+    <h2>Explore cars by body style</h2>
+    <section class="group-container flex">
+      <div class="img-container">
+        <img src="../assets/images/sedan.jpg" />
+        <h3>Sedan</h3>
+      </div>
+      <div class="img-container">
+        <img src="../assets/images/coupe.jpg" />
+        <h3>Coupe</h3>
+      </div>
+      <div class="img-container">
+        <img src="../assets/images/cabrio.jpg" />
+        <h3>Cabriolet</h3>
+      </div>
+      <div class="img-container">
+        <img src="../assets/images/suv.jpg" />
+        <h3>SUV/Crossover</h3>
+      </div>
+    </section>
   </div>
 </template>
 
