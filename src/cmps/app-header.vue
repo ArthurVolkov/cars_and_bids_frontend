@@ -40,7 +40,7 @@ export default {
       this.$store.dispatch({ type: 'loadCars' })
     },
     onScroll() {
-      // console.log('window.top.scrollY:', window.top.scrollY)
+      console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
       console.log('this.windowTop:', this.windowTop)
     },
