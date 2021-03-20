@@ -19,8 +19,8 @@
         border-radius: 5em;
         z-index: 50;
 
-        
-        *, *::placeholder {
+        *,
+        *::placeholder {
             // font-size: 1.05em;
             font-weight: 600;
             color: $clr2;
@@ -30,7 +30,6 @@
             height: 80%;
         }
 
-        
         > *:first-child {
             background-color: $clr11;
             // font-size: 1em;
@@ -39,22 +38,22 @@
             border-right: 1px solid $clr3;
             border-radius: 5em 0 0 5em;
         }
-        
-        
+
         > * {
             border-right: 1px solid $clr3;
         }
-        
-        .el-input, input {
+
+        .el-input,
+        input {
             background-color: $clr11;
             height: 100%;
             border: none;
             outline: none;
         }
-        
+
         .years-range {
             position: absolute;
-            font-size: .8em;
+            font-size: 0.8em;
             top: 70px;
             left: 0;
             height: 5em;
@@ -83,5 +82,17 @@
         }
     }
 
-   
+    .group-container {
+        flex-wrap: wrap;
+        .img-container {
+            width: 300px;
+            margin: 16px;
+            border-radius: 10px;
+
+            img {
+                border-radius: 10px;
+                cursor: pointer;
+            }
+        }
+    }
 }
