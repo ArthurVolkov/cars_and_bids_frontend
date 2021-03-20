@@ -65,7 +65,7 @@ export default {
     lastBid() {
       var bid = 0
       if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].bidPrice
+        bid = this.car.auction.bids[0].price
       } else {
         bid = this.car.auction.startPrice
       }

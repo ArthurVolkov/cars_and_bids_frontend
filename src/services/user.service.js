@@ -4,11 +4,11 @@ import { httpService } from './http.service.js'
 
 
 // Ben Oliver
+// Amelia Davis
+// Bryan Williams
 // Shannon Bishop
 // Christine Hale
-// Amelia Davis
 // Donald Rhodes
-// Bryan Williams
 // Tom Grant
 // Nathaniel Steward
 // Alice Sutton

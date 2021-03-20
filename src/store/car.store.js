@@ -7,7 +7,7 @@ export const carStore = {
   
         filterBy: {
             pageIdx: 0,
-            pageSize: 6,
+            pageSize: 8,
         },
         isLoading: false,
     },

@@ -75,8 +75,8 @@ export const carService = {
     save,
     getEmptyCar,
     getById,
-    setFilter,
-    nextPage,
+    // setFilter,
+    // nextPage,
     makeId,
     makeRandomUser,
     getBodyStyleList,
@@ -84,18 +84,19 @@ export const carService = {
     getTransmissionList,
     getDrivetrainList,
     saveComment,
-    saveBid
+    saveBid,
+    getEmptyFilter
     // saveReview
     // getCarsCountByUserId
 }
 
-function setFilter(filterBy) {
-    gFilterBy.title = filterBy.title
-    gFilterBy.pageIdx = 0;
-}
-function nextPage() {
-    gFilterBy.pageIdx++
-}
+// function setFilter(filterBy) {
+//     gFilterBy.title = filterBy.title
+//     gFilterBy.pageIdx = 0;
+// }
+// function nextPage() {
+//     gFilterBy.pageIdx++
+// }
 
 async function query(filterBy) {
     var currFiletr = JSON.parse(JSON.stringify(filterBy))
@@ -159,6 +160,22 @@ function getDrivetrainList() {
     return drivetrains.map(item => { return { value: item, label: item } })
 }
 
+function getEmptyFilter() {
+    return {
+        byYears: [1970, 2021],
+        year: {
+            from: 0,
+            to: 2021
+        },
+        years: [1970, 2021],
+        bodyStyles: '',
+        vendors: [],
+        sortBy: '',
+    }
+}
+
+
+
 function getEmptyCar() {
     return {
         vendor: '',
@@ -187,7 +204,7 @@ function getEmptyCar() {
             startPrice: 0,
             status: 'active',
             createdAt: null,
-            duration: 1000*60*60*24*7
+            duration: 1000 * 60 * 60 * 24 * 7
         }
     }
 }
@@ -328,12 +345,12 @@ function _createDemoCar1() {
             lng: -87.793808
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 14,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
@@ -373,12 +390,12 @@ function _createDemoCar2() {
             lng: -122.114357
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 46,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
@@ -418,12 +435,12 @@ function _createDemoCar3() {
             lng: -97.804008
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 3,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
@@ -463,12 +480,12 @@ function _createDemoCar4() {
             lng: -95.175490
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 12,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
@@ -508,12 +525,12 @@ function _createDemoCar5() {
             lng: -78.385597
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 2,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
@@ -553,12 +570,12 @@ function _createDemoCar6() {
             lng: -78.385597
         },
         comments: [],
-        auction: 
+        auction:
         {
             startPrice: startPrice,
             status: 'active',
             createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 4,
-            duration: 1000*60*60*24*7,
+            duration: 1000 * 60 * 60 * 24 * 7,
             bids: []
         }
     }
