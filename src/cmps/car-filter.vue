@@ -76,9 +76,6 @@
 import { carService } from "@/services/car.service.js";
 
 export default {
-
-
-
   data() {
     return {
       filterBy: {
@@ -87,7 +84,6 @@ export default {
           from: 0,
           to: 2021
         },
-        // bodyStyles: [],
         years: [1970, 2021],
         bodyStyles: '',
         vendors: [],
@@ -110,7 +106,6 @@ export default {
   },
   methods: {
     setFilter() {
-      //console.log('In Car Filter', this.filterBy.vendors)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },

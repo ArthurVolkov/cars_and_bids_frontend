@@ -186,7 +186,7 @@ function getEmptyCar() {
             startPrice: 0,
             status: 'active',
             createdAt: null,
-            duration: null
+            duration: 1000*60*60*24*7
         }
     }
 }

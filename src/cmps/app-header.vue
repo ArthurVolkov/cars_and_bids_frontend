@@ -24,7 +24,7 @@ export default {
   name: "app-header",
   data() {
     return {
-      filterName: '',
+      filterName: '',//this.$store.getters.filterName,
       windowTop: true,
       isHomeRout: false
     }
@@ -40,9 +40,9 @@ export default {
       this.$store.dispatch({ type: 'loadCars' })
     },
     onScroll() {
-      console.log('window.top.scrollY:', window.top.scrollY)
+//      console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-      console.log('this.windowTop:', this.windowTop)
+//      console.log('this.windowTop:', this.windowTop)
     },
     singUp() {
       this.$router.push('/login')
