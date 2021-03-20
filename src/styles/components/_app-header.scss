@@ -6,6 +6,7 @@
     background-color: $clr4;
     z-index: 50;
 
+    transition: .5s;
     .logo {
         font-size: 2rem;
         font-family: cursive;
@@ -23,4 +24,16 @@
     //     width: auto;
     //     background-color: transparent;
     // }
+
+    &.dark {
+        background-color: $clr1;
+        // color: $clr10;
+        .logo {
+            color: $clr10;
+        }
+
+        * {
+            color: $clr10;
+        }
+    }
 }

@@ -5,10 +5,14 @@
       <transition name="slide-fade">
         <home-nav v-if="isShown"></home-nav>
       </transition>
+
+      <section class="group-container">
+        <div>
+          <h1>Chose any </h1>
+        </div>
+      </section>
     </div>
-    <div class="home-list-container">
-      <car-row :cars="carsToShow"></car-row>
-    </div>
+ 
   </div>
 </template>
 
@@ -16,13 +20,11 @@
 // @ is an alias to /src
 // import HelloWorld from '@/cmps/HelloWorld.vue'
 import homeNav from '../cmps/home-nav'
-import carRow from '../cmps/car-row'
 
 export default {
   name: 'Home',
   components: {
     homeNav,
-    carRow
   },
   data() {
     return {

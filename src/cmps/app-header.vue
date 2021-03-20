@@ -1,10 +1,10 @@
 <template>
-  <transition name="fade">
-    <div v-if="isShown" class="header full main-layout">
+    <div class="header full main-layout" :class="isDark">
       <div class="header-container flex align-center justify-between">
         <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
 
         <el-input
+        v-if="!isDark"
           @input="setFilterName"
           placeholder="Search for car"
           v-model="filterName"
@@ -17,7 +17,6 @@
         <el-button @click="singUp" type="info" round>Sign Up</el-button>
       </div>
     </div>
-  </transition>
 </template>
 
 <script>
@@ -31,8 +30,8 @@ export default {
     }
   },
   computed: {
-    isShown() {
-      return this.windowTop && this.isHomeRout ? false : true
+    isDark() {
+      return this.windowTop && this.isHomeRout ? 'dark' : ''
     }
   },
   methods: {
