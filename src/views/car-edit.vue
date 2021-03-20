@@ -2,106 +2,85 @@
   <section v-if="carToEdit" class="car-edit flex flex-col align-center">
     <h2>{{ title }}</h2>
     <form @submit.prevent="saveCar">
-      <!-- <label for="input-price">Set price:</label>
-      <el-input-number
-        class="el-input"
-        id="input-price"
-        v-model.number="carToEdit.price"
-        :min="1"
-      >
-      </el-input-number> -->
-
     <div class="flex flex-col justify-center align-center">
-      <el-select
-        v-model="carToEdit.bodyStyle"
-        placeholder="Body style"
-      >
-        <el-option
-          v-for="item in bodyStyles"
-          :key="item.value"
+      <el-select @change="setModel" v-model="carToEdit.vendor" placeholder="vendors">
+        <el-option v-for="item in vendors" :key="item.value" 
           :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+          :value="item.value"></el-option>
       </el-select>
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <!-- <label for="sort">Sort:</label> -->
-      <el-select
-        v-model="carToEdit.vendor"
-        @change="setModel"
-        placeholder="vendors"
-      >
-        <el-option
-          v-for="item in vendors"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+      <el-select v-model="carToEdit.model" placeholder="model">
+        <el-option v-for="item in models" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <!-- <label for="sort">Sort:</label> -->
-      <el-select
-        v-model="carToEdit.model"
-        placeholder="model"
-      >
-        <el-option
-          v-for="item in models"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+      <el-select v-model.number="carToEdit.year" placeholder="year">
+        <el-option v-for="item in years" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <el-select
-        v-model.number="carToEdit.year"
-        placeholder="year"
-      >
-        <el-option
-          v-for="item in years"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+      <el-select v-model="carToEdit.bodyStyle" placeholder="Body style">
+        <el-option v-for="item in bodyStyles" :key="item.value" 
+          :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <el-select
-        v-model="carToEdit.transmission"
-        placeholder="transmission"
-      >
-        <el-option
-          v-for="item in transmissions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+      <el-input-number v-model="carToEdit.mileage" controls-position="right"
+        :min="0"></el-input-number>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select v-model="carToEdit.drivetrain" placeholder="drivetrain">
+        <el-option v-for="item in drivetrains" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
 
     <div class="flex flex-col justify-center align-center">
-      <el-select
-        v-model="carToEdit.drivetrain"
-        placeholder="drivetrain"
-      >
-        <el-option
-          v-for="item in drivetrains"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
+      <el-select v-model="carToEdit.transmission" placeholder="transmission">
+        <el-option v-for="item in transmissions" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
       </el-select>
+    </div>
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select v-model="carToEdit.exteriorColor" placeholder="exterior color"
+          filterable remote reserve-keyword>
+        <el-option v-for="item in colors" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
+      </el-select>
+    </div>    
+
+    <div class="flex flex-col justify-center align-center">
+      <el-select v-model="carToEdit.interiorColor" placeholder="interior color"
+        filterable remote reserve-keyword>
+        <el-option v-for="item in colors" :key="item.value"
+          :label="item.label" :value="item.value"></el-option>
+      </el-select>
+    </div>    
+
+    <div class="flex flex-col justify-center align-center">
+      <el-input v-model="carToEdit.desc" placeholder="description" clearable>
+      </el-input>
+    </div>    
+    <!-- TODO: check that adress exist and fetch lat lang -->
+    <div class="flex flex-col justify-center align-center">
+      <el-input v-model="carToEdit.location.address" placeholder="address"
+        clearable>
+      </el-input>
+    </div>    
+
+    <div class="flex flex-col justify-center align-center">
+      <el-input-number v-model="carToEdit.auction.startPrice" controls-position="right"
+        :min="0" >
+      </el-input-number>
     </div>
 
     <button>Save</button>
@@ -118,7 +97,7 @@
 </template>
 
 <script>
-import { dataService } from "@/services/review.service.js";
+import { dataService } from "@/services/data.service.js";
 import { carService } from "@/services/car.service.js";
 import { showMsg } from '../services/eventBus.service.js'
 
@@ -132,7 +111,8 @@ export default {
       models: dataService.getCars(''),
       years: [],
       transmissions: carService.getTransmissionList(),
-      drivetrains: carService.getDrivetrainList()
+      drivetrains: carService.getDrivetrainList(),
+      colors: dataService.getColors()
     }
   },
   computed: {
@@ -185,5 +165,5 @@ export default {
       this.carToEdit = carService.getEmptyCar()
     }
   },
-};
+}
 </script>
