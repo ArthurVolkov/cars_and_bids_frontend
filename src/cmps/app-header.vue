@@ -24,7 +24,7 @@ export default {
   name: "app-header",
   data() {
     return {
-      filterName: '',//this.$store.getters.filterName,
+      filterName: '',
       windowTop: true,
       isHomeRout: false
     }
@@ -52,13 +52,13 @@ export default {
     $route(route) {
       console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
+      this.filterName = this.$store.getters.filterBy.name
     }
   },
   created() {
     // this.$route.path
     this.isHomeRout = (this.$route.path === '/') ? true : false
-
-    console.log('this.$route.path:', this.$route.path)
+    //console.log('this.$route.path:', this.$route.path)
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)
@@ -66,5 +66,8 @@ export default {
   beforeDestroy() {
     window.removeEventListener("scroll", this.onScroll)
   },
+  destroyed() {
+    this.$store.commit({ type: 'setFilterName', name: '' })
+  }
 };
 </script>

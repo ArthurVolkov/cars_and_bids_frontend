@@ -98,14 +98,15 @@ function nextPage() {
 }
 
 async function query(filterBy) {
-    if (!filterBy.name) filterBy.name = ''
-    if (!filterBy.bodyStyles) filterBy.bodyStyles = 'all'
-    if (filterBy.bodyStyles === 'All') filterBy.bodyStyles = 'all'
-    if (!filterBy.vendors || !filterBy.vendors.length) filterBy.vendors = ['all']
-    if (!filterBy.years) filterBy.years = [1970, 2021]
-    if (!filterBy.sortBy) filterBy.sortBy = 'ending-soon'
+    var currFiletr = JSON.parse(JSON.stringify(filterBy))
+    if (!filterBy.name) currFiletr.name = ''
+    if (!filterBy.bodyStyles) currFiletr.bodyStyles = 'all'
+    if (filterBy.bodyStyles === 'All') currFiletr.bodyStyles = 'all'
+    if (!filterBy.vendors || !filterBy.vendors.length) currFiletr.vendors = ['all']
+    if (!filterBy.years) currFiletr.years = [1970, 2021]
+    if (!filterBy.sortBy) currFiletr.sortBy = 'ending-soon'
 
-    var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&bodyStyles=${filterBy.bodyStyles}&vendors=${filterBy.vendors}&years=${filterBy.years}&pageIdx=${filterBy.pageIdx}&pageSize=${filterBy.pageSize}&sortBy=${filterBy.sortBy}`
+    var queryStr = (!filterBy) ? '' : `?name=${currFiletr.name}&bodyStyles=${currFiletr.bodyStyles}&vendors=${currFiletr.vendors}&years=${currFiletr.years}&pageIdx=${currFiletr.pageIdx}&pageSize=${currFiletr.pageSize}&sortBy=${currFiletr.sortBy}`
     const data = await httpService.get(`car${queryStr}`)
     return data
 }
