@@ -8,11 +8,13 @@
 @import 'basics/helpers';
 @import 'basics/base';
 @import 'basics/layout';
+@import 'basics/buttons';
 
 // // COMPONENTS
 @import 'components/car-app';
 @import 'components/app-header';
 @import 'components/car-list';
 @import 'components/car-details';
+@import 'components/car-preview';
 @import 'components/home';
 
