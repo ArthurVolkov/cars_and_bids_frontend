@@ -1,7 +1,5 @@
 <template>
   <section class="home-nav flex justify-between align-center">
-    <!-- <div class="flex flex-col justify-center align-center"> -->
-
     <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
       Years
     </button>
@@ -18,51 +16,46 @@
       </el-slider>
     </div>
 
-    <!-- <div class="flex flex-col justify-center align-center"> -->
-      <el-select
-        v-model="filterBy.bodyStyles"
-        @change="setFilter"
-        placeholder="Body style"
-        class="body-style"
-      >
-        <el-option
-          v-for="item in bodyStyles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-    <!-- </div> -->
-
-    <!-- <div class="flex flex-col justify-center align-center"> -->
-      <!-- <label for="sort">Sort:</label> -->
-      <el-select
-        v-model="filterBy.vendors"
-        @change="setFilter"
-        placeholder="Vendors"
-        multiple
-        collapse-tags
-      >
-        <el-option
-          v-for="item in vendors"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-    <!-- </div> -->
-
-    <el-input
-      @input="setFilterName"
-      placeholder="Search for car"
-      v-model="filterName"
-      class="search"
-      clearable
+    <el-select
+      v-model="filterBy.bodyStyles"
+      @change="setFilter"
+      placeholder="Body style"
+      class="body-style"
     >
-    </el-input>
-    <button class="round-main go">🔎 Go</button>
+      <el-option
+        v-for="item in bodyStyles"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+    </el-select>
+
+    <el-select
+      v-model="filterBy.vendors"
+      @change="setFilter"
+      placeholder="Vendors"
+      multiple
+      collapse-tags
+    >
+      <el-option
+        v-for="item in vendors"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+    </el-select>
+
+  <el-input
+    @input="setFilterName"
+    placeholder="Search..."
+    v-model="filterName"
+    class="search"
+    clearable
+  >
+  </el-input>
+  <button @click="findCars" class="round-main go">🔎 Go</button>
   </section>
 </template>
 
@@ -78,8 +71,6 @@
 import { carService } from "@/services/car.service.js";
 
 export default {
-
-
   name: 'home-nav',
   data() {
     return {
@@ -89,13 +80,12 @@ export default {
           from: 0,
           to: 2021
         },
-        // bodyStyles: [],
         years: [1970, 2021],
         bodyStyles: '',
         vendors: [],
         sortBy: '',
       },
-      filterName: '',
+      filterName: '', //this.$store.getters.filterName,
       years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
@@ -113,12 +103,15 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log('In Car Filter', this.filterBy.vendors)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
-      this.$store.dispatch({ type: 'loadCars' })
     },
     setFilterName() {
-
+      console.log('in nav',this.filterName)
+      this.$store.commit({ type: 'setFilterName', name: this.filterName })
+    },
+    findCars() {
+      this.$router.push('/car')
+      this.$store.dispatch({ type: 'loadCars' })
     }
   },
   created() {

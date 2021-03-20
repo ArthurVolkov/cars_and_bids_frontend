@@ -27,6 +27,9 @@ export const carStore = {
         },
         loading(state) {
             return state.isLoading
+        },
+        filterName(state) {
+            return state.filterBy.name
         }
     },
     mutations: {
@@ -54,10 +57,12 @@ export const carStore = {
             state.filterBy.years = filterBy.years;
             state.filterBy.bodyStyles = filterBy.bodyStyles;
             state.filterBy.vendors = filterBy.vendors;
+            console.log(state.filterBy)
         },
         setFilterName(state, { name }) {
             //console.log('filterBy:', filterBy)
             state.filterBy.name = name;
+            console.log(state.filterBy)
         },
         setPage(state, { page }) {
             console.log('page:', page)
