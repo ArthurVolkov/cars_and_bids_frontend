@@ -106,19 +106,6 @@
       </form>
       <input type="number" v-model.number="bid.price" />
       <button @click="addBid">place bid</button>
-      <h3>Bids:</h3>
-      <ul class="clean-list comments-list">
-        <li v-for="bid in bidsToShow" :key="bid.id">
-          <div class="flex align-center bid-by">
-            <avatar :size="30" :username="bid.by.fullname"> </avatar>
-            <p>{{ bid.by.fullname }}</p>
-            <span>{{ bid.createdAt | moment("calendar") }}</span>
-          </div>
-          <div class="bid-price flex justify-center align-center">
-            {{ bid.price }}
-          </div>
-        </li>
-      </ul>
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment._id">
@@ -130,13 +117,19 @@
           <div class="comment-txt flex align-center">
             {{ comment.txt }}
           </div>
-          <!-- <p>
-            🤓 {{ comment.by.fullname }}
-            <span>  {{ comment.createdAt | moment("calendar") }} </span>
-          </p>
-          <div class="flex align-center">
-            {{ comment.txt }}
-          </div> -->
+        </li>
+      </ul>
+      <h3>Bids:</h3>
+      <ul class="clean-list comments-list">
+        <li v-for="bid in bidsToShow" :key="bid.id">
+          <div class="flex align-center bid-by">
+            <avatar :size="30" :username="bid.by.fullname"> </avatar>
+            <p>{{ bid.by.fullname }}</p>
+            <span>{{ bid.createdAt | moment("calendar") }}</span>
+          </div>
+          <div class="bid-price flex justify-center align-center">
+            {{ bid.price }}
+          </div>
         </li>
       </ul>
     </div>
