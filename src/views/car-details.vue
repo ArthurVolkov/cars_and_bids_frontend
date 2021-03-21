@@ -1,6 +1,5 @@
 <template>
   <div v-if="car" class="car-details flex flex-col justify-center align-center">
-
     <div class="short-info align-self-start">
       <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
       <h3>
@@ -18,7 +17,7 @@
         alt=""
       />
     </div>
-    
+
     <div class="details-bid-info flex align-center justify-between">
       <h3>
         ⏱ Time Left <span>{{ timeLeft }}</span>
@@ -106,36 +105,38 @@
         <button>Send</button>
       </form>
       <input type="number" v-model.number="bid.price" />
-      <button @click="addBid"> place bid </button>
+      <button @click="addBid">place bid</button>
       <h3>Bids:</h3>
       <ul class="clean-list comments-list">
         <li v-for="bid in bidsToShow" :key="bid.id">
-          <p>
-            🤓 {{ bid.by.fullname }}
+          <div class="flex align-center bid-by">
+            <avatar :size="30" :username="bid.by.fullname"> </avatar>
+            <p>{{ bid.by.fullname }}</p>
             <span>{{ bid.createdAt | moment("calendar") }}</span>
-          </p>
+          </div>
           <div class="bid-price flex justify-center align-center">
             {{ bid.price }}
           </div>
         </li>
       </ul>
-      <!-- <li v-for="bid in bidsToShow" :key="bid.id">
-        <span
-          >bid from: {{ bid.by.fullname }} ➡ {{ bid.bidPrice }} |
-          {{ bid.createdAt | moment("dddd, MMMM Do YYYY, h:mm:ss a") }}</span
-        >
-      </li> -->
-
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment._id">
-          <p>
-            🤓 {{ comment.by.fullname }} 
-            <!-- <span>  {{ comment.createdAt | moment("calendar") }} </span> -->
+          <div class="flex align-center bid-by">
+            <avatar :size="30" :username="comment.by.fullname"> </avatar>
+            <p>{{ comment.by.fullname }}</p>
+            <span>{{ comment.createdAt | moment("calendar") }}</span>
+          </div>
+          <div class="comment-txt flex align-center">
+            {{ comment.txt }}
+          </div>
+          <!-- <p>
+            🤓 {{ comment.by.fullname }}
+            <span>  {{ comment.createdAt | moment("calendar") }} </span>
           </p>
           <div class="flex align-center">
             {{ comment.txt }}
-          </div>
+          </div> -->
         </li>
       </ul>
     </div>
@@ -183,6 +184,8 @@ import { faTruckMonster } from '@fortawesome/free-solid-svg-icons'
 import { faPalette } from '@fortawesome/free-solid-svg-icons'
 import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import { userService } from '../services/user.service.js';
+import avatar from 'vue-avatar'
+
 
 library.add(faCarSide)
 library.add(faTrademark)
@@ -237,8 +240,8 @@ export default {
       } else {
         bid = this.car.auction.startPrice
       }
-      return bid
-      //return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+      // return bid
+      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
@@ -258,8 +261,8 @@ export default {
       this.isLoading = true
       try {
         this.car = await carService.getById(carId)
-        this.comments = this.car.comments.sort((comm1,comm2) => {return comm2.createdAt - comm1.createdAt}) 
-        this.bids = this.car.auction.bids.sort((bid1,bid2) => {return bid2.createdAt - bid1.createdAt})
+        this.comments = this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+        this.bids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
       } catch (err) {
         console.log(err)
         showMsg('Cannot load car', 'danger')
@@ -292,9 +295,9 @@ export default {
         console.log(this.lastBid)
         if (this.bid.price > this.lastBid) {
           this.bid.carId = this.car._id;
-          await this.$store.dispatch({type: 'addBid', bid: this.bid})
+          await this.$store.dispatch({ type: 'addBid', bid: this.bid })
           this.bid.price = 0
-          this.loadCar() 
+          this.loadCar()
           showMsg('Bid placed successfuly')
         } else {
           showMsg('Bid price must be over ' + this.lastBid, 'danger')
@@ -320,5 +323,8 @@ export default {
   destroyed() {
     clearInterval(this.timeLeftInterval);
   },
+  components: {
+    avatar
+  }
 }
 </script>

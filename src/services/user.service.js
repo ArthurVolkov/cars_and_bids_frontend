@@ -1,5 +1,33 @@
 import { httpService } from './http.service.js'
 
+
+
+
+// Ben Oliver
+// Amelia Davis
+// Bryan Williams
+// Shannon Bishop
+// Christine Hale
+// Donald Rhodes
+// Tom Grant
+// Nathaniel Steward
+// Alice Sutton
+// Brent Martinez
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // var gLoggedinUser = JSON.parse(sessionStorage.getItem('loggedinUser'));
 
 export const userService = {

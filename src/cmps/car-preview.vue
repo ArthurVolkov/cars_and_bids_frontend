@@ -65,12 +65,12 @@ export default {
     lastBid() {
       var bid = 0
       if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].bidPrice
+        bid = this.car.auction.bids[0].price
       } else {
         bid = this.car.auction.startPrice
       }
-       return bid
-      //return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+      //  return bid
+      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
       // const diff = this.now - this.car.auction.createdAt + this.car.auction.duration

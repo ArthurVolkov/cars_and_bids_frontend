@@ -7,7 +7,11 @@ export const carStore = {
   
         filterBy: {
             pageIdx: 0,
+<<<<<<< HEAD
             pageSize: 9,
+=======
+            pageSize: 8,
+>>>>>>> 26e9fdc4b8ec658b0f87e1af453e4f02c85a5d29
         },
         isLoading: false,
     },
