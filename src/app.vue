@@ -1,7 +1,9 @@
 <template>
-  <div id="app" class="main-layout">
+  <div id="app" class="main-layout" :class="isLoginShown" >
     <user-msg />
-    <app-header />
+    <div v-if="loginShown" class="screen"></div>
+    <app-header @openLogin="openLogin" />
+    <login v-if="loginShown" @closeLogin="closeLogin"></login>
     <router-view />
   </div>
 </template>
@@ -11,17 +13,38 @@
 <script>
 import appHeader from './cmps/app-header'
 import userMsg from './cmps/user-msg'
+import login from './cmps/login'
+
 
 export default {
   name: "app-vue",
+  data() {
+    return {
+      loginShown: false,
+    }
+  },
   created() {
     //console.log("Vue App was created!!!");
     this.$store.dispatch({ type: "loadCars" });
     this.$store.dispatch({ type: "getLoggedinUser" });
   },
+  computed: {
+    isLoginShown() {
+      return this.loginShown ? 'login-shown' : ''
+    }
+  },
+  methods: {
+    openLogin() {
+      this.loginShown = true
+    },
+    closeLogin() {
+      this.loginShown = false
+    }
+  },
   components: {
     appHeader,
-    userMsg
+    userMsg,
+    login
   }
 };
 </script>

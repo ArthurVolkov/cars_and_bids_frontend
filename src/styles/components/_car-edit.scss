@@ -1,4 +1,47 @@
-
 .car-edit {
     margin-top: 90px;
+
+    form {
+        width: 100%;
+    }
+
+    .img-upload-container {
+        background-color: $clr4;
+        padding: 20px;
+        border-radius: 6px;
+
+        p {
+            margin: 10px 0;
+        }
+
+        .upload-logo-container {
+            width: 50px;
+            // margin-bottom: 20px;
+        }
+
+        input {
+            width: 0;
+            height: 0;
+        }
+
+        .drag-container {
+            height: 160px;
+            border: 1px dashed $clr3;
+            border-radius: 6px;
+            background-color: $clr11;
+            margin-bottom: 20px;
+        }
+    }
+
+    .img-list-container {
+        .img-container {
+            width: 130px;
+            height: 100px;
+            border-radius: 6px;
+            margin: 10px;
+            img {
+                border-radius: 6px;
+            }
+        }
+    }
 }
