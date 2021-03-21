@@ -13,12 +13,9 @@
 <script>
 import appHeader from './cmps/app-header'
 import userMsg from './cmps/user-msg'
-<<<<<<< HEAD
 import login from './cmps/login'
 
-=======
 import { userService } from './services/user.service.js'
->>>>>>> 1eb2d3f6dfd9fae5a82442e7aa11af66bf2b6e49
 
 export default {
   name: "app-vue",
@@ -32,7 +29,6 @@ export default {
     this.$store.dispatch({ type: "loadCars" });
     this.$store.dispatch({ type: "getLoggedinUser" });
   },
-<<<<<<< HEAD
   computed: {
     isLoginShown() {
       return this.loginShown ? 'login-shown' : ''
@@ -45,10 +41,9 @@ export default {
     closeLogin() {
       this.loginShown = false
     }
-=======
+  },
   destroyed() {
     userService.logout();
->>>>>>> 1eb2d3f6dfd9fae5a82442e7aa11af66bf2b6e49
   },
   components: {
     appHeader,
