@@ -36,6 +36,12 @@ export const carStore = {
         setCars(state, { cars }) {
             state.cars = cars;
         },
+        setCar(state, { car }) {
+            var idx = state.cars.findIndex(currCar => {
+                return currCar._id === car._id
+            })
+            state.cars.splice(idx,1,car);
+        },
         setCount(state, { count }) {
             state.carsCount = count;
         },
@@ -128,7 +134,7 @@ export const carStore = {
         },
         async addLike(context, { like }) {
             try {
-                await carService.saveLike(like)
+                return await carService.saveLike(like)
             } catch (err) {
                 console.log('Store: Cannot save like', err);
                 throw new Error('Cannot save like');

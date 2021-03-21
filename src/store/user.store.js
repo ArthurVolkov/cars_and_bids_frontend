@@ -9,7 +9,7 @@ export const userStore = {
             // console.log('userService.LoggedinUser:', userService.getLoggedinUser())
             return state.user
         },
-        isAdmin(state) {
+        isAdmin(state) { 
             return state.user.isAdmin
         }
     },
