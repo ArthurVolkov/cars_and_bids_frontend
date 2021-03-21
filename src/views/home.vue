@@ -43,8 +43,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/cmps/HelloWorld.vue'
 import homeNav from '../cmps/home-nav'
 
 export default {
