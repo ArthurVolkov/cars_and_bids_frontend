@@ -51,6 +51,10 @@
     </el-card>
     <button class="clean-btn close-btn" @click="closeLogin">x</button>
     <!-- <pre> {{ users }} </pre> -->
+    <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
+    <img :src="img" width="50" height="50">
+    {{fbName}}
+    <pre> {{ users }} </pre>
   </section>
 </template>
 
@@ -58,6 +62,7 @@
 
 import { showMsg } from '../services/eventBus.service.js'
 import { userService } from '../services/user.service.js'
+import VFacebookLogin from 'vue-facebook-login-component'
 
 export default {
   name: 'login',
@@ -69,7 +74,9 @@ export default {
         password: ''
       },
       users: [],
-      isRegistration: false
+      isRegistration: false,
+      img:'',
+      fbName: ''
     }
   },
   computed: {
@@ -107,6 +114,13 @@ export default {
         showMsg('Cannot signupp', 'danger')
       }
     },
+    login(response) {
+      console.log('AAAAAAAAAAAA',response.authResponse)
+      this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token='+response.authResponse.accessToken     
+      FB.api('/me',(res)=>{
+        this.fbName = res.name
+      })
+    },
     async login() {
       if (!this.user.username || !this.user.password) {
         showMsg('Enter username and password!')
@@ -138,6 +152,9 @@ export default {
   },
   async created() {
     this.users = await userService.getUsers();
-  }
+  },
+  components: {
+      VFacebookLogin,
+  },
 }
 </script>

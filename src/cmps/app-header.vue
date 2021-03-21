@@ -5,7 +5,8 @@
 
       <el-input
         v-if="!isDark"
-        @focus="setFilterName"
+        @focus="setFilterFocus"
+        @input="setFilterName"
         placeholder="Search for car"
         v-model="filterName"
         clearable
@@ -41,10 +42,11 @@ export default {
   },
   methods: {
     setFilterName() {
+      this.$store.commit({ type: 'setFilterName', name: this.filterName })
+      this.$store.dispatch({ type: 'loadCars' })
+    },
+    setFilterFocus() {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-
-      // this.$store.commit({ type: 'setFilterName', name: this.filterName })
-      // this.$store.dispatch({ type: 'loadCars' })
     },
     onScroll() {
       //      console.log('window.top.scrollY:', window.top.scrollY)
@@ -62,7 +64,6 @@ export default {
       // this.$store.dispatch({ type: "loadCars" });
       // if (this.$route.path === '/car') this.$router.go(this.$router.currentRoute)
       // else this.$router.push('/car')
-
     }
   },
   watch: {
