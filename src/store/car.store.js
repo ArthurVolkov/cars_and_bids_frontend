@@ -7,7 +7,11 @@ export const carStore = {
   
         filterBy: {
             pageIdx: 0,
+<<<<<<< HEAD
+            pageSize: 9,
+=======
             pageSize: 8,
+>>>>>>> 26e9fdc4b8ec658b0f87e1af453e4f02c85a5d29
         },
         isLoading: false,
     },
@@ -53,7 +57,6 @@ export const carStore = {
             state.cars.splice(idx, 1)
         },
         setFilter(state, { filterBy }) {
-            console.log('MMMMMMMMMMMMMMMMM',filterBy)
             if (filterBy.years) state.filterBy.years = filterBy.years;
             if (filterBy.bodyStyles) state.filterBy.bodyStyles = filterBy.bodyStyles;
             if (filterBy.vendors) state.filterBy.vendors = filterBy.vendors;

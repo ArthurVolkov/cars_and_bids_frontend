@@ -5,7 +5,6 @@
     </button>
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
-        @change="setFilter"
         v-model="filterBy.years"
         range
         :min="1970"
@@ -18,7 +17,6 @@
 
     <el-select
       v-model="filterBy.bodyStyles"
-      @change="setFilter"
       placeholder="Body styles"
       class="body-style"
     >
@@ -33,7 +31,6 @@
 
     <el-select
       v-model="filterBy.vendors"
-      @change="setFilter"
       placeholder="Vendors"
       multiple
       collapse-tags
@@ -48,7 +45,6 @@
     </el-select>
 
     <el-input
-      @input="setFilterName"
       placeholder="Search..."
       v-model="filterName"
       ref="search"
@@ -111,6 +107,8 @@ export default {
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
     },
     findCars() {
+      this.$store.commit({ type: 'setFilterName', name: this.filterName })
+      this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$router.push('/car')
       this.$store.dispatch({ type: 'loadCars' })
     }

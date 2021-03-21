@@ -24,7 +24,7 @@
         <h2>Is the best place</h2>
         <h2>to sell your modern</h2>
         <h2>enthusiast car</h2>
-        <button class="sell-btn">Sell your Car</button>
+        <button @click="sellCar" class="sell-btn">Sell your Car</button>
       </div>
     </div>
     
@@ -35,7 +35,7 @@
         :key="type.imgUrl"
         class="img-container"
       >
-        <img :src="getImgUrl(type.imgUrl)" />
+        <img @click="findSortedCars(type.sortName)" :src="getImgUrl(type.imgUrl)" />
         <h3>{{ type.name }}</h3>
       </div>
     </section>
@@ -69,13 +69,13 @@ export default {
       }
       ],
       sortTypes: [{
-        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon'
+        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon' ,sortName:'ending-soon'
       },
       {
-        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed'
+        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed' ,sortName:'newly-listed'
       },
       {
-        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage'
+        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage', sortName:'lowest-mileage'
       },
       ]
     }
@@ -104,6 +104,14 @@ export default {
       this.$store.commit({ type: 'setFilter', filterBy: filterBy })
       this.$router.push('/car')
       this.$store.dispatch({ type: 'loadCars' })
+    },
+    findSortedCars(name) {
+      this.$store.commit({ type: 'setSort', sortBy: name })
+      this.$router.push('/car')
+      this.$store.dispatch({ type: 'loadCars' })
+    },
+    sellCar() {
+      this.$router.push('/car/edit')
     }
   },
   mounted() {
