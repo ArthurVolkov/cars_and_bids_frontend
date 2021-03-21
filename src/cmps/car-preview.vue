@@ -87,6 +87,9 @@ export default {
     },
     isActive() {
       return this.isLiked ? 'active' : ''
+    },
+    likesCount(){
+      return this.car.likes.length
     }
   },
   methods: {
@@ -100,14 +103,39 @@ export default {
       this.isLiked = !this.isLiked
       if (this.isLiked){
         this.like.carId = this.car._id;
-        await this.$store.dispatch({ type: 'addLike', like: this.like })
+        var like = await this.$store.dispatch({ type: 'addLike', like: this.like })
+        var carToEdit = JSON.parse(JSON.stringify(this.car))
+        carToEdit.likes.push(like) 
+        this.$store.commit({ type: 'setCar', car: carToEdit })
       } else {
+        var idx = this.car.likes.findIndex(like=> {
+          console.log(this.$store.getters.loggedinUser._id)      
+          return like.by._id === this.$store.getters.loggedinUser._id
+        })
+
         this.like.carId = this.car._id;
         await this.$store.dispatch({ type: 'removeLike', like: this.like })
+        carToEdit = JSON.parse(JSON.stringify(this.car))
+        carToEdit.likes.splice(idx,1)        
+        this.$store.commit({ type: 'setCar', car: carToEdit })
+      }
+      carToEdit = null;
+    },
+    findLike() {
+      if (this.$store.getters.loggedinUser && this.car.likes.length) {
+
+        var idx = this.car.likes.findIndex(like=> {
+          return like.by._id === this.$store.getters.loggedinUser._id
+        })
+        
+        if (idx >= 0) {
+          this.isLiked = true
+        }
       }
     }
   },
   created() {
+    this.findLike()
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
     }, 1000);
@@ -115,5 +143,5 @@ export default {
   destroyed() {
     clearInterval(this.timeLeftInterval);
   }
-};
+}
 </script>
