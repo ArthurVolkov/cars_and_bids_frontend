@@ -203,6 +203,8 @@ export default {
         price: 0,
       },
       bids: [],
+      like: {},
+      likes: [],
       isLoading: false,
       now: Date.now(),
       timeLeftInterval: null
@@ -307,7 +309,29 @@ export default {
       } catch (err) {
         showMsg('Cannot place vid', 'danger')
       }
-    }
+    },
+    async addLike() {
+      try {
+        this.like.carId = this.car._id;
+        await this.$store.dispatch({ type: 'addLike', like: this.like })
+        await this.loadCar()
+//        this..txt = ''
+        //showMsg('Comment saved successfuly')
+      } catch (err) {
+        //showMsg('Cannot save comment', 'danger')
+      }
+    },
+    async removeLike() {
+      try {
+        this.like.carId = this.car._id;
+        await this.$store.dispatch({ type: 'removeLike', like: this.like })
+        await this.loadCar()
+//        this..txt = ''
+        //showMsg('Comment saved successfuly')
+      } catch (err) {
+        //showMsg('Cannot save comment', 'danger')
+      }
+    },
   },
   created() {
     this.loadCar()

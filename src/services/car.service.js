@@ -85,6 +85,8 @@ export const carService = {
     getDrivetrainList,
     saveComment,
     saveBid,
+    saveLike,
+    removeLike,
     getEmptyFilter
     // saveReview
     // getCarsCountByUserId
@@ -122,7 +124,7 @@ async function getById(carId) {
 
 async function remove(carId) {
     //return httpService.delete(`car/${id}`)
-    return await storageService.delete('car', carId)
+    //return await storageService.delete('car', carId)
 }
 
 async function saveComment(comment) {
@@ -133,6 +135,21 @@ async function saveComment(comment) {
 async function saveBid(bid) {
     return await httpService.post('car/bid', bid)
 }
+
+async function saveLike(like) {
+    const res = await httpService.post('car/like', like)
+    return res
+}
+
+async function removeLike(like) {
+    return httpService.delete(`car/like/${like.carId}/${like.id}`)
+}
+
+// async function remove(carId) {
+    //return httpService.delete(`car/${id}`)
+    //return await storageService.delete('car', carId)
+// }
+
 
 async function save(car) {
     if (car._id) {
@@ -198,6 +215,7 @@ function getEmptyCar() {
             lng: 0
         },
         comments: [],
+        likes: [],
         auction:
         {
             bids: [],
