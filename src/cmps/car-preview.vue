@@ -1,9 +1,12 @@
 <template>
-  <li class="car-preview flex flex-col">
+  <li class="car-preview flex flex-col justify-start">
     <!-- <img :src="getImgUrl(car.imgUrls[0])" alt=""> -->
     <!-- <div class="block"> -->
     <el-carousel trigger="click" :autoplay="false" height="200px">
-      <el-carousel-item v-for="(img, idx) in car.imgUrls.slice(0, 4)" :key="idx">
+      <el-carousel-item
+        v-for="(img, idx) in car.imgUrls.slice(0, 4)"
+        :key="idx"
+      >
         <!-- height="150px" -->
         <router-link class="img-container" :to="'/car/details/' + car._id">
           <img :src="getImgUrl(img)" alt="" />
@@ -17,7 +20,10 @@
     <!-- <button class="like-btn">🤍</button> -->
     <div class="bid-info flex justify-between align-center">
       <div class="flex flex-col justify-center align-center">
-        <p>⏱ {{ timeLeft }}</p>
+        <p>
+          <font-awesome-icon icon="clock" class="main-info-icon" />
+          {{ timeLeft }}
+        </p>
         <p class="description">Before ends</p>
       </div>
       <div class="flex flex-col justify-center align-center">
@@ -30,15 +36,23 @@
       </div>
     </div>
 
-    <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>
-    <p>{{ car.engine }} Engine, {{ car.transmission }} Gear</p>
-    <p>~ {{ car.mileage }} Miles</p>
-    <p class="preview-address">{{ car.location.address }}</p>
-    <!-- <p>Time Left: {{ timeLeft }}</p> -->
-    <div class="preview-btn-container flex justify-between align-center">
-      <!-- <router-link class="preview-btn" :to="'/car/details/' + car._id"
-        >Details</router-link
-      > -->
+    <div class="flex justify-between align-center preview-title-conteiner">
+      <h3>{{ car.year }} {{ car.vendor }} {{ car.model }}</h3>
+      <p>Mileage: {{ mileage }}</p>
+    </div>
+    <p>{{ car.engine }} Engine</p>
+    <p>{{ car.transmission }} Gear</p>
+    <!-- <p>Mileage: {{ car.mileage }}</p> -->
+    <div class="flex justify-between align-center">
+      <p class="preview-address">{{ car.location.address }}</p>
+      <p class="flex align-center">
+        <font-awesome-icon icon="heart" class="main-info-icon" /><span
+          >(8)</span
+        >
+        <!-- <font-awesome-icon icon="heart" class="main-info-icon" /><span
+          >({{ likesCount }})</span
+        > -->
+      </p>
     </div>
   </li>
 </template>
@@ -49,8 +63,8 @@ var moment = require("moment");
 var momentDurationFormatSetup = require("moment-duration-format");
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
-library.add(faHeart)
+import { faHeart, faClock } from '@fortawesome/free-solid-svg-icons'
+library.add(faHeart, faClock)
 
 
 export default {
@@ -90,6 +104,9 @@ export default {
     },
     likesCount(){
       return this.car.likes.length
+    },
+    mileage() {
+      return this.car.mileage.toLocaleString('en-US')
     }
   },
   methods: {

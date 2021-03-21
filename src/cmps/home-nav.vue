@@ -45,14 +45,16 @@
     </el-select>
 
     <el-input
-      placeholder="Search..."
+      placeholder='Try "Audi 2008 gray"'
       v-model="filterName"
       ref="search"
       class="search"
       clearable
     >
     </el-input>
-    <button @click="findCars" class="round-main go">🔎 Go</button>
+    <button @click="findCars" class="round-main go">
+      <font-awesome-icon icon="search" class="main-info-icon" /> Search
+    </button>
   </section>
 </template>
 
@@ -66,6 +68,10 @@
 //   };
 // }
 import { carService } from "@/services/car.service.js";
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+library.add(faSearch)
 
 export default {
   name: 'home-nav',
@@ -82,7 +88,7 @@ export default {
         vendors: [],
         sortBy: '',
       },
-      filterName: '', 
+      filterName: '',
       years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),

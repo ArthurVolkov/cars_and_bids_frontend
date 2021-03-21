@@ -15,8 +15,8 @@
 
     .el-carousel {
         width: 100%;
-        margin-bottom: 40px;
-        border-radius: 10px;
+        margin-bottom: 60px;
+        border-radius: 6px;
 
         // height: 50%
     }
@@ -31,7 +31,7 @@
         //     height: 100%;
         // }
         img {
-            border-radius: 10px;
+            border-radius: 6px;
             // height: 200px; ////////////////////////
         }
         img:hover {
@@ -68,7 +68,7 @@
 
     .bid-info {
         position: absolute;
-        top: 48%;
+        top: 50%;
         left: 5%;
         background-color: $clr11;
         z-index: 30;
@@ -78,7 +78,7 @@
         width: 90%;
         // align-self: center;
         padding: 8px 15px;
-        border-radius: 10px;
+        border-radius: 6px;
 
         p {
             font-weight: 600;
@@ -111,5 +111,18 @@
         &.active {
             color: $clr6;
         }
+    }
+
+    >:last-child {
+        width: 100%;
+        .main-info-icon {
+            font-size: 1.2rem;
+            color: $clr6;
+            margin-inline-end: 5px;
+        }
+    }
+
+    .preview-title-conteiner {
+        width: 100%;
     }
 }

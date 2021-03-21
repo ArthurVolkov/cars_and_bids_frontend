@@ -8,19 +8,26 @@
         margin-bottom: 20px;
     }
 
+    .hero-slogan-container {
+        width: 95%;
+        position: absolute;
+        top: 85vh;
+        left: 20px;
+        color: $clr11;
+    }
+
     .home-nav {
         position: absolute;
-        height: 4rem;
+        height: 3.5rem;
         width: 70%;
         left: 15%;
-        top: 12vh;
+        top: 15vh;
         grid-column: 2/-2;
         background-color: $clr11;
         border-radius: 5em;
         z-index: 50;
-
-        *,
-        *::placeholder {
+        font-size: 1.1em;
+        *, *::placeholder {
             // font-size: 1.05em;
             font-weight: 600;
             color: $clr2;
@@ -68,17 +75,26 @@
         }
 
         .body-style {
-            width: 26%;
+            width: 30%;
         }
 
         .search {
             width: 50%;
+            & ::placeholder {
+                color: $clr3;
+                font-weight: 500;
+            }
         }
 
         .go {
             // height: 80%;
-            width: 110px;
+            font-size: 1.1rem;
+            width: 160px;
             margin: 6px;
+            color: $clr11;
+            .main-info-icon *{
+                color: white;
+            }
         }
     }
 
@@ -88,9 +104,9 @@
 
         // flex-wrap: wrap;
         .img-container {
-            width: 200px;
-            height: 120px;
-            margin: 16px 0;
+            width: 230px;
+            height: 160px;
+            margin: 16px 0 5px;
             border-radius: 10px;
 
             img {
@@ -99,7 +115,7 @@
             }
         }
         > *:not(:last-child) {
-            margin-right: 16px;
+            margin-right: 10px;
         }
     }
 
