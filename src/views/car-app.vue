@@ -1,7 +1,6 @@
 <template>
   <section class="car-app flex flex-col">
     <car-filter @setFilter="setFilter" @setSort="setSort"></car-filter>
-
     <car-list
       :cars="carsToShow"
     ></car-list>
@@ -77,5 +76,8 @@ export default {
     carList,
     carFilter,
   },
+  created(){
+    console.log('hello')
+  }
 };
 </script>
