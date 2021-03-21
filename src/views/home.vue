@@ -5,11 +5,19 @@
       <transition name="slide-fade">
         <home-nav v-if="isShown"></home-nav>
       </transition>
+      <div class="hero-slogan-container flex flex-col align-center">
+        <h2>Find your dreem car in Cars & Bids,</h2>
+        <h2>the modern enthusiast cars auctions all around the world</h2>
+      </div>
     </div>
 
     <h2>Explore cars by body styles</h2>
     <section class="group-container flex justify-between">
-      <div v-for="style in bodyStyles" :key="style.imgUrl" @click="findCars(style.name)">
+      <div
+        v-for="style in bodyStyles"
+        :key="style.imgUrl"
+        @click="findCars(style.name)"
+      >
         <div class="img-container">
           <img :src="getImgUrl(style.imgUrl)" />
         </div>
@@ -27,15 +35,14 @@
         <button @click="sellCar" class="sell-btn">Sell your Car</button>
       </div>
     </div>
-    
+
     <h2>Hotest auctions everyday</h2>
     <section class="sort-group-container flex justify-between">
-      <div
-        v-for="type in sortTypes"
-        :key="type.imgUrl"
-        class="img-container"
-      >
-        <img @click="findSortedCars(type.sortName)" :src="getImgUrl(type.imgUrl)" />
+      <div v-for="type in sortTypes" :key="type.imgUrl" class="img-container">
+        <img
+          @click="findSortedCars(type.sortName)"
+          :src="getImgUrl(type.imgUrl)"
+        />
         <h3>{{ type.name }}</h3>
       </div>
     </section>
@@ -44,6 +51,8 @@
 
 <script>
 import homeNav from '../cmps/home-nav'
+
+
 
 export default {
   name: 'Home',
@@ -67,13 +76,13 @@ export default {
       }
       ],
       sortTypes: [{
-        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon' ,sortName:'ending-soon'
+        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon', sortName: 'ending-soon'
       },
       {
-        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed' ,sortName:'newly-listed'
+        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed', sortName: 'newly-listed'
       },
       {
-        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage', sortName:'lowest-mileage'
+        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage', sortName: 'lowest-mileage'
       },
       ]
     }
