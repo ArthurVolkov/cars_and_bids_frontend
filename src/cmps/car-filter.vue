@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       filterBy: {
-        // byYears: [1970, 2021],
+        byYears: [1970, 2021],
         // year: {
         //   from: 0,
         //   to: 2021
@@ -118,14 +118,10 @@ export default {
   },
   created() {
     this.filterBy = this.$store.getters.filterBy;
-    
-    // for (let i = 2021; i >= 1970; i--) {
-    //   this.years.push({ value: i, label: i });
-    // }
+    console.log('PPPPPPPPPPP',this.filterBy)
   },
   destroyed() {
     this.filterBy.byYears = [1970, 2021],
-    // this.filterBy.years = [1970, 2021],
     this.filterBy.bodyStyles = '',
     this.filterBy.vendors =  [],
     this.filterBy.sortBy = ''

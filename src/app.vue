@@ -11,6 +11,7 @@
 <script>
 import appHeader from './cmps/app-header'
 import userMsg from './cmps/user-msg'
+import { userService } from './services/user.service.js'
 
 export default {
   name: "app-vue",
@@ -18,6 +19,9 @@ export default {
     //console.log("Vue App was created!!!");
     this.$store.dispatch({ type: "loadCars" });
     this.$store.dispatch({ type: "getLoggedinUser" });
+  },
+  destroyed() {
+    userService.logout();
   },
   components: {
     appHeader,

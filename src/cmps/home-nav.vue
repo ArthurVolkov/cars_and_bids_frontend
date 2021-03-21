@@ -5,7 +5,7 @@
     </button>
     <div v-if="yearsRangeIsOpen" class="block years-range">
       <el-slider
-        v-model="filterBy.years"
+        v-model="filterBy.byYears"
         range
         :min="1970"
         :max="2021"
@@ -79,17 +79,8 @@ export default {
     return {
       filterBy: {
         byYears: [1970, 2021],
-        year: {
-          from: 0,
-          to: 2021
-        },
-        years: [1970, 2021],
-        bodyStyles: '',
-        vendors: [],
-        sortBy: '',
       },
       filterName: '',
-      years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
       yearsRangeIsOpen: false,
@@ -100,7 +91,6 @@ export default {
       return {
         [this.filterBy.byYears[0]]: '' + this.filterBy.byYears[0],
         [this.filterBy.byYears[1]]: '' + this.filterBy.byYears[1],
-        // 2021: '2021',
       }
     }
   },
@@ -114,6 +104,7 @@ export default {
     },
     findCars() {
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
+      console.log('filter byin nav:',this.filterBy)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$router.push('/car')
       this.$store.dispatch({ type: 'loadCars' })
@@ -122,9 +113,6 @@ export default {
   created() {
     //this.filterDebounce = debounce(this.setFilter, 1000);
     this.$store.commit({ type: 'setFilterName', name: '' })
-    for (let i = 2021; i >= 1970; i--) {
-      this.years.push({ value: i, label: i });
-    }
   },
   mounted() {
     this.$refs.search.focus();
