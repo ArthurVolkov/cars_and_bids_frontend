@@ -46,12 +46,12 @@
     <div class="flex justify-between align-center">
       <p class="preview-address">{{ car.location.address }}</p>
       <p class="flex align-center">
-        <font-awesome-icon icon="heart" class="main-info-icon" /><span
-          >(8)</span
-        >
         <!-- <font-awesome-icon icon="heart" class="main-info-icon" /><span
-          >({{ likesCount }})</span
+          >(8)</span
         > -->
+        <font-awesome-icon icon="heart" class="main-info-icon" /><span
+          >({{ likesCount }})</span
+        >
       </p>
     </div>
   </li>
