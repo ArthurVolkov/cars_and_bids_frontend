@@ -118,7 +118,7 @@ export default {
   },
   created() {
     this.filterBy = this.$store.getters.filterBy;
-
+    
     for (let i = 2021; i >= 1970; i--) {
       this.years.push({ value: i, label: i });
     }

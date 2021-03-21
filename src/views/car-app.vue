@@ -77,7 +77,7 @@ export default {
     carFilter,
   },
   created(){
-    console.log('hello')
+    this.$store.dispatch({ type: 'loadCars' })
   }
 };
 </script>
