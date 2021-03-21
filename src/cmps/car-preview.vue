@@ -78,7 +78,8 @@ export default {
     return {
       now: Date.now(),
       timeLeftInterval: null,
-      isLiked: false
+      isLiked: false,
+      like: {}
     }
   },
   computed: {
@@ -112,8 +113,15 @@ export default {
     getImgUrl(pic) {
       return require('../assets/' + pic)
     },
-    toggleLike() {
+    async toggleLike() {
       this.isLiked = !this.isLiked
+      if (this.isLiked){
+        this.like.carId = this.car._id;
+        await this.$store.dispatch({ type: 'addLike', like: this.like })
+      } else {
+        this.like.carId = this.car._id;
+        await this.$store.dispatch({ type: 'removeLike', like: this.like })
+      }
     }
   },
   created() {

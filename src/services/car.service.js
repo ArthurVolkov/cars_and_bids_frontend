@@ -142,7 +142,7 @@ async function saveLike(like) {
 }
 
 async function removeLike(like) {
-    return httpService.delete(`car/like/${like.carId}/${like.id}`)
+    return httpService.delete(`car/like/${like.carId}`)
 }
 
 // async function remove(carId) {
