@@ -90,7 +90,7 @@ export default {
     onScroll() {
       // console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-      console.log('this.windowTop:', this.windowTop)
+      // console.log('this.windowTop:', this.windowTop)
     },
     getImgUrl(pic) {
       return require('../assets/' + pic)

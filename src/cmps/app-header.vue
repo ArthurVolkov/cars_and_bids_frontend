@@ -69,6 +69,7 @@ export default {
       console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
+      //this.filterBy = this.$store.getters.filterBy;
     }
   },
   created() {

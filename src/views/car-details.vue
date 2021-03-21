@@ -236,6 +236,15 @@ export default {
       // return bid
       return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
+    currentPrice() {
+      var bid = 0
+      if (this.car.auction.bids.length) {
+        bid = this.car.auction.bids[0].price
+      } else {
+        bid = this.car.auction.startPrice
+      }
+      return bid
+    },
     timeLeft() {
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
       if (diff <= 0) return 'Finished'
@@ -285,15 +294,15 @@ export default {
     async addBid() {
       try {
         console.log(this.bid.price)
-        console.log(this.lastBid)
-        if (this.bid.price > this.lastBid) {
+        console.log(this.currentPrice)
+        if (this.bid.price > this.currentPrice) {
           this.bid.carId = this.car._id;
           await this.$store.dispatch({ type: 'addBid', bid: this.bid })
           this.bid.price = 0
           this.loadCar()
           showMsg('Bid placed successfuly')
         } else {
-          showMsg('Bid price must be over ' + this.lastBid, 'danger')
+          showMsg('Bid price must be over ' + this.currentPrice, 'danger')
         }
       } catch (err) {
         showMsg('Cannot place vid', 'danger')
