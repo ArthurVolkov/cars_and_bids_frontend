@@ -65,7 +65,6 @@ export default {
       isLoading: false,
       isDragOver: false,
       imgUrls: [],
-
     };
   },
   methods: {
@@ -95,6 +94,7 @@ export default {
 
           this.imgUrls.push(img.url)
         });
+        this.$emit('saveImgs', this.imgUrls)
       } catch (err) {
         console.log('can`t upload images', err);
       } finally {

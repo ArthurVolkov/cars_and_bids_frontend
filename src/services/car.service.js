@@ -7,8 +7,8 @@ import axios from 'axios'
 
 const vendors = ['Audi', 'BMW', 'Golf', 'Mazda', 'Ferari']
 const bodyStyles = ['Coupe', 'Sedan', 'Truck', 'Hatchback'];
-const transmissions = ['Automatic', 'Menual', 'Robotic'];
-const drivetrains = ['Rear-wheel drive', 'Front-wheel drive'];
+const transmissions = ['Automatic', 'Manual', 'Robotic'];
+const drivetrains = ['Rear-wheel drive', 'Front-wheel drive', 'All-wheel drive'];
 const colors = ['Blue', 'Black', 'Red', 'Yellow', 'Green', 'Gray'];
 
 const usersDemo =

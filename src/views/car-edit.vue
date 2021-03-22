@@ -1,149 +1,223 @@
 <template>
   <section v-if="carToEdit" class="car-edit flex flex-col align-center">
-    <h2>{{ title }}</h2>
+    <h1>Tell us about your car</h1>
+    <p>Give us the following info and we’ll work to get the auction live.</p>
+
     <form @submit.prevent="saveCar">
-      <div class="flex flex-col justify-center align-center">
-        <el-select
-          @change="setModel"
-          v-model="carToEdit.vendor"
-          placeholder="vendors"
-        >
-          <el-option
-            v-for="item in vendors"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select v-model="carToEdit.model" placeholder="model">
-          <el-option
-            v-for="item in models"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select v-model.number="carToEdit.year" placeholder="year">
-          <el-option
-            v-for="item in years"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select v-model="carToEdit.bodyStyle" placeholder="Body style">
-          <el-option
-            v-for="item in bodyStyles"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-input-number
-          v-model="carToEdit.mileage"
-          controls-position="right"
-          :min="0"
-        ></el-input-number>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select v-model="carToEdit.drivetrain" placeholder="drivetrain">
-          <el-option
-            v-for="item in drivetrains"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select v-model="carToEdit.transmission" placeholder="transmission">
-          <el-option
-            v-for="item in transmissions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select
-          v-model="carToEdit.exteriorColor"
-          placeholder="exterior color"
-          filterable
-          remote
-          reserve-keyword
-        >
-          <el-option
-            v-for="item in colors"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-select
-          v-model="carToEdit.interiorColor"
-          placeholder="interior color"
-          filterable
-          remote
-          reserve-keyword
-        >
-          <el-option
-            v-for="item in colors"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-input v-model="carToEdit.desc" placeholder="description" clearable>
-        </el-input>
-      </div>
-      <!-- TODO: check that adress exist and fetch lat lang -->
-      <div class="flex flex-col justify-center align-center">
-        <el-input
-          v-model="carToEdit.location.address"
-          placeholder="address"
-          clearable
-        >
-        </el-input>
-      </div>
-
-      <div class="flex flex-col justify-center align-center">
-        <el-input-number
-          v-model="carToEdit.auction.startPrice"
-          controls-position="right"
-          :min="0"
-        >
-        </el-input-number>
-      </div>
-
       <div>
-        <img-upload @save="saveImg"></img-upload>
-        <!-- <img-list :imgUrls="imgUrls" /> -->
-      </div>
+        <h2>Car details</h2>
+        <div class="flex justify-center justify-between align-center">
+          <div class="flex flex-col">
+            <label for="e-set-vendor">Vendor</label>
+            <el-select
+              @change="setModel"
+              v-model="carToEdit.vendor"
+              placeholder=""
+              id="e-set-vendor"
+              filterable
+              no-match-text="Not here yet..."
+            >
+              <el-option
+                v-for="item in vendors"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
 
-      <button>Save</button>
-      <router-link to="/car" class="back-btn">Back</router-link>
+          <div class="flex flex-col">
+            <label for="e-set-model">Model</label>
+            <el-select
+              v-model="carToEdit.model"
+              placeholder=""
+              id="e-set-model"
+              filterable
+              :allow-create="true"
+              no-match-text="Not here yet..."
+              no-data-text="Choose car vendor first / no matches"
+            >
+              <el-option
+                v-for="item in models"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+
+        <div class="flex justify-between align-center">
+          <div class="flex flex-col">
+            <label for="e-set-style">Body style</label>
+            <el-select
+              v-model="carToEdit.bodyStyle"
+              placeholder=""
+              id="e-set-style"
+              filterable
+              no-match-text="Not here yet..."
+            >
+              <el-option
+                v-for="item in bodyStyles"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="e-set-year">Year</label>
+            <el-select
+              v-model.number="carToEdit.year"
+              placeholder=""
+              id="e-set-year"
+              filterable
+              no-match-text="Only 1970-2021 alowed"
+            >
+              <el-option
+                v-for="item in years"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+
+        <div class="flex justify-between align-center">
+          <div class="flex flex-col">
+            <label for="e-set-drivetrain">Drivetrain</label>
+            <el-select
+              v-model="carToEdit.drivetrain"
+              placeholder=""
+              id="e-set-drivetrain"
+              filterable
+              :allow-create="true"
+              no-match-text="Not here yet"
+            >
+              <el-option
+                v-for="item in drivetrains"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="e-set-transmission">Transmission</label>
+            <el-select
+              v-model="carToEdit.transmission"
+              placeholder=""
+              id="e-set-transmission"
+              filterable
+              no-match-text="Not here yet"
+            >
+              <el-option
+                v-for="item in transmissions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+
+        <div class="flex justify-between align-center">
+          <div class="flex flex-col">
+            <label for="e-set-exterior-color">Exterior color</label>
+            <el-select
+              v-model="carToEdit.exteriorColor"
+              placeholder=""
+              id="e-set-exterior-color"
+              filterable
+              no-match-text="Not here yet"
+            >
+              <el-option
+                v-for="item in colors"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="e-set-interior-color">Interior color</label>
+            <el-select
+              v-model="carToEdit.interiorColor"
+              placeholder=""
+              id="e-set-interior-color"
+              filterable
+              no-match-text="Not here yet"
+            >
+              <el-option
+                v-for="item in colors"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+        </div>
+
+        <div class="flex flex-col justify-center">
+          <label for="e-set-description">Description</label>
+          <el-input
+            type="textarea"
+            :rows="4"
+            v-model="carToEdit.desc"
+            placeholder=""
+            clearable
+            id="e-set-description"
+          >
+          </el-input>
+        </div>
+        <!-- TODO: check that adress exist and fetch lat lang -->
+        <div class="flex flex-col justify-center">
+          <label for="e-set-address">Address</label>
+          <el-input
+            v-model="carToEdit.location.address"
+            placeholder=""
+            clearable
+            id="e-set-address"
+          >
+          </el-input>
+        </div>
+
+        <div class="flex justify-between align-center">
+          <div class="flex flex-col">
+            <label for="e-set-mileage">Mileage (mi)</label>
+            <el-input-number
+              v-model="carToEdit.mileage"
+              :min="0"
+              :controls="false"
+              id="e-set-mileage"
+            ></el-input-number>
+          </div>
+          <div class="flex flex-col">
+            <label for="e-set-start-price">Reserve price (USD)</label>
+            <el-input-number
+              v-model="carToEdit.auction.startPrice"
+              :min="0"
+              :step="50"
+              :controls="false"
+              id="e-set-start-price"
+            >
+            </el-input-number>
+          </div>
+        </div>
+
+        <div>
+          <img-upload @saveImgs="saveImgs"></img-upload>
+        </div>
+
+        <div class="flex justify-between">
+          <router-link to="/car" class="reg-btn back">Back</router-link>
+          <button class="clean-btn reg-btn save">Save</button>
+        </div>
+      </div>
     </form>
   </section>
   <div
@@ -172,14 +246,12 @@ export default {
       transmissions: carService.getTransmissionList(),
       drivetrains: carService.getDrivetrainList(),
       colors: dataService.getColors(),
+      imgUrls: []
     };
   },
   computed: {
     carId() {
       return this.$route.params.carId;
-    },
-    title() {
-      return this.carId ? "Car Edit" : "Car Add";
     },
     loading() {
       return this.carToEdit ? false : true;
@@ -210,8 +282,8 @@ export default {
         showMsg("Cannot save cars", "danger");
       }
     },
-    saveImg(imgUrl) {
-      this.imgUrls.push(imgUrl);
+    saveImgs(imgUrls) {
+      this.imgUrls = imgUrls;
     },
   },
   created() {

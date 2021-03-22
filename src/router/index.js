@@ -43,7 +43,7 @@ const routes = [
   },
   {
     path: '/activity',
-    name: 'carDetails',
+    name: 'activity',
     component: activity
   }
 ]

@@ -19,8 +19,12 @@
         <!-- <router-link to="/about">About</router-link> -->
         <div
           class="account-options-btn flex justify-between align-center pointer"
-          @click="openOptions = !openOptions"
+          @click="openMenu"
         >
+          <!-- <div
+          class="account-options-btn flex justify-between align-center pointer"
+          @click="openOptions = !openOptions"
+        > -->
           <font-awesome-icon icon="bars" class="main-info-icon" />
           <font-awesome-icon
             v-if="!loggedInUser"
@@ -33,7 +37,19 @@
             class="main-info-icon user-img"
           /> -->
           <!-- <div v-if="openOptions" class="account-options flex flex-col"> -->
-          <div v-if="openOptions" @click-outside="click" class="account-options flex flex-col">
+          <!-- <div
+            v-if="openOptions"
+            @click-outside="click"
+            class="account-options flex flex-col"
+          > -->
+          
+            <!-- @focusout="clickOutside"
+            ref="options" -->
+          <div
+            v-if="openOptions"
+            tabindex="0"
+            class="account-options flex flex-col"
+          >
             <button v-if="!loggedInUser" class="clean-btn" @click="openLogin">
               Sign in
             </button>
@@ -55,6 +71,7 @@ import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 library.add(faBars, faUserCircle)
+import clickOutside from '../directives/click-outside.js'
 
 export default {
   name: "app-header",
@@ -111,8 +128,16 @@ export default {
         showMsg('Cannot logout', 'danger')
       }
     },
-    click() {
-      console.log('click:')
+    openMenu() {
+      this.openOptions = true
+      // this.$nextTick(() => {
+      //   this.$refs.options.focusWithin();
+
+      // })
+    },
+    clickOutside() {
+      console.log('closeeeeeeee');
+      this.openOptions = false
     }
   },
   watch: {
@@ -127,6 +152,11 @@ export default {
     // this.$route.path
     this.isHomeRout = (this.$route.path === '/') ? true : false
     //console.log('this.$route.path:', this.$route.path)
+    window.addEventListener('click', (e) => {
+      if (!this.$el.contains(e.target)) {
+        this.openOptions = false
+      }
+    })
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)
@@ -139,6 +169,9 @@ export default {
   },
   components: {
     avatar
+  },
+  directives: {
+    clickOutside
   }
 };
 </script>
