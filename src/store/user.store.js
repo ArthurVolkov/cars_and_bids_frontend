@@ -3,18 +3,25 @@ import { userService } from "../services/user.service";
 export const userStore = {
     state: {
         user: null,
+        loginShown: false,
     },
     getters: {
         loggedinUser(state) {
             // console.log('userService.LoggedinUser:', userService.getLoggedinUser())
             return state.user
         },
-        isAdmin(state) { 
-            return state.user.isAdmin
+        // isAdmin(state) { 
+        //     return state.user.isAdmin
+        // },
+        loginShown({loginShown}) {
+            return loginShown
         }
     },
     mutations: {
-
+        toggleLogin(state, {isShown}) {
+            state.loginShown = isShown
+            console.log('state.loginShown:', state.loginShown)
+        }
     },
     actions: {
         async getLoggedinUser({state}) {

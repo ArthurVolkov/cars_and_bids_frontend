@@ -152,14 +152,14 @@ export default {
       this.isRegistration = !this.isRegistration
     },
     closeLogin() {
-      this.$emit('closeLogin')
+      this.$store.commit('toggleLogin', {isShown: false})
     }
   },
   async created() {
     this.users = await userService.getUsers();
   },
   destroyed() {
-    this.$emit('closeLogin')
+    this.closeLogin()
   },
   components: {
     VFacebookLogin,
