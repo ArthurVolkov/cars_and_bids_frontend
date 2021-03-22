@@ -51,7 +51,7 @@
       </el-form>
     </el-card>
     <!-- <v-facebook-login @login="fbLogin" app-id="1015104252644196"></v-facebook-login> -->
-    <img :src="img" width="50" height="50">
+    <!-- <img :src="img" width="50" height="50"> -->
     {{fbName}}
     <pre> {{ users }} </pre>
   </section>
