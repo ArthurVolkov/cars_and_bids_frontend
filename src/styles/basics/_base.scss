@@ -42,6 +42,12 @@ img {
     object-fit: cover;
 }
 
+.el-textarea, textarea {
+    textarea {
+        resize: none;
+    }
+}
+
 // button.place-bid-btn {
 //     padding: 5px 10px;
 //     font-size: 1.5em;

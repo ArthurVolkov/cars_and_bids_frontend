@@ -79,7 +79,7 @@ export default {
   data() {
     return {
       filterBy: {
-        byYears: [1970, 2021],
+        byYears: [1970, 2021]
         // year: {
         //   from: 0,
         //   to: 2021
@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log(' this.filterBy:',  this.filterBy)
+      console.log(' this.filterBy:', this.filterBy)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },
@@ -117,14 +117,15 @@ export default {
     }
   },
   created() {
-    this.filterBy = this.$store.getters.filterBy;
-    console.log('PPPPPPPPPPP',this.filterBy)
+    // this.filterBy = JSON.parse(JSON.stringify(this.$store.getters.filterBy));
+    this.filterBy = { byYears: this.filterBy.byYears, ...this.$store.getters.filterBy };
+    // if (!this.filterBy.byYears) this.filterBy.byYears = [1970, 2021]
   },
   destroyed() {
     this.filterBy.byYears = [1970, 2021],
-    this.filterBy.bodyStyles = '',
-    this.filterBy.vendors =  [],
-    this.filterBy.sortBy = ''
+      this.filterBy.bodyStyles = '',
+      this.filterBy.vendors = [],
+      this.filterBy.sortBy = ''
     this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
   }
 }

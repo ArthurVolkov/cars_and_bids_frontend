@@ -73,3 +73,19 @@ button.round-main {
         }
     }
 }
+
+.reg-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 1.1em;
+
+    &.back {
+        background-color: $clr11;
+        border: 1px solid $clr3;
+    }
+
+    &.save {
+        background-color: $clr6;
+        color: $clr11;
+    }
+}

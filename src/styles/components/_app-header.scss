@@ -30,8 +30,14 @@
             color: $clr10;
         }
 
+        // *:not(:last-child){
+        //     color: $clr10;
+        // }
         * {
             color: $clr10;
+        }
+        & .account-options-btn * {
+            color: $clr2;
         }
     }
     .btn-container {
@@ -62,7 +68,9 @@
         border: 1px solid $clr3;
         border-radius: 6px;
         background-color: $clr11;
+        outline: none;
         padding: 10px 20px;
+        // z-index: 200;
         * {
             font-size: 1.1em;
             font-weight: 500;
