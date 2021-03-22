@@ -14,7 +14,7 @@
       </el-input>
       <div>
         <!-- <button to="/car" @click="loadCars" class="btn">Explore</button> -->
-        <router-link to="/car" @click="loadCars" class="btn">Explore</router-link>
+        <router-link to="/car" class="btn">Explore</router-link>
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <el-button @click="openLogin" type="info" round>Sign Up</el-button>
@@ -59,13 +59,6 @@ export default {
       this.$store.commit('toggleLogin', {isShown: true})
       // this.$emit('openLogin')
     },
-    loadCars() {
-      // console.log('loadCars:')
-      // this.$store.commit({ type: 'setFilter', filterBy: carService.getEmptyFilter() })
-      // this.$store.dispatch({ type: "loadCars" });
-      // if (this.$route.path === '/car') this.$router.go(this.$router.currentRoute)
-      // else this.$router.push('/car')
-    }
   },
   watch: {
     $route(route) {
