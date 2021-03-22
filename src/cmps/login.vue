@@ -119,13 +119,13 @@ export default {
         showMsg('Cannot signupp', 'danger')
       }
     },
-    login(response) {
-      console.log('AAAAAAAAAAAA', response.authResponse)
-      this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token=' + response.authResponse.accessToken
-      FB.api('/me', (res) => {
-        this.fbName = res.name
-      })
-    },
+    // login(response) {
+    //   console.log('AAAAAAAAAAAA', response.authResponse)
+    //   this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token=' + response.authResponse.accessToken
+    //   FB.api('/me', (res) => {
+    //     this.fbName = res.name
+    //   })
+    // },
     async login() {
       if (!this.user.username || !this.user.password) {
         showMsg('Enter username and password!')
