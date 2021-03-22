@@ -47,14 +47,6 @@ export const carStore = {
         addCar(state, { car }) {
             state.cars.unshift(car);
         },
-        // updateCar(state, { car }) {
-        //     const idx = state.cars.findIndex(t => t._id === car._id)
-        //     state.cars.splice(idx, 1, car);
-        // },
-        // removeCar(state, { car }) {
-        //     const idx = state.cars.findIndex(t => t._id === car._id)
-        //     state.cars.splice(idx, 1)
-        // },
         setFilter(state, { filterBy }) {
             if (filterBy.byYears) state.filterBy.byYears = filterBy.byYears;
             if (filterBy.bodyStyles) state.filterBy.bodyStyles = filterBy.bodyStyles;

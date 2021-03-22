@@ -71,7 +71,7 @@ var gFilterBy = { name: '', pageIdx: 0 }
 
 export const carService = {
     query,
-    remove,
+    queryUserCars,
     save,
     getEmptyCar,
     getById,
@@ -88,7 +88,6 @@ export const carService = {
     saveLike,
     removeLike,
     getEmptyFilter
-    // saveReview
     // getCarsCountByUserId
 }
 
@@ -116,7 +115,7 @@ async function query(filterBy) {
 
 async function queryUserCars(userId) {
     var queryStr = (!userId) ? '' : `?userId=${userId}`
-    const data = await httpService.get(`car/user/${queryStr}`)
+    const data = await httpService.get(`car/user/${userId}`)
     return data
 }
 
