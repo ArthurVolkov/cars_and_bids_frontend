@@ -12,12 +12,38 @@
         clearable
       >
       </el-input>
-      <div>
+      <div class="btn-container flex align-center">
         <!-- <button to="/car" @click="loadCars" class="btn">Explore</button> -->
-        <router-link to="/car" @click="loadCars" class="btn">Explore</router-link>
+        <router-link to="/car" @click="loadCars" class="btn"
+          >Explore</router-link
+        >
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
-        <el-button @click="openLogin" type="info" round>Sign Up</el-button>
+        <div
+          class="account-options-btn flex justify-between align-center pointer"
+          @click="openOptions = !openOptions"
+        >
+          <font-awesome-icon icon="bars" class="main-info-icon" />
+          <font-awesome-icon
+            v-if="!loggedInUser"
+            icon="user-circle"
+            class="main-info-icon user-img"
+          />
+          <avatar v-else :size="30" :username="loggedInUser.fullname"></avatar>
+          <!-- <font-awesome-icon
+            icon="user-circle"
+            class="main-info-icon user-img"
+          /> -->
+          <!-- <div v-if="openOptions" class="account-options flex flex-col"> -->
+          <div v-if="openOptions" @click-outside="click" class="account-options flex flex-col">
+            <button v-if="!loggedInUser" class="clean-btn" @click="openLogin">
+              Sign in
+            </button>
+            <button v-else class="clean-btn" @click="logout">Sign out</button>
+            <router-link to="/activity">Activites</router-link>
+          </div>
+        </div>
+        <!-- <el-button @click="openLogin" type="info" round>Sign Up</el-button> -->
       </div>
     </div>
   </div>
@@ -26,18 +52,29 @@
 <script>
 
 
+import avatar from 'vue-avatar'
+import { showMsg } from '../services/eventBus.service.js'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+library.add(faBars, faUserCircle)
+
 export default {
   name: "app-header",
   data() {
     return {
       filterName: '',
       windowTop: true,
-      isHomeRout: false
+      isHomeRout: false,
+      openOptions: false
     }
   },
   computed: {
     isDark() {
       return this.windowTop && this.isHomeRout ? 'dark' : ''
+    },
+    loggedInUser() {
+      // return this.$store.getters.loggedinUser ? true : false
+      return this.$store.getters.loggedinUser ? this.$store.getters.loggedinUser : false
     }
   },
   methods: {
@@ -56,7 +93,7 @@ export default {
     openLogin() {
       // this.$router.push('/login')
       console.log('openLogin:')
-      this.$store.commit('toggleLogin', {isShown: true})
+      this.$store.commit('toggleLogin', { isShown: true })
       // this.$emit('openLogin')
     },
     loadCars() {
@@ -65,6 +102,19 @@ export default {
       // this.$store.dispatch({ type: "loadCars" });
       // if (this.$route.path === '/car') this.$router.go(this.$router.currentRoute)
       // else this.$router.push('/car')
+    },
+    async logout() {
+      console.log('Logout!');
+      try {
+        await this.$store.dispatch({ type: 'logout' })
+        showMsg('logged out success')
+
+      } catch (err) {
+        showMsg('Cannot logout', 'danger')
+      }
+    },
+    click() {
+      console.log('click:')
     }
   },
   watch: {
@@ -90,6 +140,7 @@ export default {
     this.$store.commit({ type: 'setFilterName', name: '' })
   },
   components: {
+    avatar
   }
 };
 </script>

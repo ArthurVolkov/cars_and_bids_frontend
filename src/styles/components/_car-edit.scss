@@ -7,7 +7,7 @@
 
     .img-upload-container {
         background-color: $clr4;
-        padding: 20px;
+        padding: 20px 10px 10px 20px;
         border-radius: 6px;
 
         p {
@@ -29,20 +29,29 @@
             border: 1px dashed $clr3;
             border-radius: 6px;
             background-color: $clr11;
+            margin-inline-end: 10px;
+            margin-bottom: 10px;
         }
     }
 
     .img-list-container {
-        margin-top: 20px;
         flex-wrap: wrap;
+        min-height: 100px;
+        margin-top: 10px;
+
+        .el-loading-mask {
+            border-radius: 6px;
+            margin-inline-end: 10px;
+            margin: -10px 0 0 -10px;
+        }
 
         .img-container {
-            width: 130px;
+            width: 132px;
             height: 100px;
             border-radius: 6px;
             margin-bottom: 10px;
+            margin-inline-end: 10px;
             &:not(:last-child) {
-                margin-inline-end: 10px;
             }
 
             img {

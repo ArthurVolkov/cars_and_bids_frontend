@@ -1,19 +1,14 @@
 <template>
   <section class="login-container">
     <el-card>
-      <section v-if="loggedinUser" class="flex justify-between align-center">
+      <!-- <section v-if="loggedinUser" class="flex justify-between align-center">
         Hello, {{ loggedinUser.fullname }}
         <el-button class="login-button" type="primary" @click="logout"
           >Logout</el-button
         >
-        <!-- <button @click="logout">Logout</button> -->
-      </section>
-      <el-form
-        v-else
-        class="login-form"
-        ref="form"
-        @submit.native.prevent="send"
-      >
+        <button @click="logout">Logout</button>
+      </section> -->
+      <el-form class="login-form" ref="form" @submit.native.prevent="send">
         <h2>{{ title }}</h2>
         <el-form-item v-if="isRegistration" prop="fullname">
           <el-input v-model="user.fullname" placeholder="Full name"></el-input>
@@ -136,23 +131,25 @@ export default {
         showMsg('signupp success')
       } catch (err) {
         showMsg('Cannot signupp', 'danger')
+      } finally {
+        this.closeLogin()
       }
     },
-    async logout() {
-      console.log('Logout!');
-      try {
-        await this.$store.dispatch({ type: 'logout' })
-        showMsg('logged out success')
+    // async logout() {
+    //   console.log('Logout!');
+    //   try {
+    //     await this.$store.dispatch({ type: 'logout' })
+    //     showMsg('logged out success')
 
-      } catch (err) {
-        showMsg('Cannot logout', 'danger')
-      }
-    },
+    //   } catch (err) {
+    //     showMsg('Cannot logout', 'danger')
+    //   }
+    // },
     toggleRegistration() {
       this.isRegistration = !this.isRegistration
     },
     closeLogin() {
-      this.$store.commit('toggleLogin', {isShown: false})
+      this.$store.commit('toggleLogin', { isShown: false })
     }
   },
   async created() {

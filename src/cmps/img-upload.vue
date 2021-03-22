@@ -23,12 +23,23 @@
 
         <!-- <h3 v-else>Drop image here</h3> -->
       </label>
-      <img-list v-if="imgUrls.length" :imgUrls="imgUrls" />
+      <!-- <img-list v-if="imgUrls.length" :imgUrls="imgUrls" :isLoading="isLoading"/> -->
+      <!-- <img-list v-if="imgUrls.length || isLoading" :imgUrls="imgUrls" :isLoading="isLoading"/> -->
+      <img-list
+        v-if="imgUrls.length || isLoading"
+        :imgUrls="imgUrls"
+        v-loading.lock="isLoading"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.5)"
+      />
+
       <!-- HIDDEN INPUT -->
       <input
         type="file"
         name="img-uploader"
+        accept="image/png, image/jpeg"
         id="imgUploader"
+        :multiple="true"
         @change="handleFile"
       />
     </template>
@@ -63,21 +74,33 @@ export default {
     },
     handleFile(ev) {
       console.log('ev:', ev)
-      let file;
-      if (ev.type === "change") file = ev.target.files[0];
-      else if (ev.type === "drop") file = ev.dataTransfer.files[0];
-      console.log('file:', file)
-      this.onUploadImg(file);
+      let files;
+      if (ev.type === "change") files = ev.target.files;
+      else if (ev.type === "drop") files = ev.dataTransfer.files;
+      // if (ev.type === "change") file = ev.target.files[0];
+      // else if (ev.type === "drop") file = ev.dataTransfer.files[0];
+      console.log('file:', files)
+      this.onUploadImg(files);
     },
 
-    async onUploadImg(file) {
+    async onUploadImg(files) {
       // console.log('file:', file)
-      this.isLoading = true;
       this.isDragOver = false;
-      const res = await uploadImg(file);
-      this.imgUrls.push(res.url)
+      try {
+
+        this.isLoading = true;
+        const res = await uploadImg(files);
+        console.log('res in upload cmp:', res)
+        res.forEach(img => {
+
+          this.imgUrls.push(img.url)
+        });
+      } catch (err) {
+        console.log('can`t upload images', err);
+      } finally {
+        this.isLoading = false;
+      }
       // this.$emit("save", res.url);
-      this.isLoading = false;
     },
   },
   components: {

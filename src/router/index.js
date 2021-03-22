@@ -5,6 +5,7 @@ import about from '../views/about.vue'
 import carApp from '../views/car-app.vue'
 import carDetails from '../views/car-details.vue'
 import carEdit from '../views/car-edit.vue'
+import activity from '../views/activity.vue'
 // import carLogin from '../cmps/login.vue'
 
 Vue.use(VueRouter)
@@ -39,6 +40,11 @@ const routes = [
     path: '/car/details/:carId?',
     name: 'carDetails',
     component: carDetails
+  },
+  {
+    path: '/activity',
+    name: 'carDetails',
+    component: activity
   }
 ]
 
