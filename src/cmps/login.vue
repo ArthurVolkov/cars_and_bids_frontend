@@ -50,7 +50,7 @@
         </div>
       </el-form>
     </el-card>
-    <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
+    <!-- <v-facebook-login @login="fbLogin" app-id="1015104252644196"></v-facebook-login> -->
     <img :src="img" width="50" height="50">
     {{fbName}}
     <pre> {{ users }} </pre>
@@ -112,11 +112,12 @@ export default {
         showMsg('Cannot signupp', 'danger')
       }
     },
-    login(response) {
-      console.log('AAAAAAAAAAAA',response.authResponse)
+    fbLogin(response) {
+      console.log('hello')
       this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token='+response.authResponse.accessToken     
       FB.api('/me',(res)=>{
         this.fbName = res.name
+        console.log(this.fbName)
       })
     },
     async login() {
