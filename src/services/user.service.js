@@ -72,7 +72,7 @@ async function logout() {
 
 async function getLoggedinUser() {
     const loggedinUser = await httpService.get('auth/user')
-    console.log('loggedinUser:', loggedinUser)
+    //console.log('loggedinUser:', loggedinUser)
     return loggedinUser
 }
 

@@ -14,9 +14,7 @@
       </el-input>
       <div class="btn-container flex align-center">
         <!-- <button to="/car" @click="loadCars" class="btn">Explore</button> -->
-        <router-link to="/car" @click="loadCars" class="btn"
-          >Explore</router-link
-        >
+        <router-link to="/car" class="btn">Explore</router-link>
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
         <div

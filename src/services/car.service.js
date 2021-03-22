@@ -114,17 +114,18 @@ async function query(filterBy) {
     return data
 }
 
+async function queryUserCars(userId) {
+    var queryStr = (!userId) ? '' : `?userId=${userId}`
+    const data = await httpService.get(`car/user/${queryStr}`)
+    return data
+}
+
 async function getById(carId) {
     const car = await httpService.get(`car/${carId}`)
     //console.log('car:', car)
     return car
     // const car = await storageService.get('cars',carId)
     // return car
-}
-
-async function remove(carId) {
-    //return httpService.delete(`car/${id}`)
-    //return await storageService.delete('car', carId)
 }
 
 async function saveComment(comment) {
@@ -144,12 +145,6 @@ async function saveLike(like) {
 async function removeLike(like) {
     return httpService.delete(`car/like/${like.carId}`)
 }
-
-// async function remove(carId) {
-    //return httpService.delete(`car/${id}`)
-    //return await storageService.delete('car', carId)
-// }
-
 
 async function save(car) {
     if (car._id) {

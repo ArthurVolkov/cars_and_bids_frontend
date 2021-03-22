@@ -157,10 +157,8 @@
 <script>
 import { dataService } from "@/services/data.service.js";
 import { carService } from "@/services/car.service.js";
-import { showMsg } from '../services/eventBus.service.js'
-import imgUpload from '../cmps/img-upload'
-
-
+import { showMsg } from "../services/eventBus.service.js";
+import imgUpload from "../cmps/img-upload";
 
 export default {
   name: "car-edit",
@@ -169,46 +167,51 @@ export default {
       carToEdit: null,
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
-      models: dataService.getCars(''),
+      models: dataService.getCars(""),
       years: [],
       transmissions: carService.getTransmissionList(),
       drivetrains: carService.getDrivetrainList(),
       colors: dataService.getColors(),
-    }
+    };
   },
   computed: {
     carId() {
-      return this.$route.params.carId
+      return this.$route.params.carId;
     },
     title() {
-      return this.carId ? 'Car Edit' : 'Car Add'
+      return this.carId ? "Car Edit" : "Car Add";
     },
     loading() {
-      return this.carToEdit ? false : true
+      return this.carToEdit ? false : true;
     },
   },
   methods: {
     setModel() {
-      this.models = dataService.getCars(this.carToEdit.vendor)
+      this.models = dataService.getCars(this.carToEdit.vendor);
     },
     async saveCar() {
-      console.log('Saving...', this.carToEdit);
+      console.log("Saving...", this.carToEdit);
       try {
-        await this.$store.dispatch({ type: 'saveCar', car: this.carToEdit })
-        showMsg('Car saved')
-        this.carToEdit = carService.getEmptyCar()
-        this.$router.push('/car')
-        try {
-          await this.$store.dispatch({ type: "loadCars" });
-        } catch (err) {
-          showMsg("Cannot load cars", "danger");
+        this.$store.dispatch({ type: "getLoggedinUser" });
+        if (!this.$store.getters.loggedinUser) {
+          this.$store.commit("toggleLogin", { isShown: true });
+        } else {
+          await this.$store.dispatch({ type: "saveCar", car: this.carToEdit });
+          showMsg("Car saved");
+          this.carToEdit = carService.getEmptyCar();
+          this.$router.push("/car");
+          try {
+            await this.$store.dispatch({ type: "loadCars" });
+          } catch (err) {
+            showMsg("Cannot load cars", "danger");
+          }
         }
       } catch (err) {
-        showMsg('Cannot save cars', 'danger')
+        showMsg("Cannot save cars", "danger");
       }
     },
     saveImg(imgUrl) {
-      this.imgUrls.push(imgUrl)
+      this.imgUrls.push(imgUrl);
     },
   },
   created() {
@@ -217,20 +220,19 @@ export default {
     }
     if (this.carId) {
       try {
-        carService.getById(this.carId)
-          .then((car) => {
-            //console.log('car:', car)
-            this.carToEdit = car
-          })
+        carService.getById(this.carId).then((car) => {
+          //console.log('car:', car)
+          this.carToEdit = car;
+        });
       } catch (err) {
-        showMsg('Cannot load car', 'danger')
+        showMsg("Cannot load car", "danger");
       }
     } else {
-      this.carToEdit = carService.getEmptyCar()
+      this.carToEdit = carService.getEmptyCar();
     }
   },
   components: {
     imgUpload,
-  }
-}
+  },
+};
 </script>

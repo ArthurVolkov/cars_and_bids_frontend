@@ -259,6 +259,7 @@ export default {
       return this.car.auction.bids
     }
   },
+
   methods: {
     async loadCar() {
       const carId = this.$route.params.carId;
@@ -275,36 +276,49 @@ export default {
       }
     },
     async placeBid() {
-      if (!this.$store.getters.loggedinUser) {
-        this.$router.push('/login')
-      }
+        this.$store.dispatch({ type: "getLoggedinUser" });
+        if (!this.$store.getters.loggedinUser) {        
+            this.$store.commit('toggleLogin', {isShown: true})
+        }
     },
     getImgUrl(pic) {
       return require('../assets/' + pic)
     },
     async addComment() {
       try {
-        this.comment.carId = this.car._id;
-        await this.$store.dispatch({ type: 'addComment', comment: this.comment })
-        await this.loadCar()
-        this.comment.txt = ''
-        showMsg('Comment saved successfuly')
+        this.$store.dispatch({ type: "getLoggedinUser" });
+        if (!this.$store.getters.loggedinUser) {        
+            this.$store.commit('toggleLogin', {isShown: true})
+        }
+        else {
+          this.comment.carId = this.car._id;
+          await this.$store.dispatch({ type: 'addComment', comment: this.comment })
+          await this.loadCar()
+          this.comment.txt = ''
+          showMsg('Comment saved successfuly')          
+        }
       } catch (err) {
         showMsg('Cannot save comment', 'danger')
       }
     },
     async addBid() {
       try {
-        console.log(this.bid.price)
-        console.log(this.currentPrice)
-        if (this.bid.price > this.currentPrice) {
-          this.bid.carId = this.car._id;
-          await this.$store.dispatch({ type: 'addBid', bid: this.bid })
-          this.bid.price = 0
-          this.loadCar()
-          showMsg('Bid placed successfuly')
-        } else {
-          showMsg('Bid price must be over ' + this.currentPrice, 'danger')
+        this.$store.dispatch({ type: "getLoggedinUser" });
+        if (!this.$store.getters.loggedinUser) {        
+            this.$store.commit('toggleLogin', {isShown: true})
+        }
+        else {
+          console.log(this.bid.price)
+          console.log(this.currentPrice)
+          if (this.bid.price > this.currentPrice) {
+            this.bid.carId = this.car._id;
+            await this.$store.dispatch({ type: 'addBid', bid: this.bid })
+            this.bid.price = 0
+            this.loadCar()
+            showMsg('Bid placed successfuly')
+          } else {
+            showMsg('Bid price must be over ' + this.currentPrice, 'danger')
+          }
         }
       } catch (err) {
         showMsg('Cannot place vid', 'danger')
