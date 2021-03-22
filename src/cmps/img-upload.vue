@@ -21,10 +21,9 @@
           <p>Click to select photos, or drag and drop here</p>
         </div>
 
-        <img-list v-if="imgUrls.length" :imgUrls="imgUrls" />
-
         <!-- <h3 v-else>Drop image here</h3> -->
       </label>
+      <img-list v-if="imgUrls.length" :imgUrls="imgUrls" />
       <!-- HIDDEN INPUT -->
       <input
         type="file"
