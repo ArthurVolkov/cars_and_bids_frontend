@@ -49,14 +49,11 @@
         </div>
       </el-form>
     </el-card>
-    <!-- <v-facebook-login @login="fbLogin" app-id="1015104252644196"></v-facebook-login> -->
-    <!-- <img :src="img" width="50" height="50"> -->
     <button class="clean-btn close-btn" @click="closeLogin">x</button>
     <!-- <pre> {{ users }} </pre> -->
-    <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
+    <!-- <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
     <img :src="img" width="50" height="50">
-    {{fbName}}
-    <pre> {{ users }} </pre>
+    {{fbName}} -->
   </section>
 </template>
 
