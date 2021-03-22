@@ -1,9 +1,12 @@
 <template>
   <div id="app" class="main-layout" :class="isLoginShown" >
     <user-msg />
-    <div v-if="loginShown" class="screen"></div>
+    <div v-if="loginShown" class="screen" @click="closeLogin"></div>
+    <app-header />
+    <login v-if="loginShown"></login>
+    <!-- <div v-if="loginShown" class="screen" @click="closeLogin"></div>
     <app-header @openLogin="openLogin" />
-    <login v-if="loginShown" @closeLogin="closeLogin"></login>
+    <login v-if="loginShown" @closeLogin="closeLogin"></login> -->
     <router-view />
   </div>
 </template>
@@ -21,7 +24,7 @@ export default {
   name: "app-vue",
   data() {
     return {
-      loginShown: false,
+      // loginShown: false,
     }
   },
   created() {
@@ -32,15 +35,21 @@ export default {
   computed: {
     isLoginShown() {
       return this.loginShown ? 'login-shown' : ''
+    },
+    loginShown() {
+      return this.$store.getters.loginShown
     }
   },
   methods: {
-    openLogin() {
-      this.loginShown = true
-    },
+    // openLogin() {
+    //   this.loginShown = true
+    // },
     closeLogin() {
-      this.loginShown = false
-    }
+      this.$store.commit('toggleLogin', {isShown: false})
+    },
+    // closeLogin() {
+    //   this.loginShown = false
+    // }
   },
   destroyed() {
     userService.logout();

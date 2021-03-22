@@ -56,7 +56,8 @@ export default {
     openLogin() {
       // this.$router.push('/login')
       console.log('openLogin:')
-      this.$emit('openLogin')
+      this.$store.commit('toggleLogin', {isShown: true})
+      // this.$emit('openLogin')
     },
     loadCars() {
       // console.log('loadCars:')
