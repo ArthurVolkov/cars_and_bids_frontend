@@ -5,7 +5,7 @@ import about from '../views/about.vue'
 import carApp from '../views/car-app.vue'
 import carDetails from '../views/car-details.vue'
 import carEdit from '../views/car-edit.vue'
-import carLogin from '../cmps/login.vue'
+// import carLogin from '../cmps/login.vue'
 
 Vue.use(VueRouter)
 
@@ -15,11 +15,11 @@ const routes = [
     name: 'home',
     component: home
   },
-  {
-    path: '/login',
-    name: 'login',
-    component: carLogin
-  },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   component: carLogin
+  // },
   {
     path: '/about',
     name: 'about',

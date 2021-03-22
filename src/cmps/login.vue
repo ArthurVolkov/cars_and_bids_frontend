@@ -1,14 +1,20 @@
 <template>
   <section class="login-container">
-    <section v-if="loggedinUser">
-      Hello Master: {{ loggedinUser.fullname }}
-      <button @click="logout">Logout</button>
-    </section>
-
-    <el-card v-else>
-      <h2>{{ title }}</h2>
-
-      <el-form class="login-form" ref="form" @submit.native.prevent="send">
+    <el-card>
+      <section v-if="loggedinUser" class="flex justify-between align-center">
+        Hello, {{ loggedinUser.fullname }}
+        <el-button class="login-button" type="primary" @click="logout"
+          >Logout</el-button
+        >
+        <!-- <button @click="logout">Logout</button> -->
+      </section>
+      <el-form
+        v-else
+        class="login-form"
+        ref="form"
+        @submit.native.prevent="send"
+      >
+        <h2>{{ title }}</h2>
         <el-form-item v-if="isRegistration" prop="fullname">
           <el-input v-model="user.fullname" placeholder="Full name"></el-input>
         </el-form-item>
@@ -32,7 +38,6 @@
               @click.prevent.stop="toggleRegistration"
               class="login-button"
               type="primary"
-              native-type="submit"
               block
               >{{ regBtn }}</el-button
             >
@@ -51,10 +56,10 @@
     </el-card>
     <button class="clean-btn close-btn" @click="closeLogin">x</button>
     <!-- <pre> {{ users }} </pre> -->
-    <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
+    <!-- <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
     <img :src="img" width="50" height="50">
     {{fbName}}
-    <pre> {{ users }} </pre>
+    <pre> {{ users }} </pre> -->
   </section>
 </template>
 
@@ -75,7 +80,7 @@ export default {
       },
       users: [],
       isRegistration: false,
-      img:'',
+      img: '',
       fbName: ''
     }
   },
@@ -87,7 +92,7 @@ export default {
       return this.isRegistration ? 'Sign up' : 'Login'
     },
     regBtn() {
-      return this.isRegistration ? 'Cancel' : 'Registration'
+      return this.isRegistration ? 'Login' : 'Registration'
     },
     loggedinUser() {
       //console.log('this.$store.getters.loggedinUser:', this.$store.getters.loggedinUser)
@@ -115,9 +120,9 @@ export default {
       }
     },
     login(response) {
-      console.log('AAAAAAAAAAAA',response.authResponse)
-      this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token='+response.authResponse.accessToken     
-      FB.api('/me',(res)=>{
+      console.log('AAAAAAAAAAAA', response.authResponse)
+      this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token=' + response.authResponse.accessToken
+      FB.api('/me', (res) => {
         this.fbName = res.name
       })
     },
@@ -153,8 +158,11 @@ export default {
   async created() {
     this.users = await userService.getUsers();
   },
+  destroyed() {
+    this.$emit('closeLogin')
+  },
   components: {
-      VFacebookLogin,
+    VFacebookLogin,
   },
 }
 </script>

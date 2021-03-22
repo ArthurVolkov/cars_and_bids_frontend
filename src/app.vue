@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="main-layout" :class="isLoginShown" >
     <user-msg />
-    <div v-if="loginShown" class="screen"></div>
+    <div v-if="loginShown" class="screen" @click="closeLogin"></div>
     <app-header @openLogin="openLogin" />
     <login v-if="loginShown" @closeLogin="closeLogin"></login>
     <router-view />
