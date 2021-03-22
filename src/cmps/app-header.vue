@@ -17,7 +17,7 @@
         <router-link to="/car" @click="loadCars" class="btn">Explore</router-link>
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
-        <el-button @click="singUp" type="info" round>Sign Up</el-button>
+        <el-button @click="openLogin" type="info" round>Sign Up</el-button>
       </div>
     </div>
   </div>
@@ -25,7 +25,6 @@
 
 <script>
 
-// import { carService } from '../services/car.service'
 
 export default {
   name: "app-header",
@@ -54,8 +53,10 @@ export default {
       this.windowTop = window.top.scrollY < 10 ? true : false
       //      console.log('this.windowTop:', this.windowTop)
     },
-    singUp() {
-      this.$router.push('/login')
+    openLogin() {
+      // this.$router.push('/login')
+      console.log('openLogin:')
+      this.$emit('openLogin')
     },
     loadCars() {
       // console.log('loadCars:')
@@ -86,6 +87,8 @@ export default {
   },
   destroyed() {
     this.$store.commit({ type: 'setFilterName', name: '' })
+  },
+  components: {
   }
 };
 </script>

@@ -363,6 +363,7 @@ function _createDemoCar1() {
             lng: -87.793808
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,
@@ -408,6 +409,7 @@ function _createDemoCar2() {
             lng: -122.114357
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,
@@ -453,6 +455,7 @@ function _createDemoCar3() {
             lng: -97.804008
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,
@@ -498,6 +501,7 @@ function _createDemoCar4() {
             lng: -95.175490
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,
@@ -543,6 +547,7 @@ function _createDemoCar5() {
             lng: -78.385597
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,
@@ -588,6 +593,7 @@ function _createDemoCar6() {
             lng: -78.385597
         },
         comments: [],
+        likes:[],
         auction:
         {
             startPrice: startPrice,

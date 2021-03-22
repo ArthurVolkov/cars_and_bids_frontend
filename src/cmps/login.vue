@@ -1,7 +1,7 @@
 <template>
   <section class="login-container">
     <section v-if="loggedinUser">
-      Hello Master {{ loggedinUser.fullname }}
+      Hello Master: {{ loggedinUser.fullname }}
       <button @click="logout">Logout</button>
     </section>
 
@@ -29,16 +29,6 @@
         <div class="flex justify-between">
           <el-form-item>
             <el-button
-              class="login-button"
-              type="primary"
-              native-type="submit"
-              block
-              >Submit</el-button
-            >
-          </el-form-item>
-
-          <el-form-item>
-            <el-button
               @click.prevent.stop="toggleRegistration"
               class="login-button"
               type="primary"
@@ -47,11 +37,24 @@
               >{{ regBtn }}</el-button
             >
           </el-form-item>
+          <el-form-item>
+            <el-button
+              class="login-button"
+              type="primary"
+              native-type="submit"
+              block
+              >Submit</el-button
+            >
+          </el-form-item>
         </div>
       </el-form>
     </el-card>
     <!-- <v-facebook-login @login="fbLogin" app-id="1015104252644196"></v-facebook-login> -->
     <!-- <img :src="img" width="50" height="50"> -->
+    <button class="clean-btn close-btn" @click="closeLogin">x</button>
+    <!-- <pre> {{ users }} </pre> -->
+    <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
+    <img :src="img" width="50" height="50">
     {{fbName}}
     <pre> {{ users }} </pre>
   </section>
@@ -64,6 +67,7 @@ import { userService } from '../services/user.service.js'
 import VFacebookLogin from 'vue-facebook-login-component'
 
 export default {
+  name: 'login',
   data() {
     return {
       user: {
@@ -145,6 +149,9 @@ export default {
     toggleRegistration() {
       this.isRegistration = !this.isRegistration
     },
+    closeLogin() {
+      this.$emit('closeLogin')
+    }
   },
   async created() {
     this.users = await userService.getUsers();
