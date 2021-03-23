@@ -114,7 +114,7 @@
         }
     }
 
-    >:last-child {
+    > :last-child {
         width: 100%;
         .main-info-icon {
             font-size: 1.2rem;
@@ -125,5 +125,12 @@
 
     .preview-title-conteiner {
         width: 100%;
+        white-space: nowrap;
+
+        & h3 {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-inline-end: 10px;
+        }
     }
 }

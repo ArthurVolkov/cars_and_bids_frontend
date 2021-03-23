@@ -1,54 +1,57 @@
 <template>
-  <div class="main-info details-icon-grid">
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="trademark" class="main-info-icon" />  Make:</pre>
-    <span>{{ car.vendor }}</span>
+  <div class="main-info-container">
+    <h2>Car info</h2>
+    <div class="main-info details-icon-grid">
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="trademark" class="main-info-icon" />  Make:</pre>
+      <span>{{ car.vendor }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="list-ul" class="main-info-icon" />  Model:</pre>
-    <span>{{ car.model }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="list-ul" class="main-info-icon" />  Model:</pre>
+      <span>{{ car.model }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Year:</pre>
-    <span>{{ car.year }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Year:</pre>
+      <span>{{ car.year }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="car-side" class="main-info-icon" />  Body Style:</pre>
-    <span>{{ car.bodyStyle }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="car-side" class="main-info-icon" />  Body Style:</pre>
+      <span>{{ car.bodyStyle }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Mileage:</pre>
-    <span>{{ car.mileage }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Mileage:</pre>
+      <span>{{ mileage }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="truck-monster" class="main-info-icon" />  Drivetrain:</pre>
-    <span>{{ car.drivetrain }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="truck-monster" class="main-info-icon" />  Drivetrain:</pre>
+      <span>{{ car.drivetrain }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="microchip" class="main-info-icon" />  Engine:</pre>
-    <span>{{ car.engine }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="microchip" class="main-info-icon" />  Engine:</pre>
+      <span>{{ car.engine }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="cogs" class="main-info-icon" />  Transmission:</pre>
-    <span>{{ car.transmission }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="cogs" class="main-info-icon" />  Transmission:</pre>
+      <span>{{ car.transmission }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="palette" class="main-info-icon" />  Exterior Color:</pre>
-    <span>{{ car.exteriorColor }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="palette" class="main-info-icon" />  Exterior Color:</pre>
+      <span>{{ car.exteriorColor }}</span>
 
-    <pre
-      class="flex align-center"
-    ><font-awesome-icon icon="palette" class="main-info-icon" />  Interior Color:</pre>
-    <span>{{ car.interiorColor }}</span>
+      <pre
+        class="flex align-center"
+      ><font-awesome-icon icon="palette" class="main-info-icon" />  Interior Color:</pre>
+      <span>{{ car.interiorColor }}</span>
+    </div>
   </div>
 </template>
 
@@ -72,6 +75,11 @@ export default {
     car: {
       type: Object,
     },
+  },
+  computed: {
+    mileage() {
+      return this.car.mileage.toLocaleString('en-US')
+    }
   }
 }
 </script>

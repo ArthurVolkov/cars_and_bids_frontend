@@ -7,7 +7,9 @@
     transition: 0.5s;
     .logo {
         font-size: 2rem;
-        font-family: cursive;
+        // font-family: cursive;
+        font-family: Montserrat;
+
         font-weight: 900;
         span {
             color: $clr6;
@@ -44,7 +46,7 @@
         > * {
             margin-inline-start: 20px;
             font-weight: 600;
-            font-size: 1em;
+            font-size: 1.2em;
             white-space: nowrap;
         }
     }
