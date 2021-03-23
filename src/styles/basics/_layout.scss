@@ -32,8 +32,19 @@
     }
 }
 
+.header-container {
+    @include for-narrow-layout {
+   
+    }
 
+    @include for-normal-layout {
 
+    }
+
+    @include for-wide-layout {
+
+    }
+}
 
 .card-grid {
     display: grid;
@@ -42,7 +53,6 @@
     // grid-auto-flow: dense;
 
     grid-auto-rows: 380px;
-
 
     // > * {
     //     @include aspect-ratio(1, 1);

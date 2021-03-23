@@ -67,7 +67,7 @@
     </div>
 
     <div class="flex flex-col comments-container">
-      <h2>Comments & Bids</h2>
+      <h2>Comments</h2>
 
       <form @submit.prevent="addComment" class="add-comment flex">
         <textarea
