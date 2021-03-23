@@ -11,9 +11,12 @@
     .hero-slogan-container {
         width: 95%;
         position: absolute;
-        top: 85vh;
+        top: 82vh;
         left: 20px;
-        color: $clr11;
+        color: white;
+        & h1 {
+            font-size: 2rem
+        };
     }
 
     .home-nav {
@@ -21,7 +24,7 @@
         height: 3.5rem;
         width: 70%;
         left: 15%;
-        top: 15vh;
+        top: 20vh;
         grid-column: 2/-2;
         background-color: $clr11;
         border-radius: 5em;

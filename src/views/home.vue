@@ -5,11 +5,15 @@
       <transition name="slide-fade">
         <home-nav v-if="isShown"></home-nav>
       </transition>
-      <div class="hero-slogan-container flex flex-col align-center">
-        <h2>Find your dreem car in Cars & Bids,</h2>
+      <div class="hero-slogan-container main-layout flex flex-col">
+        <h1>Find your dreem car in Cars & Bids,</h1>
         <h2>the modern enthusiast cars auctions all around the world</h2>
       </div>
     </div>
+
+    <h2>Most popular cars</h2>
+
+    <car-row :cars="carsToShow"></car-row>
 
     <h2>Explore cars by body styles</h2>
     <section class="group-container flex justify-between">
@@ -51,6 +55,8 @@
 
 <script>
 import homeNav from '../cmps/home-nav'
+import carRow from "@/cmps/car-row.vue";
+
 
 
 
@@ -58,6 +64,7 @@ export default {
   name: 'Home',
   components: {
     homeNav,
+    carRow
   },
   data() {
     return {
@@ -93,13 +100,15 @@ export default {
     },
     isShown() {
       return this.windowTop ? true : false
-    }
+    },
+    carsToShow() {
+      return this.$store.getters.carsToShow;
+      // return this.$store.getters.carsToShow.slice(0, 3);
+    },
   },
   methods: {
     onScroll() {
-      // console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-      // console.log('this.windowTop:', this.windowTop)
     },
     getImgUrl(pic) {
       return require('../assets/' + pic)

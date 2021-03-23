@@ -112,6 +112,8 @@ export default {
         showMsg('signupp success')
       } catch (err) {
         showMsg('Cannot signupp', 'danger')
+      } finally {
+        this.closeLogin()
       }
     },
     // login(response) {

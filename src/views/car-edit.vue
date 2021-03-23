@@ -283,7 +283,7 @@ export default {
       }
     },
     saveImgs(imgUrls) {
-      this.imgUrls = imgUrls;
+      this.carToEdit.imgUrls = imgUrls;
     },
   },
   created() {

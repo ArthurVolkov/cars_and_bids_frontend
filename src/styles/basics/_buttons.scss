@@ -68,9 +68,6 @@ button.round-main {
     &.watch {
         background-color: $clr11;
         color: $clr2;
-        &::first-letter {
-            font-size: 0.8em;
-        }
     }
 }
 
@@ -88,4 +85,15 @@ button.round-main {
         background-color: $clr6;
         color: $clr11;
     }
+}
+
+.arrow-btn {
+    background-color: $clr11;
+    font-size: 2rem;
+    color: $clr2;
+    height: 2.8rem;
+    width: 2.8rem;
+    border-radius: 3rem;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.9);
+
 }

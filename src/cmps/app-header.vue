@@ -19,7 +19,7 @@
         <!-- <router-link to="/about">About</router-link> -->
         <div
           class="account-options-btn flex justify-between align-center pointer"
-          @click="openMenu"
+          @click="openOptions=!openOptions"
         >
           <!-- <div
           class="account-options-btn flex justify-between align-center pointer"
@@ -127,13 +127,6 @@ export default {
       } catch (err) {
         showMsg('Cannot logout', 'danger')
       }
-    },
-    openMenu() {
-      this.openOptions = true
-      // this.$nextTick(() => {
-      //   this.$refs.options.focusWithin();
-
-      // })
     },
     clickOutside() {
       console.log('closeeeeeeee');

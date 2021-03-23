@@ -31,67 +31,28 @@
       <h3>
         &#128172; Comments <span>{{ car.auction.bids.length }}</span>
       </h3>
-      <button class="round-main bid">Place Bid</button>
-      <button class="round-main watch">💛 Watch</button>
+      <button class="round-main bid" @click="modalOpen=false" >Place Bid</button>
+      <button class="round-main watch">Follow</button>
     </div>
 
-    <div class="main-info details-icon-grid">
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="trademark" class="main-info-icon" />  Make:</pre>
-      <span>{{ car.vendor }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="list-ul" class="main-info-icon" />  Model:</pre>
-      <span>{{ car.model }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Year:</pre>
-      <span>{{ car.year }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="car-side" class="main-info-icon" />  Body Style:</pre>
-      <span>{{ car.bodyStyle }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Mileage:</pre>
-      <span>{{ car.mileage }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="truck-monster" class="main-info-icon" />  Drivetrain:</pre>
-      <span>{{ car.drivetrain }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="microchip" class="main-info-icon" />  Engine:</pre>
-      <span>{{ car.engine }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="cogs" class="main-info-icon" />  Transmission:</pre>
-      <span>{{ car.transmission }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="palette" class="main-info-icon" />  Exterior Color:</pre>
-      <span>{{ car.exteriorColor }}</span>
-
-      <pre
-        class="flex align-center"
-      ><font-awesome-icon icon="palette" class="main-info-icon" />  Interior Color:</pre>
-      <span>{{ car.interiorColor }}</span>
+    <div class="flex justify-between">
+      <main-info :car="car"></main-info>
+      <div class="bids-container">
+        <h2>Bids:</h2>
+        <ul class="clean-list">
+          <li v-for="bid in bidsToShow" :key="bid.id">
+            <div class="flex align-center bid-by">
+              <avatar :size="30" :username="bid.by.fullname"> </avatar>
+              <p>{{ bid.by.fullname }}</p>
+              <span>{{ bid.createdAt | moment("calendar") }}</span>
+            </div>
+            <div class="bid-price flex justify-center align-center">
+              {{ bid.price }}
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <!-- <form @submit.prevent="addBid" class="review-form flex flex-col">
-      <el-input type="number" placeholder="Place bid..." v-model="bid.price">
-      </el-input>
-      <button>Send</button>
-    </form> -->
 
     <div class="flex flex-col comments-container">
       <h2>Comments & Bids</h2>
@@ -104,8 +65,13 @@
         ></textarea>
         <button>Send</button>
       </form>
-      <input type="number" v-model.number="bid.price" />
-      <button @click="addBid">place bid</button>
+
+      <div v-if="modalOpen" class="screen" @click="modalOpen=false"></div>
+      <div class="place-bid-modal">
+        <input type="number" v-model.number="bid.price" />
+        <button @click="addBid">place bid</button>
+      </div>
+
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment._id">
@@ -116,19 +82,6 @@
           </div>
           <div class="comment-txt flex align-center">
             {{ comment.txt }}
-          </div>
-        </li>
-      </ul>
-      <h3>Bids:</h3>
-      <ul class="clean-list comments-list">
-        <li v-for="bid in bidsToShow" :key="bid.id">
-          <div class="flex align-center bid-by">
-            <avatar :size="30" :username="bid.by.fullname"> </avatar>
-            <p>{{ bid.by.fullname }}</p>
-            <span>{{ bid.createdAt | moment("calendar") }}</span>
-          </div>
-          <div class="bid-price flex justify-center align-center">
-            {{ bid.price }}
           </div>
         </li>
       </ul>
@@ -162,33 +115,11 @@
 <script>
 import { carService } from "@/services/car.service.js";
 import { showMsg } from '../services/eventBus.service.js'
+import mainInfo from '../cmps/main-info'
 var moment = require("moment");
-//import { reviewService } from "../services/review.service.js";
-//import chatRoom from '../cmps/chat-room'
 
-
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCarSide } from '@fortawesome/free-solid-svg-icons'
-import { faTrademark } from '@fortawesome/free-solid-svg-icons'
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons'
-import { faMicrochip } from '@fortawesome/free-solid-svg-icons'
-import { faCogs } from '@fortawesome/free-solid-svg-icons'
-import { faTruckMonster } from '@fortawesome/free-solid-svg-icons'
-import { faPalette } from '@fortawesome/free-solid-svg-icons'
-import { faListUl } from '@fortawesome/free-solid-svg-icons'
 import { userService } from '../services/user.service.js';
 import avatar from 'vue-avatar'
-
-
-library.add(faCarSide)
-library.add(faTrademark)
-library.add(faCalendarAlt)
-library.add(faMicrochip)
-library.add(faCogs)
-library.add(faTruckMonster)
-library.add(faPalette)
-library.add(faListUl)
-
 
 export default {
   name: "car-details",
@@ -207,27 +138,11 @@ export default {
       likes: [],
       isLoading: false,
       now: Date.now(),
-      timeLeftInterval: null
+      timeLeftInterval: null,
+      modalOpen: false
     };
   },
   computed: {
-    spesifications() {
-      const {
-        bodyStyle, drivetrain, engine, transmission, exteriorColor, interiorColor, mileage, vendor, model, year
-      } = this.car
-      return [
-        // { icon: '<font-awesome-icon icon="user-secret" />', val: bodyStyle },
-        // drivetrain,
-        // engine,
-        // transmission,
-        // exteriorColor,
-        // interiorColor,
-        // mileage,
-        // vendor,
-        // model,
-        // year
-      ]
-    },
     lastBid() {
       var bid = 0
       if (this.car.auction.bids.length) {
@@ -276,26 +191,29 @@ export default {
       }
     },
     async placeBid() {
-        this.$store.dispatch({ type: "getLoggedinUser" });
-        if (!this.$store.getters.loggedinUser) {        
-            this.$store.commit('toggleLogin', {isShown: true})
-        }
+      this.$store.dispatch({ type: "getLoggedinUser" });
+      if (!this.$store.getters.loggedinUser) {
+        this.$store.commit('toggleLogin', { isShown: true })
+      }
     },
     getImgUrl(pic) {
+      if (!pic.includes('images')) {
+        return pic
+      }
       return require('../assets/' + pic)
     },
     async addComment() {
       try {
         this.$store.dispatch({ type: "getLoggedinUser" });
-        if (!this.$store.getters.loggedinUser) {        
-            this.$store.commit('toggleLogin', {isShown: true})
+        if (!this.$store.getters.loggedinUser) {
+          this.$store.commit('toggleLogin', { isShown: true })
         }
         else {
           this.comment.carId = this.car._id;
           await this.$store.dispatch({ type: 'addComment', comment: this.comment })
           await this.loadCar()
           this.comment.txt = ''
-          showMsg('Comment saved successfuly')          
+          showMsg('Comment saved successfuly')
         }
       } catch (err) {
         showMsg('Cannot save comment', 'danger')
@@ -304,8 +222,8 @@ export default {
     async addBid() {
       try {
         this.$store.dispatch({ type: "getLoggedinUser" });
-        if (!this.$store.getters.loggedinUser) {        
-            this.$store.commit('toggleLogin', {isShown: true})
+        if (!this.$store.getters.loggedinUser) {
+          this.$store.commit('toggleLogin', { isShown: true })
         }
         else {
           console.log(this.bid.price)
@@ -329,7 +247,7 @@ export default {
         this.like.carId = this.car._id;
         await this.$store.dispatch({ type: 'addLike', like: this.like })
         await this.loadCar()
-//        this..txt = ''
+        //        this..txt = ''
         //showMsg('Comment saved successfuly')
       } catch (err) {
         //showMsg('Cannot save comment', 'danger')
@@ -340,7 +258,7 @@ export default {
         this.like.carId = this.car._id;
         await this.$store.dispatch({ type: 'removeLike', like: this.like })
         await this.loadCar()
-//        this..txt = ''
+        //        this..txt = ''
         //showMsg('Comment saved successfuly')
       } catch (err) {
         //showMsg('Cannot save comment', 'danger')
@@ -364,7 +282,8 @@ export default {
     clearInterval(this.timeLeftInterval);
   },
   components: {
-    avatar
+    avatar,
+    mainInfo
   }
 }
 </script>

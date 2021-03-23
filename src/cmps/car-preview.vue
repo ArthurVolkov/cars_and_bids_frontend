@@ -114,6 +114,9 @@ export default {
       this.$emit("remove", car);
     },
     getImgUrl(pic) {
+      if (!pic.includes('images')) {
+        return pic
+      }      
       return require('../assets/' + pic)
     },
     async toggleLike() {
