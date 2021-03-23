@@ -44,7 +44,7 @@
 
       <div class="flex flex-col align-center">
         <h3>Likes</h3>
-        <h3>{{ likesCount }}</h3>
+        <h3>{{ car.likes.length }}</h3>
       </div>
 
       <div class="bid-info-btn-container flex align-center">
@@ -271,33 +271,11 @@ export default {
           }
         }
       } catch (err) {
-        showMsg('Cannot place vid', 'danger')
+        showMsg('Cannot place bid', 'danger')
       } finally {
         this.modalOpen = false
       }
     },
-    // async addLike() {
-    //   try {
-    //     this.like.carId = this.car._id;
-    //     await this.$store.dispatch({ type: 'addLike', like: this.like })
-    //     await this.loadCar()
-    //     //        this..txt = ''
-    //     //showMsg('Comment saved successfuly')
-    //   } catch (err) {
-    //     //showMsg('Cannot save comment', 'danger')
-    //   }
-    // },
-    // async removeLike() {
-    //   try {
-    //     this.like.carId = this.car._id;
-    //     await this.$store.dispatch({ type: 'removeLike', like: this.like })
-    //     await this.loadCar()
-    //     //        this..txt = ''
-    //     //showMsg('Comment saved successfuly')
-    //   } catch (err) {
-    //     //showMsg('Cannot save comment', 'danger')
-    //   }
-    // },
     someOneAddBid(bid) {
       this.car.auction.bids.unshift(bid)
     },
@@ -317,32 +295,37 @@ export default {
         if (this.isLiked) {
           this.like.carId = this.car._id;
           var like = await this.$store.dispatch({ type: 'addLike', like: this.like })
-          var carToEdit = JSON.parse(JSON.stringify(this.car))
-          carToEdit.likes.push(like)
-          this.$store.commit({ type: 'setCar', car: carToEdit })
+          this.car.likes.push(like)
         } else {
           var idx = this.car.likes.findIndex(like => {
-            console.log(this.$store.getters.loggedinUser._id)
             return like.by._id === this.$store.getters.loggedinUser._id
           })
-
           this.like.carId = this.car._id;
           await this.$store.dispatch({ type: 'removeLike', like: this.like })
-          carToEdit = JSON.parse(JSON.stringify(this.car))
-          carToEdit.likes.splice(idx, 1)
-          this.$store.commit({ type: 'setCar', car: carToEdit })
+          this.car.likes.splice(idx, 1)
         }
-        carToEdit = null;
+      }
+    },
+    findLike() {
+      this.$store.dispatch({ type: "getLoggedinUser" });
+      if (this.$store.getters.loggedinUser && this.car.likes.length) {
+        const idx = this.car.likes.findIndex(like=> {
+          return like.by._id === this.$store.getters.loggedinUser._id
+        })
+        
+        if (idx >= 0) {
+          this.isLiked = true
+        }
       }
     },
   },
-  created() {
+  async created() {
     socketService.emit('details topic', this.topic)
     socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details addComment', this.someOneAddComment)
     socketService.on('details changeLike', this.someOneChangeLike)
-    console.log('SOCKET IS VERY UP')
-    this.loadCar()
+    await this.loadCar()
+    this.findLike()
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
     }, 1000);
