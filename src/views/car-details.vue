@@ -31,27 +31,15 @@
       <h3>
         &#128172; Comments <span>{{ car.comments.length }}</span>
       </h3>
-      <button class="round-main bid" @click="modalOpen=false" >Place Bid</button>
+      <button class="round-main bid" @click="modalOpen = true">
+        Place Bid
+      </button>
       <button class="round-main watch">Follow</button>
     </div>
 
     <div class="flex justify-between">
       <main-info :car="car"></main-info>
-      <div class="bids-container">
-        <h2>Bids:</h2>
-        <ul class="clean-list">
-          <li v-for="bid in bidsToShow" :key="bid.id">
-            <div class="flex align-center bid-by">
-              <avatar :size="30" :username="bid.by.fullname"> </avatar>
-              <p>{{ bid.by.fullname }}</p>
-              <span>{{ bid.createdAt | moment("calendar") }}</span>
-            </div>
-            <div class="bid-price flex justify-center align-center">
-              {{ bid.price }}
-            </div>
-          </li>
-        </ul>
-      </div>
+      <bid-list :bids="bidsToShow.slice(0, 4)"></bid-list>
     </div>
 
     <div class="flex flex-col comments-container">
@@ -65,12 +53,6 @@
         ></textarea>
         <button>Send</button>
       </form>
-
-      <div v-if="modalOpen" class="screen" @click="modalOpen=false"></div>
-      <div class="place-bid-modal">
-        <input type="number" v-model.number="bid.price" />
-        <button @click="addBid">place bid</button>
-      </div>
 
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
@@ -86,22 +68,23 @@
         </li>
       </ul>
     </div>
-    <!-- 
-    <ul class="review-container clean-list">
-      <li v-for="bid in bidsToShow" :key="bid.id">
-        <span
-          >bid from: {{ bid.by.fullname }} ➡ {{ bid.bidPrice }} |
-          {{ bid.createdAt | moment("dddd, MMMM Do YYYY, h:mm:ss a") }}</span
-        >
-      </li>
-    </ul> -->
-
-    <!-- <div class="details-btn-container">
-      <router-link to="/car" class="back-btn">Back</router-link>
-    </div> -->
-
-    <!-- <chat-room :carId="car._id"></chat-room> -->
+    <div v-if="modalOpen" class="screen" @click="modalOpen = false"></div>
+    <div v-if="modalOpen" class="place-bid-modal flex flex-col align-center">
+      <h2 class="modal-title">
+        {{ car.year }} {{ car.vendor }} {{ car.model }}
+      </h2>
+      <bid-list :bids="bidsToShow"></bid-list>
+      <form @submit="addBid" class="flex add-bid-container">
+        <el-input-number
+          v-model.number="bid.price"
+          :min="lastBidNum+100"
+          :controls="false"
+        ></el-input-number>
+        <button class="clean-btn">Place bid</button>
+      </form>
+    </div>
   </div>
+
   <div
     v-else
     v-loading.fullscreen.lock="isLoading"
@@ -117,6 +100,7 @@ import { carService } from "@/services/car.service.js";
 import { socketService } from "@/services/socket.service.js";
 import { showMsg } from '../services/eventBus.service.js'
 import mainInfo from '../cmps/main-info'
+import bidList from '../cmps/bid-list'
 var moment = require("moment");
 
 import { userService } from '../services/user.service.js';
@@ -138,7 +122,7 @@ export default {
       now: Date.now(),
       timeLeftInterval: null,
       modalOpen: false,
-      topic : this.$route.params.carId,
+      topic: this.$route.params.carId,
     };
   },
   computed: {
@@ -151,6 +135,15 @@ export default {
       }
       // return bid
       return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+    },
+    lastBidNum() {
+      var bid = 0
+      if (this.car.auction.bids.length) {
+        bid = this.car.auction.bids[0].price
+      } else {
+        bid = this.car.auction.startPrice
+      }
+      return bid
     },
     currentPrice() {
       var bid = 0
@@ -263,10 +256,10 @@ export default {
         //showMsg('Cannot save comment', 'danger')
       }
     },
-    someOneAddBid(bid){
+    someOneAddBid(bid) {
       this.car.auction.bids.unshift(bid)
     },
-    someOneAddComment(comment){
+    someOneAddComment(comment) {
       this.car.comments.unshift(comment)
     },
     someOneChangeLike() {
@@ -279,7 +272,7 @@ export default {
     socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details addComment', this.someOneAddComment)
     socketService.on('details changeLike', this.someOneChangeLike)
-  console.log('SOCKET IS VERY UP')
+    console.log('SOCKET IS VERY UP')
     this.loadCar()
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
@@ -302,7 +295,8 @@ export default {
   },
   components: {
     avatar,
-    mainInfo
+    mainInfo,
+    bidList
   }
 }
 </script>
