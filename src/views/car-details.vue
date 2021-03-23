@@ -262,7 +262,6 @@ export default {
             this.bid.carId = this.car._id;
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
             socketService.emit('details newBid', bidToAdd)
-
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
             showMsg('Bid placed successfuly')
@@ -282,8 +281,15 @@ export default {
     someOneAddComment(comment) {
       this.car.comments.unshift(comment)
     },
-    someOneChangeLike() {
-
+    someOneChangeLike(like) {
+      if (like.isAdd){
+        this.car.likes.unshift(like)
+      } else {
+          var idx = this.car.likes.findIndex(currLike => {
+            return like.id === currLike.id
+          })
+          this.car.likes.splice(idx, 1)                  
+      }
     },
     async toggleLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
@@ -294,14 +300,15 @@ export default {
         this.isLiked = !this.isLiked
         if (this.isLiked) {
           this.like.carId = this.car._id;
-          var like = await this.$store.dispatch({ type: 'addLike', like: this.like })
-          this.car.likes.push(like)
+          var likeToAdd = await this.$store.dispatch({ type: 'addLike', like: this.like })
+          this.car.likes.push(likeToAdd)
+          socketService.emit('details newLike', likeToAdd)
         } else {
           var idx = this.car.likes.findIndex(like => {
             return like.by._id === this.$store.getters.loggedinUser._id
           })
           this.like.carId = this.car._id;
-          await this.$store.dispatch({ type: 'removeLike', like: this.like })
+          likeToAdd = await this.$store.dispatch({ type: 'removeLike', like: this.like })
           this.car.likes.splice(idx, 1)
         }
       }

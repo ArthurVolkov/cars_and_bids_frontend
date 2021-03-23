@@ -34,17 +34,22 @@ export const userStore = {
             const userCars = await carService.queryUserCars(state.user._id);
             console.log('USER CARS:',userCars)
             userCars.forEach((car,idx) => {
+                console.log(car,idx)
                 car.msgs?.forEach(msg=>{
-                    state.msgs.push(msg)
+                    console.log(msg)
+                    if (msg.by._id !== state.user._id) state.msgs.push(msg)
                 })                
             })
         },
         async addUserMsg( {state}, {msg}) {
-            const userCars = await carService.queryUserCars(state.user._id);
-            const carFound = userCars.find(car=>{
-                return car._id === msg.carId                
-            })
-            if (carFound) state.msgs.push(msg)
+            if (msg.type === 'car') state.msgs.push(msg)
+            else {
+                const userCars = await carService.queryUserCars(state.user._id);
+                const carFound = userCars.find(car=>{
+                    return car._id === msg.carId                
+                })
+                if (carFound && msg.by._id !== state.user._id) state.msgs.push(msg)
+            }
         },
 
         ///TODO SORT
