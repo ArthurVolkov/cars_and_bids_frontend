@@ -25,7 +25,7 @@
       <pre
         class="flex align-center"
       ><font-awesome-icon icon="calendar-alt" class="main-info-icon" />  Mileage:</pre>
-      <span>{{ car.mileage }}</span>
+      <span>{{ mileage }}</span>
 
       <pre
         class="flex align-center"
@@ -75,6 +75,11 @@ export default {
     car: {
       type: Object,
     },
+  },
+  computed: {
+    mileage() {
+      return this.car.mileage.toLocaleString('en-US')
+    }
   }
 }
 </script>

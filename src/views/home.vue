@@ -6,7 +6,7 @@
         <home-nav v-if="isShown"></home-nav>
       </transition>
       <div class="hero-slogan-container main-layout flex flex-col">
-        <h1>Find your dreem car in Cars & Bids,</h1>
+        <h1>Find your dreem car in <span>Cars & Bids</span>,</h1>
         <h2>the modern enthusiast cars auctions all around the world</h2>
       </div>
     </div>

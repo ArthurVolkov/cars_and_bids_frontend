@@ -3,7 +3,7 @@
     <div class="short-info align-self-start">
       <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
       <h3>
-        ~ {{ car.mileage }} Miles, {{ car.engine }} Engine,
+        ~ {{ mileage }} Miles, {{ car.engine }} Engine,
         {{ car.transmission }} Gear
       </h3>
     </div>
@@ -201,6 +201,9 @@ export default {
     likesCount() {
       return this.car.likes.length
     },
+    mileage() {
+      return this.car.mileage.toLocaleString('en-US')
+    }
   },
 
   methods: {
