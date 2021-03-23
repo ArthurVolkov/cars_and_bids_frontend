@@ -17,14 +17,28 @@
         <router-link to="/car" class="btn">Explore</router-link>
         <router-link to="/car/edit" class="btn">Sell your Car</router-link>
         <!-- <router-link to="/about">About</router-link> -->
+
+        <button
+          @click="openNotifications = !openNotifications; openOptions=false"
+          class="clean-btn"
+        >
+          <el-badge :value="12" class="item">
+            <font-awesome-icon icon="bell" class="main-info-icon" />
+          </el-badge>
+        </button>
+        <ul v-if="openNotifications" class="user-msg-container">
+          <div v-if="userMsgs.length" class="">
+            <li v-for="(msg, idx) in userMsgs" :key="idx">
+              <p></p>
+            </li>
+          </div>
+          <h3>No new messeges</h3>
+        </ul>
+
         <div
           class="account-options-btn flex justify-between align-center pointer"
-          @click="openOptions=!openOptions"
+          @click="openOptions = !openOptions; openNotifications = false"
         >
-          <!-- <div
-          class="account-options-btn flex justify-between align-center pointer"
-          @click="openOptions = !openOptions"
-        > -->
           <font-awesome-icon icon="bars" class="main-info-icon" />
           <font-awesome-icon
             v-if="!loggedInUser"
@@ -42,8 +56,8 @@
             @click-outside="click"
             class="account-options flex flex-col"
           > -->
-          
-            <!-- @focusout="clickOutside"
+
+          <!-- @focusout="clickOutside"
             ref="options" -->
           <div
             v-if="openOptions"
@@ -69,8 +83,8 @@
 import avatar from 'vue-avatar'
 import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-library.add(faBars, faUserCircle)
+import { faBars, faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons'
+library.add(faBars, faUserCircle, faBell)
 import clickOutside from '../directives/click-outside.js'
 
 export default {
@@ -80,7 +94,9 @@ export default {
       filterName: '',
       windowTop: true,
       isHomeRout: false,
-      openOptions: false
+      openOptions: false,
+      openNotifications: false,
+      userMsgs: []
     }
   },
   computed: {
@@ -123,7 +139,7 @@ export default {
     },
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
-      console.log('USER NEW MSGS:',this.$store.getters.userMsgs)
+      console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
     }
   },
   watch: {
@@ -139,10 +155,11 @@ export default {
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.openOptions = false
+        this.openNotifications = false
       }
     })
     socketService.on('cars newMsg', this.newMsg)
-    console.log('USER MSGS CREATED:',this.$store.getters.userMsgs)
+    console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)

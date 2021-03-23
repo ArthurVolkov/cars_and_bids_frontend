@@ -11,6 +11,7 @@
         font-family: Montserrat;
 
         font-weight: 900;
+        margin-right: 20px;
         span {
             color: $clr6;
         }
@@ -74,12 +75,23 @@
         padding: 10px 20px;
         // z-index: 200;
         * {
-            font-size: 1.1em;
+            font-size: 1em;
             font-weight: 500;
             padding: 10px 0;
             &:not(:last-child) {
                 border-bottom: 1px solid $clr2;
             }
         }
+    }
+
+    .user-msg-container {
+        position: absolute;
+        top: 65px;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.9);
+        border-radius: 6px 0 0 6px;
+        width: 300px;
+        padding: 20px 10px;
     }
 }
