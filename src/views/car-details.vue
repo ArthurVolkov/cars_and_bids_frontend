@@ -29,7 +29,7 @@
         # Bids <span>{{ car.auction.bids.length }}</span>
       </h3>
       <h3>
-        &#128172; Comments <span>{{ car.auction.bids.length }}</span>
+        &#128172; Comments <span>{{ car.comments.length }}</span>
       </h3>
       <button class="round-main bid" @click="modalOpen=false" >Place Bid</button>
       <button class="round-main watch">Follow</button>
@@ -114,6 +114,7 @@
 
 <script>
 import { carService } from "@/services/car.service.js";
+import { socketService } from "@/services/socket.service.js";
 import { showMsg } from '../services/eventBus.service.js'
 import mainInfo from '../cmps/main-info'
 var moment = require("moment");
@@ -129,17 +130,15 @@ export default {
       comment: {
         txt: '',
       },
-      comments: [],
       bid: {
         price: 0,
       },
-      bids: [],
       like: {},
-      likes: [],
       isLoading: false,
       now: Date.now(),
       timeLeftInterval: null,
-      modalOpen: false
+      modalOpen: false,
+      topic : this.$route.params.carId,
     };
   },
   computed: {
@@ -181,8 +180,8 @@ export default {
       this.isLoading = true
       try {
         this.car = await carService.getById(carId)
-        this.comments = this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
-        this.bids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+        this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+        this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
       } catch (err) {
         console.log(err)
         showMsg('Cannot load car', 'danger')
@@ -210,8 +209,9 @@ export default {
         }
         else {
           this.comment.carId = this.car._id;
-          await this.$store.dispatch({ type: 'addComment', comment: this.comment })
-          await this.loadCar()
+          const commentToAdd = await this.$store.dispatch({ type: 'addComment', comment: this.comment })
+          socketService.emit('details newComment', commentToAdd)
+          this.car.comments.unshift(commentToAdd)
           this.comment.txt = ''
           showMsg('Comment saved successfuly')
         }
@@ -226,13 +226,12 @@ export default {
           this.$store.commit('toggleLogin', { isShown: true })
         }
         else {
-          console.log(this.bid.price)
-          console.log(this.currentPrice)
           if (this.bid.price > this.currentPrice) {
             this.bid.carId = this.car._id;
-            await this.$store.dispatch({ type: 'addBid', bid: this.bid })
+            const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
+            socketService.emit('details newBid', bidToAdd)
+            this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
-            this.loadCar()
             showMsg('Bid placed successfuly')
           } else {
             showMsg('Bid price must be over ' + this.currentPrice, 'danger')
@@ -264,8 +263,23 @@ export default {
         //showMsg('Cannot save comment', 'danger')
       }
     },
+    someOneAddBid(bid){
+      this.car.auction.bids.unshift(bid)
+    },
+    someOneAddComment(comment){
+      this.car.comments.unshift(comment)
+    },
+    someOneChangeLike() {
+
+    },
   },
   created() {
+    socketService.setup();
+    socketService.emit('details topic', this.topic)
+    socketService.on('details addBid', this.someOneAddBid)
+    socketService.on('details addComment', this.someOneAddComment)
+    socketService.on('details changeLike', this.someOneChangeLike)
+  console.log('SOCKET IS VERY UP')
     this.loadCar()
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
@@ -280,6 +294,11 @@ export default {
   },
   destroyed() {
     clearInterval(this.timeLeftInterval);
+    socketService.off('details addBid', this.someOneAddBid)
+    socketService.off('details addComment', this.someOneAddComment)
+    socketService.off('details changeLike', this.someOneChangeLike)
+    socketService.terminate();
+
   },
   components: {
     avatar,

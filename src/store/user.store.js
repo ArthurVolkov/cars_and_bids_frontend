@@ -43,6 +43,9 @@ export const userStore = {
             try {
                 const loggedinUser = await userService.login(user)
                 context.state.user = await userService.getLoggedinUser()
+
+                
+
                 return loggedinUser
             } catch (err) {
                 throw err

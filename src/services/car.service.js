@@ -1,9 +1,5 @@
 // import { utilService } from './util.service.js'
-// import { userService } from './user.service.js'
-import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
-import { userService } from './user.service.js'
-import axios from 'axios'
 
 const vendors = ['Audi', 'BMW', 'Golf', 'Mazda', 'Ferari']
 const bodyStyles = ['Coupe', 'Sedan', 'Truck', 'Hatchback'];
