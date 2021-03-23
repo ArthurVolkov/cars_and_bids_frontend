@@ -1,8 +1,10 @@
 import { userService } from "../services/user.service";
+import { carService } from "../services/car.service";
 
 export const userStore = {
     state: {
         user: null,
+        msgs: [],
         loginShown: false,
     },
     getters: {
@@ -15,15 +17,37 @@ export const userStore = {
         // },
         loginShown({loginShown}) {
             return loginShown
+        },
+        userMsgs({msgs}) {
+            return msgs;
         }
     },
     mutations: {
         toggleLogin(state, {isShown}) {
             state.loginShown = isShown
             console.log('state.loginShown:', state.loginShown)
-        }
+        },
     },
     actions: {
+        async getUserMsgs({state}) {
+            state.msgs = []
+            const userCars = await carService.queryUserCars(state.user._id);
+            console.log('USER CARS:',userCars)
+            userCars.forEach((car,idx) => {
+                car.msgs?.forEach(msg=>{
+                    state.msgs.push(msg)
+                })                
+            })
+        },
+        async addUserMsg( {state}, {msg}) {
+            const userCars = await carService.queryUserCars(state.user._id);
+            const carFound = userCars.find(car=>{
+                return car._id === msg.carId                
+            })
+            if (carFound) state.msgs.push(msg)
+        },
+
+        ///TODO SORT
         async getLoggedinUser({state}) {
             state.user = await userService.getLoggedinUser()
         },
@@ -43,9 +67,6 @@ export const userStore = {
             try {
                 const loggedinUser = await userService.login(user)
                 context.state.user = await userService.getLoggedinUser()
-
-                
-
                 return loggedinUser
             } catch (err) {
                 throw err

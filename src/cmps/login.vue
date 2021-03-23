@@ -129,7 +129,10 @@ export default {
         return
       }
       try {
+
         await this.$store.dispatch({ type: 'login', user: this.user })
+        await this.$store.dispatch({ type: 'getUserMsgs'});
+        console.log('USER MSGS:',this.$store.getters.userMsgs)
         showMsg('signupp success')
       } catch (err) {
         showMsg('Cannot signupp', 'danger')

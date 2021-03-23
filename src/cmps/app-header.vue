@@ -94,6 +94,7 @@ export default {
   },
   methods: {
     setFilterName() {
+      //socketService.emit('admin change', 'Admin change toy')
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
       this.$store.dispatch({ type: 'loadCars' })
     },
@@ -101,22 +102,11 @@ export default {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     onScroll() {
-      //      console.log('window.top.scrollY:', window.top.scrollY)
       this.windowTop = window.top.scrollY < 10 ? true : false
-      //      console.log('this.windowTop:', this.windowTop)
     },
     openLogin() {
-      // this.$router.push('/login')
       console.log('openLogin:')
       this.$store.commit('toggleLogin', { isShown: true })
-      // this.$emit('openLogin')
-    },
-    loadCars() {
-      // console.log('loadCars:')
-      // this.$store.commit({ type: 'setFilter', filterBy: carService.getEmptyFilter() })
-      // this.$store.dispatch({ type: "loadCars" });
-      // if (this.$route.path === '/car') this.$router.go(this.$router.currentRoute)
-      // else this.$router.push('/car')
     },
     async logout() {
       console.log('Logout!');
@@ -129,8 +119,11 @@ export default {
       }
     },
     clickOutside() {
-      console.log('closeeeeeeee');
       this.openOptions = false
+    },
+    async newMsg(msg) {
+      await this.$store.dispatch({ type: 'addUserMsg', msg })
+      console.log('USER NEW MSGS:',this.$store.getters.userMsgs)
     }
   },
   watch: {
@@ -142,14 +135,14 @@ export default {
     }
   },
   created() {
-    // this.$route.path
     this.isHomeRout = (this.$route.path === '/') ? true : false
-    //console.log('this.$route.path:', this.$route.path)
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.openOptions = false
       }
     })
+    socketService.on('cars newMsg', this.newMsg)
+    console.log('USER MSGS CREATED:',this.$store.getters.userMsgs)
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)
@@ -159,6 +152,7 @@ export default {
   },
   destroyed() {
     this.$store.commit({ type: 'setFilterName', name: '' })
+    socketService.off('cars newMsg', this.newMsg)
   },
   components: {
     avatar

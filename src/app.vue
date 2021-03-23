@@ -30,7 +30,7 @@ export default {
   created() {
     this.$store.dispatch({ type: "loadCars" });
     this.$store.dispatch({ type: "getLoggedinUser" });
-//    socketService.setup();
+    socketService.setup();
   },
   computed: {
     isLoginShown() {
@@ -52,6 +52,7 @@ export default {
     // }
   },
   destroyed() {
+    socketService.terminate();
     userService.logout();
   },
   components: {

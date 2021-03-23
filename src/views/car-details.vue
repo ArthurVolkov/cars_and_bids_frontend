@@ -230,6 +230,7 @@ export default {
             this.bid.carId = this.car._id;
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
             socketService.emit('details newBid', bidToAdd)
+
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
             showMsg('Bid placed successfuly')
@@ -274,12 +275,10 @@ export default {
     },
   },
   created() {
-    socketService.setup();
     socketService.emit('details topic', this.topic)
     socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details addComment', this.someOneAddComment)
     socketService.on('details changeLike', this.someOneChangeLike)
-  console.log('SOCKET IS VERY UP')
     this.loadCar()
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
@@ -297,8 +296,6 @@ export default {
     socketService.off('details addBid', this.someOneAddBid)
     socketService.off('details addComment', this.someOneAddComment)
     socketService.off('details changeLike', this.someOneChangeLike)
-    socketService.terminate();
-
   },
   components: {
     avatar,

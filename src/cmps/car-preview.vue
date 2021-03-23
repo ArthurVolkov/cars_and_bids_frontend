@@ -79,7 +79,8 @@ export default {
       now: Date.now(),
       timeLeftInterval: null,
       isLiked: false,
-      like: {}
+      like: {},
+      topic: this.car._id
     }
   },
   computed: {
@@ -158,7 +159,7 @@ export default {
           this.isLiked = true
         }
       }
-    }
+    },
   },
   created() {
     this.findLike()
