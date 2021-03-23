@@ -110,7 +110,7 @@ export const carStore = {
         // },
         async addComment(context, { comment }) {
             try {
-                await carService.saveComment(comment)
+                return await carService.saveComment(comment)
             } catch (err) {
                 console.log('Store: Cannot save review', err);
                 throw new Error('Cannot save review');
@@ -118,7 +118,7 @@ export const carStore = {
         },
         async addBid(context, { bid }) {
             try {
-                await carService.saveBid(bid)
+                return await carService.saveBid(bid)
             } catch (err) {
                 console.log('Store: Cannot save review', err);
                 throw new Error('Cannot save review');
