@@ -231,6 +231,7 @@
 <script>
 import { dataService } from "@/services/data.service.js";
 import { carService } from "@/services/car.service.js";
+import { socketService } from "@/services/socket.service.js";
 import { showMsg } from "../services/eventBus.service.js";
 import imgUpload from "../cmps/img-upload";
 
@@ -268,7 +269,8 @@ export default {
         if (!this.$store.getters.loggedinUser) {
           this.$store.commit("toggleLogin", { isShown: true });
         } else {
-          await this.$store.dispatch({ type: "saveCar", car: this.carToEdit });
+          const newCar = await this.$store.dispatch({ type: "saveCar", car: this.carToEdit });
+          socketService.emit('details newCar', newCar)
           showMsg("Car saved");
           this.carToEdit = carService.getEmptyCar();
           this.$router.push("/car");

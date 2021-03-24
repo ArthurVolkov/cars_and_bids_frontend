@@ -134,7 +134,7 @@ export const carStore = {
         },
         async removeLike(context, { like }) {
             try {
-                await carService.removeLike(like)
+                return await carService.removeLike(like)
             } catch (err) {
                 console.log('Store: Cannot save like', err);
                 throw new Error('Cannot save like');
