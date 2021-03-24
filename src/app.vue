@@ -4,14 +4,9 @@
     <div v-if="loginShown" class="screen" @click="closeLogin"></div>
     <app-header />
     <login v-if="loginShown"></login>
-    <!-- <div v-if="loginShown" class="screen" @click="closeLogin"></div>
-    <app-header @openLogin="openLogin" />
-    <login v-if="loginShown" @closeLogin="closeLogin"></login> -->
     <router-view />
   </div>
 </template>
-
- 
 
 <script>
 import appHeader from './cmps/app-header'
@@ -24,13 +19,7 @@ export default {
   name: "app-vue",
   data() {
     return {
-      // loginShown: false,
     }
-  },
-  created() {
-    this.$store.dispatch({ type: "loadCars" });
-    this.$store.dispatch({ type: "getLoggedinUser" });
-    socketService.setup();
   },
   computed: {
     isLoginShown() {
@@ -41,15 +30,14 @@ export default {
     }
   },
   methods: {
-    // openLogin() {
-    //   this.loginShown = true
-    // },
     closeLogin() {
       this.$store.commit('toggleLogin', {isShown: false})
     },
-    // closeLogin() {
-    //   this.loginShown = false
-    // }
+  },
+  created() {
+    this.$store.dispatch({ type: "loadCars" });
+    this.$store.dispatch({ type: "getLoggedinUser" });
+    socketService.setup();
   },
   destroyed() {
     socketService.terminate();

@@ -14,7 +14,6 @@ Vue.use(require('vue-moment'));
 // Styles
 import "./styles/styles.scss";
 
-
 Vue.config.productionTip = false
 
 new Vue({

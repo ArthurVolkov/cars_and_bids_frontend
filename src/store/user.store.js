@@ -33,13 +33,12 @@ export const userStore = {
             state.msgs = []
             const userCars = await carService.queryUserCars(state.user._id);
             console.log('USER CARS:',userCars)
-            userCars.forEach((car,idx) => {
-                console.log(car,idx)
+            userCars.forEach(car => {
                 car.msgs?.forEach(msg=>{
-                    console.log(msg)
                     if (msg.by._id !== state.user._id) state.msgs.push(msg)
                 })                
             })
+            state.msgs.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })            
         },
         async addUserMsg( {state}, {msg}) {
             if (msg.type === 'car') state.msgs.push(msg)
@@ -48,7 +47,7 @@ export const userStore = {
                 const carFound = userCars.find(car=>{
                     return car._id === msg.carId                
                 })
-                if (carFound && msg.by._id !== state.user._id) state.msgs.push(msg)
+                if (carFound && msg.by._id !== state.user._id) state.msgs.unshift(msg)
             }
         },
 
