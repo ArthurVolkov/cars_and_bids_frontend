@@ -16,7 +16,6 @@ export default {
   name: "car-app",
   computed: {
     carsToShow() {
-      // console.log("carsToShow in car-app:", this.$store.getters.carsToShow);
       return this.$store.getters.carsToShow;
     },
   },

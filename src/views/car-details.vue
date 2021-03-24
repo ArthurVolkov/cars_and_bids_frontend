@@ -287,6 +287,7 @@ export default {
           var likeToAdd = await this.$store.dispatch({ type: 'addLike', like: this.like })
           this.car.likes.push(likeToAdd)
           likeToAdd.carId = this.car._id
+          likeToAdd.isAdd = true
           socketService.emit('details newLike', likeToAdd)
         } else {
           var idx = this.car.likes.findIndex(like => {
@@ -294,6 +295,9 @@ export default {
           })
           this.like.carId = this.car._id;
           likeToAdd = await this.$store.dispatch({ type: 'removeLike', like: this.like })
+          likeToAdd.carId = this.car._id
+          likeToAdd.isAdd = false
+          socketService.emit('details newLike', likeToAdd)
           this.car.likes.splice(idx, 1)
         }
       }

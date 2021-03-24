@@ -117,10 +117,7 @@ async function queryUserCars(userId) {
 
 async function getById(carId) {
     const car = await httpService.get(`car/${carId}`)
-    //console.log('car:', car)
     return car
-    // const car = await storageService.get('cars',carId)
-    // return car
 }
 
 async function saveComment(comment) {
@@ -300,7 +297,6 @@ function makeId(length = 5) {
 }
 
 function makeRandom(array) {
-    //console.log(array)
     return array[Math.floor(Math.random() * array.length)];
 }
 
@@ -309,7 +305,6 @@ function makeRandomInt(min, max) {
 }
 
 function makeRandomUser(users = usersDemo) {
-    //console.log(users)
     const idx = makeRandomInt(0, users.length - 1);
     var minimalUser = {
         _id: users[idx]._id,

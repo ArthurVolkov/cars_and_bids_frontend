@@ -140,11 +140,9 @@ export default {
       this.windowTop = window.top.scrollY < 10 ? true : false
     },
     openLogin() {
-      console.log('openLogin:')
       this.$store.commit('toggleLogin', { isShown: true })
     },
     async logout() {
-      console.log('Logout!');
       try {
         await this.$store.dispatch({ type: 'logout' })
         showMsg('logged out success')
@@ -156,7 +154,6 @@ export default {
 
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
-      console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
     }
   },
   watch: {
@@ -164,15 +161,9 @@ export default {
       console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
-      //this.filterBy = this.$store.getters.filterBy;
-    },
-    // windowWidth() {
-    //   if (windowWidth >= 810) {
-    //     console.log('The window width is 768px');
-    //   }
-    // }
+    }
   },
-  created() {
+  async created() {
     this.isHomeRout = (this.$route.path === '/') ? true : false
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
@@ -181,7 +172,11 @@ export default {
       }
     })
     socketService.on('cars newMsg', this.newMsg)
-    console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
+    try {
+      await this.$store.dispatch({ type: 'getUserMsgs'});
+    } catch (err) {
+      showMsg('Cannot load messages', 'danger')
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)

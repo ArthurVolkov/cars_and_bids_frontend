@@ -87,7 +87,8 @@ export default {
     lastBid() {
       var bid = 0
       if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
+        var sortBids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
+        bid = sortBids[0].price
       } else {
         bid = this.car.auction.startPrice
       }
@@ -130,26 +131,29 @@ export default {
         if (this.isLiked){
           this.like.carId = this.car._id;
           var likeToAdd = await this.$store.dispatch({ type: 'addLike', like: this.like })
-          // var carToEdit = JSON.parse(JSON.stringify(this.car))
-          this.car.likes.push(likeToAdd)
+          var carToEdit = JSON.parse(JSON.stringify(this.car))
+          carToEdit.likes.push(likeToAdd)
+          this.$store.commit({ type: 'setCar', car: carToEdit })
           likeToAdd.carId = this.car._id
+          likeToAdd.isAdd = true
           socketService.emit('details newLike', likeToAdd)
-          // carToEdit.likes.push(like) 
-          // this.$store.commit({ type: 'setCar', car: carToEdit })
+
         } else {
           var idx = this.car.likes.findIndex(like=> {
-            console.log(this.$store.getters.loggedinUser._id)      
             return like.by._id === this.$store.getters.loggedinUser._id
           })
-//////////////  ASK YARON IF THIS IS OK?////////////////////////////////
           this.like.carId = this.car._id;
           await this.$store.dispatch({ type: 'removeLike', like: this.like })
-          //carToEdit = JSON.parse(JSON.stringify(this.car))
-          this.car.likes.splice(idx,1);
-          //carToEdit.likes.splice(idx,1)        
-          //this.$store.commit({ type: 'setCar', car: carToEdit })
+          carToEdit = JSON.parse(JSON.stringify(this.car))
+          carToEdit.likes.splice(idx,1)        
+          this.$store.commit({ type: 'setCar', car: carToEdit })
+          likeToAdd = {}
+          likeToAdd.carId = this.car._id
+          likeToAdd.isAdd = false
+          socketService.emit('details newLike', likeToAdd)
+
         }
-        //carToEdit = null;
+        carToEdit = null;
       }
     },
     findLike() {

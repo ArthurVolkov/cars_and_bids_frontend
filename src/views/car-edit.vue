@@ -295,7 +295,6 @@ export default {
     if (this.carId) {
       try {
         carService.getById(this.carId).then((car) => {
-          //console.log('car:', car)
           this.carToEdit = car;
         });
       } catch (err) {

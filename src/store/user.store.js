@@ -9,12 +9,8 @@ export const userStore = {
     },
     getters: {
         loggedinUser(state) {
-            // console.log('userService.LoggedinUser:', userService.getLoggedinUser())
             return state.user
         },
-        // isAdmin(state) { 
-        //     return state.user.isAdmin
-        // },
         loginShown({loginShown}) {
             return loginShown
         },
@@ -30,15 +26,17 @@ export const userStore = {
     },
     actions: {
         async getUserMsgs({state}) {
-            state.msgs = []
-            const userCars = await carService.queryUserCars(state.user._id);
-            console.log('USER CARS:',userCars)
-            userCars.forEach(car => {
-                car.msgs?.forEach(msg=>{
-                    if (msg.by._id !== state.user._id) state.msgs.push(msg)
-                })                
-            })
-            state.msgs.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })            
+            state.msgs = []           
+            if (state.user) { 
+                const userCars = await carService.queryUserCars(state.user._id);
+                console.log('USER CARS:',userCars)
+                userCars.forEach(car => {
+                    car.msgs?.forEach(msg=>{
+                        if (msg.by._id !== state.user._id) state.msgs.push(msg)
+                    })                
+                })
+                state.msgs.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })            
+            }
         },
         async addUserMsg( {state}, {msg}) {
             if (msg.type === 'car') state.msgs.push(msg)
@@ -50,8 +48,6 @@ export const userStore = {
                 if (carFound && msg.by._id !== state.user._id) state.msgs.unshift(msg)
             }
         },
-
-        ///TODO SORT
         async getLoggedinUser({state}) {
             state.user = await userService.getLoggedinUser()
         },
