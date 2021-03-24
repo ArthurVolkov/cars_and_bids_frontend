@@ -104,7 +104,7 @@ export default {
     },
     findCars() {
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
-      console.log('filter byin nav:',this.filterBy)
+      console.log('filter byin nav:', this.filterBy)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$router.push('/car')
       this.$store.dispatch({ type: 'loadCars' })
@@ -113,6 +113,11 @@ export default {
   created() {
     //this.filterDebounce = debounce(this.setFilter, 1000);
     this.$store.commit({ type: 'setFilterName', name: '' })
+    window.addEventListener('click', (e) => {
+      if (!this.$el.contains(e.target)) {
+        this.yearsRangeIsOpen = false
+      }
+    })
   },
   mounted() {
     this.$refs.search.focus();

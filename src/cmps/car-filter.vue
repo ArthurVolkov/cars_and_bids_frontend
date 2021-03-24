@@ -120,6 +120,11 @@ export default {
     // this.filterBy = JSON.parse(JSON.stringify(this.$store.getters.filterBy));
     this.filterBy = { byYears: this.filterBy.byYears, ...this.$store.getters.filterBy };
     // if (!this.filterBy.byYears) this.filterBy.byYears = [1970, 2021]
+    window.addEventListener('click', (e) => {
+      if (!this.$el.contains(e.target)) {
+        this.yearsRangeIsOpen = false
+      }
+    })
   },
   destroyed() {
     this.filterBy.byYears = [1970, 2021],

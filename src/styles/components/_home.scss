@@ -67,7 +67,7 @@
         .years-range {
             position: absolute;
             font-size: 0.8em;
-            top: 70px;
+            top: 60px;
             left: 0;
             height: 5em;
             width: 350px;
@@ -76,9 +76,9 @@
             border: 1px solid $clr4;
             border-radius: 5em;
             outline: none;
-            padding: 10px 40px;
+            padding: 15px 40px;
             z-index: 20;
-        }
+        } 
 
         .body-style {
             width: 30%;
