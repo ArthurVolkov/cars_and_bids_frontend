@@ -26,6 +26,7 @@ export const userStore = {
     },
     actions: {
         async getUserMsgs({state}) {
+<<<<<<< HEAD
             state.msgs = []           
             if (state.user) { 
                 const userCars = await carService.queryUserCars(state.user._id);
@@ -37,6 +38,19 @@ export const userStore = {
                 })
                 state.msgs.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })            
             }
+=======
+            state.msgs = []
+            if (!state.user) var userId = ''
+            else userId = state.user._id
+            const userCars = await carService.queryUserCars(userId);
+            console.log('USER CARS:',userCars)
+            userCars.forEach(car => {
+                car.msgs?.forEach(msg=>{
+                    if (msg.by._id !== state.user._id) state.msgs.push(msg)
+                })                
+            })
+            state.msgs.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })            
+>>>>>>> 13027c074eab051f189a4d6d0680c52931f2fe96
         },
         async addUserMsg( {state}, {msg}) {
             if (msg.type === 'car') state.msgs.push(msg)

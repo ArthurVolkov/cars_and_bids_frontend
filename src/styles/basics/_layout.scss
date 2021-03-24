@@ -44,13 +44,12 @@
 
 .header .collapsing-btn-container.collapsing {
     @include for-normal-layout {
-        
     }
 }
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     grid-gap: 16px;
     // grid-auto-flow: dense;
 
@@ -90,6 +89,38 @@
     // }
 }
 
+.card-type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    // grid-template-rows: 150px 150px;
+    grid-gap: 10px;
+    > img {
+        @include aspect-ratio(5, 3);
+    }
+    @include for-narrow-layout {
+        grid-gap: 32px;
+    }
+    @include for-normal-layout {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 16px;
+    }
+}
+
+.card-sort-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    // grid-template-rows: 150px 150px;
+    grid-gap: 16px;
+    > img {
+        @include aspect-ratio(5, 3);
+    }
+       @include for-narrow-layout {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+
 .details-icon-grid {
     display: grid;
     align-items: center;
@@ -98,11 +129,11 @@
     grid-gap: 16px;
 }
 
-.list-row {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: repeat(5, 250px);
-    overflow: hidden;
-    grid-gap: 16px;
-    // grid-auto-flow: dense;
-}
+// .list-row {
+//     display: grid;
+//     grid-auto-flow: column;
+//     grid-template-columns: repeat(5, 250px);
+//     overflow: hidden;
+//     grid-gap: 16px;
+//     // grid-auto-flow: dense;
+// }
