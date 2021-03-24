@@ -19,7 +19,7 @@ export const carStore = {
             return state.cars
         },
         carsToShowHome(state) {
-            return state.cars.slice(0, 5)
+            return state.cars.sort((car1, car2) => { return car1.likes.length - car2.likes.length })
         },
         commentsToShow(state) {
             return state.comments
@@ -47,7 +47,7 @@ export const carStore = {
         addCar(state, { car }) {
             state.cars.unshift(car);
         },
-        setFilter(state, { filterBy }) {
+        setFilter(state, { filterBy ={} }) {
             if (filterBy.byYears) state.filterBy.byYears = filterBy.byYears;
             if (filterBy.bodyStyles) state.filterBy.bodyStyles = filterBy.bodyStyles;
             if (filterBy.vendors) state.filterBy.vendors = filterBy.vendors;
@@ -98,16 +98,6 @@ export const carStore = {
                 throw new Error('Cannot save car');
             }
         },
-        // async removeCar(context, payload) {
-        //     try {
-        //         const removed = await carService.remove(payload.car._id)
-        //         context.commit(payload)
-        //         return removed
-        //     } catch (err) {
-        //         console.log('Store: Cannot remove car', err);
-        //         throw new Error('Cannot remove car');
-        //     }
-        // },
         async addComment(context, { comment }) {
             try {
                 return await carService.saveComment(comment)

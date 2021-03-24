@@ -12,9 +12,7 @@
     </div>
 
     <h2>Most popular cars</h2>
-
     <car-row :cars="carsToShow"></car-row>
-
     <h2>Explore cars by body styles</h2>
     <section class="group-container flex justify-between card-type-grid">
       <div
@@ -62,87 +60,95 @@
 </template>
 
 <script>
-import homeNav from '../cmps/home-nav'
+import homeNav from "../cmps/home-nav";
 import carRow from "@/cmps/car-row.vue";
 
-
-
-
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     homeNav,
-    carRow
+    carRow,
   },
   data() {
     return {
       windowTop: true,
-      bodyStyles: [{
-        imgUrl: 'images/sedan.jpg', name: 'Sedan'
-      },
-      {
-        imgUrl: 'images/coupe.jpg', name: 'Coupe'
-      },
-      {
-        imgUrl: 'images/cabrio.jpg', name: 'Cabriolet'
-      },
-      {
-        imgUrl: 'images/suv.jpg', name: 'SUV/Crossover'
-      }
+      bodyStyles: [
+        {
+          imgUrl: "images/sedan.jpg",
+          name: "Sedan",
+        },
+        {
+          imgUrl: "images/coupe.jpg",
+          name: "Coupe",
+        },
+        {
+          imgUrl: "images/cabrio.jpg",
+          name: "Cabriolet",
+        },
+        {
+          imgUrl: "images/suv.jpg",
+          name: "SUV/Crossover",
+        },
       ],
-      sortTypes: [{
-        imgUrl: 'images/ending-soon.jpg', name: 'Ending Soon', sortName: 'ending-soon'
-      },
-      {
-        imgUrl: 'images/newly-listed.jpg', name: 'Newely listed', sortName: 'newly-listed'
-      },
-      {
-        imgUrl: 'images/lowest-mileage.jpg', name: 'Lowest Mileage', sortName: 'lowest-mileage'
-      },
-      ]
-    }
+      sortTypes: [
+        {
+          imgUrl: "images/ending-soon.jpg",
+          name: "Ending Soon",
+          sortName: "ending-soon",
+        },
+        {
+          imgUrl: "images/newly-listed.jpg",
+          name: "Newely listed",
+          sortName: "newly-listed",
+        },
+        {
+          imgUrl: "images/lowest-mileage.jpg",
+          name: "Lowest Mileage",
+          sortName: "lowest-mileage",
+        },
+      ],
+    };
   },
   computed: {
     carsToShow() {
-      return this.$store.getters.carsToShowHome;
+      return this.$store.getters.carsToShowHome
     },
     isShown() {
-      return this.windowTop ? true : false
+      return this.windowTop ? true : false;
     },
     carsToShow() {
       return this.$store.getters.carsToShow;
-      // return this.$store.getters.carsToShow.slice(0, 3);
     },
   },
   methods: {
     onScroll() {
-      this.windowTop = window.top.scrollY < 10 ? true : false
+      this.windowTop = window.top.scrollY < 10 ? true : false;
     },
     getImgUrl(pic) {
-      return require('../assets/' + pic)
+      return require("../assets/" + pic);
     },
     findCars(name) {
       const filterBy = {
-        bodyStyles: name
-      }
-      this.$store.commit({ type: 'setFilter', filterBy: filterBy })
-      this.$router.push('/car')
-      this.$store.dispatch({ type: 'loadCars' })
+        bodyStyles: name,
+      };
+      this.$store.commit({ type: "setFilter", filterBy: filterBy });
+      this.$router.push("/car");
+      this.$store.dispatch({ type: "loadCars" });
     },
     findSortedCars(name) {
-      this.$store.commit({ type: 'setSort', sortBy: name })
-      this.$router.push('/car')
-      this.$store.dispatch({ type: 'loadCars' })
+      this.$store.commit({ type: "setSort", sortBy: name });
+      this.$router.push("/car");
+      this.$store.dispatch({ type: "loadCars" });
     },
     sellCar() {
-      this.$router.push('/car/edit')
-    }
+      this.$router.push("/car/edit");
+    },
   },
   mounted() {
-    window.addEventListener("scroll", this.onScroll)
+    window.addEventListener("scroll", this.onScroll);
   },
   beforeDestroy() {
-    window.removeEventListener("scroll", this.onScroll)
+    window.removeEventListener("scroll", this.onScroll);
   },
-}
+};
 </script>

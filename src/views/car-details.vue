@@ -275,22 +275,6 @@ export default {
         this.modalOpen = false
       }
     },
-    someOneAddBid(bid) {
-      this.car.auction.bids.unshift(bid)
-    },
-    someOneAddComment(comment) {
-      this.car.comments.unshift(comment)
-    },
-    someOneChangeLike(like) {
-      if (like.isAdd){
-        this.car.likes.unshift(like)
-      } else {
-          var idx = this.car.likes.findIndex(currLike => {
-            return like.id === currLike.id
-          })
-          this.car.likes.splice(idx, 1)                  
-      }
-    },
     async toggleLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
       if (!this.$store.getters.loggedinUser) {
@@ -302,6 +286,7 @@ export default {
           this.like.carId = this.car._id;
           var likeToAdd = await this.$store.dispatch({ type: 'addLike', like: this.like })
           this.car.likes.push(likeToAdd)
+          likeToAdd.carId = this.car._id
           socketService.emit('details newLike', likeToAdd)
         } else {
           var idx = this.car.likes.findIndex(like => {
@@ -318,11 +303,23 @@ export default {
       if (this.$store.getters.loggedinUser && this.car.likes.length) {
         const idx = this.car.likes.findIndex(like=> {
           return like.by._id === this.$store.getters.loggedinUser._id
-        })
-        
-        if (idx >= 0) {
-          this.isLiked = true
-        }
+        })        
+        if (idx >= 0) this.isLiked = true
+      }
+    },
+    someOneAddBid(bid) {
+      this.car.auction.bids.unshift(bid)
+    },
+    someOneAddComment(comment) {
+      this.car.comments.unshift(comment)
+    },
+    someOneChangeLike(like) {
+      if (like.isAdd) this.car.likes.unshift(like)
+      else {
+          var idx = this.car.likes.findIndex(currLike => {
+            return like.id === currLike.id
+          })
+          this.car.likes.splice(idx, 1)                  
       }
     },
   },
