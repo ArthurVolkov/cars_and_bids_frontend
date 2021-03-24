@@ -31,7 +31,9 @@ export const userStore = {
     actions: {
         async getUserMsgs({state}) {
             state.msgs = []
-            const userCars = await carService.queryUserCars(state.user._id);
+            if (!state.user) var userId = ''
+            else userId = state.user._id
+            const userCars = await carService.queryUserCars(userId);
             console.log('USER CARS:',userCars)
             userCars.forEach((car,idx) => {
                 console.log(car,idx)

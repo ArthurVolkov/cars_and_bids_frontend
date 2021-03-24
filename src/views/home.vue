@@ -16,8 +16,16 @@
     <car-row :cars="carsToShow"></car-row>
 
     <h2>Explore cars by body styles</h2>
-    <section class="group-container flex justify-between">
+    <section class="group-container flex justify-between card-type-grid">
       <div
+        v-for="style in bodyStyles"
+        :key="style.imgUrl"
+        class="img-container"
+      >
+        <img @click="findCars(style.name)" :src="getImgUrl(style.imgUrl)" />
+        <h3>{{ style.name }}</h3>
+      </div>
+      <!-- <div
         v-for="style in bodyStyles"
         :key="style.imgUrl"
         @click="findCars(style.name)"
@@ -26,7 +34,7 @@
           <img :src="getImgUrl(style.imgUrl)" />
         </div>
         <h3>{{ style.name }}</h3>
-      </div>
+      </div> -->
     </section>
 
     <div class="sell-img-container">
@@ -41,7 +49,7 @@
     </div>
 
     <h2>Hotest auctions everyday</h2>
-    <section class="sort-group-container flex justify-between">
+    <section class="sort-group-container flex justify-between card-sort-grid">
       <div v-for="type in sortTypes" :key="type.imgUrl" class="img-container">
         <img
           @click="findSortedCars(type.sortName)"

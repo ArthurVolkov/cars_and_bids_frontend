@@ -2,7 +2,7 @@
   <li class="car-preview flex flex-col justify-start">
     <!-- <img :src="getImgUrl(car.imgUrls[0])" alt=""> -->
     <!-- <div class="block"> -->
-    <el-carousel trigger="click" :autoplay="false" height="200px">
+    <el-carousel trigger="click" :autoplay="false" height="200px" indicator-position="none">
       <el-carousel-item
         v-for="(img, idx) in car.imgUrls.slice(0, 4)"
         :key="idx"
@@ -88,6 +88,7 @@ export default {
       var bid = 0
       if (this.car.auction.bids.length) {
         bid = this.car.auction.bids[0].price
+        console.log('this.car.auction.bids:', this.car.auction.bids)
       } else {
         bid = this.car.auction.startPrice
       }

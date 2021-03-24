@@ -110,7 +110,8 @@ async function query(filterBy) {
 }
 
 async function queryUserCars(userId) {
-    var queryStr = (!userId) ? '' : `?userId=${userId}`
+    // var queryStr = (!userId) ? '' : `?userId=${userId}`
+    if (!userId) userId = ''
     const data = await httpService.get(`car/user/${userId}`)
     return data
 }
