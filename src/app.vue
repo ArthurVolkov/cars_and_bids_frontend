@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="main-layout" :class="isLoginShown" >
+  <div id="app" class="main-layout" :class="isLoginShown">
     <user-msg />
     <div v-if="loginShown" class="screen" @click="closeLogin"></div>
     <app-header />
@@ -27,11 +27,7 @@ export default {
       // loginShown: false,
     }
   },
-  created() {
-    this.$store.dispatch({ type: "loadCars" });
-    this.$store.dispatch({ type: "getLoggedinUser" });
-    socketService.setup();
-  },
+
   computed: {
     isLoginShown() {
       return this.loginShown ? 'login-shown' : ''
@@ -45,11 +41,20 @@ export default {
     //   this.loginShown = true
     // },
     closeLogin() {
-      this.$store.commit('toggleLogin', {isShown: false})
+      this.$store.commit('toggleLogin', { isShown: false })
     },
     // closeLogin() {
     //   this.loginShown = false
     // }
+  },
+  created() {
+    this.$store.dispatch({ type: "loadCars" });
+    this.$store.dispatch({ type: "getLoggedinUser" });
+    socketService.setup();
+    window.addEventListener('resize', () => {
+      this.$store.commit('setWindowWidth')
+    })
+    // window.addEventListener('resize', this.onResize())
   },
   destroyed() {
     socketService.terminate();

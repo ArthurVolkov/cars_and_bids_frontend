@@ -8,8 +8,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    windowWidth: window.innerWidth,
+  },
+  getters: {
+    windowWidth(state) {
+      return state.windowWidth
+    }
   },
   mutations: {
+    setWindowWidth(state) {
+      state.windowWidth = window.innerWidth;
+    }
   },
   actions: {
   },

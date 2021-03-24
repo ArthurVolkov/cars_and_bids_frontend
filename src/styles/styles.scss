@@ -7,7 +7,6 @@
 // // BASICS
 @import 'basics/helpers';
 @import 'basics/base';
-@import 'basics/layout';
 @import 'basics/buttons';
 
 // // COMPONENTS
@@ -20,4 +19,7 @@
 @import 'components/car-edit';
 @import 'components/login';
 @import 'components/activity';
+
+// LAYOUT
+@import 'basics/layout';
 

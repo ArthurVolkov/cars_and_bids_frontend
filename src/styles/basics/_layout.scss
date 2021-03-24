@@ -10,39 +10,41 @@
         grid-column: 1 / -1;
     }
 
-    @include for-narrow-layout {
-        grid-template-columns:
-            minmax(2rem, 1fr)
-            minmax(auto, $break-narrow)
-            minmax(2rem, 1fr);
+    @include for-mobile-layout {
+        grid-template-columns: 1rem 1fr 1rem;
     }
 
-    @include for-normal-layout {
-        grid-template-columns:
-            minmax(2rem, 1fr)
-            minmax(auto, $break-normal)
-            minmax(2rem, 1fr);
-    }
+    // @include for-narrow-layout {
+    //     grid-template-columns:
+    //         minmax(2rem, 1fr)
+    //         minmax(auto, $break-narrow)
+    //         minmax(2rem, 1fr);
+    // }
 
+    // @include for-normal-layout {
+    //     grid-template-columns:
+    //         minmax(2rem, 1fr)
+    //         minmax(auto, $break-normal)
+    //         minmax(2rem, 1fr);
+    // }
+
+    // @include for-wide-layout {
+    //     grid-template-columns:
+    //         minmax(2rem, 1fr)
+    //         minmax(auto, $break-wide)
+    //         minmax(2rem, 1fr);
+    // }
+}
+
+.header .el-input {
     @include for-wide-layout {
-        grid-template-columns:
-            minmax(2rem, 1fr)
-            minmax(auto, $break-wide)
-            minmax(2rem, 1fr);
+        width: 300px;
     }
 }
 
-.header-container {
-    @include for-narrow-layout {
-   
-    }
-
+.header .collapsing-btn-container.collapsing {
     @include for-normal-layout {
-
-    }
-
-    @include for-wide-layout {
-
+        
     }
 }
 

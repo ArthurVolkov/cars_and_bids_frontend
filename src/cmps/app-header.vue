@@ -3,26 +3,37 @@
     <div class="header-container flex align-center justify-between">
       <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
 
-      <el-input
-        v-if="!isDark"
-        @focus="setFilterFocus"
-        @input="setFilterName"
-        placeholder="Search for car"
-        v-model="filterName"
-        clearable
-      >
-      </el-input>
+      <div
+        v-if="openCollapsingBtns"
+        class="screen"
+        @click="openCollapsingBtns = false"
+      ></div>
       <div class="btn-container flex align-center">
-        <!-- <button to="/car" @click="loadCars" class="btn">Explore</button> -->
-        <router-link to="/car" class="btn">Explore</router-link>
-        <router-link to="/car/edit" class="btn">Sell your Car</router-link>
-        <!-- <router-link to="/about">About</router-link> -->
-
-        <button
-          @click="openNotifications = !openNotifications; openOptions=false"
-          class="clean-btn"
+        <div
+          v-if="openCollapsingBtns || !hamburgerOpen"
+          class="collapsing-btn-container"
+          :class="collapsing"
         >
-          <el-badge :value="12" class="item">
+          <el-input
+            v-if="!isDark"
+            @focus="setFilterFocus"
+            @input="setFilterName"
+            placeholder="Search for car"
+            v-model="filterName"
+            clearable
+          >
+          </el-input>
+          <router-link to="/car" class="btn">Explore</router-link>
+          <router-link to="/car/edit" class="btn">Sell your Car</router-link>
+        </div>
+        <button
+          @click="
+            openNotifications = !openNotifications;
+            openOptions = false;
+          "
+          class="clean-btn msgs-open-btn"
+        >
+          <el-badge :value="0" class="item">
             <font-awesome-icon icon="bell" class="main-info-icon" />
           </el-badge>
         </button>
@@ -37,28 +48,23 @@
 
         <div
           class="account-options-btn flex justify-between align-center pointer"
-          @click="openOptions = !openOptions; openNotifications = false"
+          @click="
+            openOptions = !openOptions;
+            openNotifications = false;
+          "
         >
-          <font-awesome-icon icon="bars" class="main-info-icon" />
+          <font-awesome-icon
+            v-if="!openOptions"
+            icon="caret-down"
+            class="main-info-icon"
+          />
+          <font-awesome-icon v-else icon="caret-up" class="main-info-icon" />
           <font-awesome-icon
             v-if="!loggedInUser"
             icon="user-circle"
             class="main-info-icon user-img"
           />
           <avatar v-else :size="30" :username="loggedInUser.fullname"></avatar>
-          <!-- <font-awesome-icon
-            icon="user-circle"
-            class="main-info-icon user-img"
-          /> -->
-          <!-- <div v-if="openOptions" class="account-options flex flex-col"> -->
-          <!-- <div
-            v-if="openOptions"
-            @click-outside="click"
-            class="account-options flex flex-col"
-          > -->
-
-          <!-- @focusout="clickOutside"
-            ref="options" -->
           <div
             v-if="openOptions"
             tabindex="0"
@@ -71,7 +77,13 @@
             <router-link to="/activity">Activites</router-link>
           </div>
         </div>
-        <!-- <el-button @click="openLogin" type="info" round>Sign Up</el-button> -->
+        <button
+          v-if="hamburgerOpen"
+          class="clean-btn open-collapsing-btn"
+          @click="openCollapsingBtns = !openCollapsingBtns"
+        >
+          <font-awesome-icon icon="bars" class="main-info-icon" />
+        </button>
       </div>
     </div>
   </div>
@@ -83,9 +95,8 @@
 import avatar from 'vue-avatar'
 import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faBars, faUserCircle, faBell } from '@fortawesome/free-solid-svg-icons'
-library.add(faBars, faUserCircle, faBell)
-import clickOutside from '../directives/click-outside.js'
+import { faBars, faUserCircle, faBell, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+library.add(faBars, faUserCircle, faBell, faCaretDown, faCaretUp)
 
 export default {
   name: "app-header",
@@ -96,7 +107,8 @@ export default {
       isHomeRout: false,
       openOptions: false,
       openNotifications: false,
-      userMsgs: []
+      userMsgs: [],
+      openCollapsingBtns: false
     }
   },
   computed: {
@@ -106,7 +118,14 @@ export default {
     loggedInUser() {
       // return this.$store.getters.loggedinUser ? true : false
       return this.$store.getters.loggedinUser ? this.$store.getters.loggedinUser : false
+    },
+    collapsing() {
+      return this.$store.getters.windowWidth >= 810 ? '' : 'collapsing';
+    },
+    hamburgerOpen() {
+      return this.$store.getters.windowWidth >= 810 ? false : true
     }
+
   },
   methods: {
     setFilterName() {
@@ -134,9 +153,7 @@ export default {
         showMsg('Cannot logout', 'danger')
       }
     },
-    clickOutside() {
-      this.openOptions = false
-    },
+
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
       console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
@@ -148,7 +165,12 @@ export default {
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
       //this.filterBy = this.$store.getters.filterBy;
-    }
+    },
+    // windowWidth() {
+    //   if (windowWidth >= 810) {
+    //     console.log('The window width is 768px');
+    //   }
+    // }
   },
   created() {
     this.isHomeRout = (this.$route.path === '/') ? true : false
@@ -174,8 +196,6 @@ export default {
   components: {
     avatar
   },
-  directives: {
-    clickOutside
-  }
+
 };
 </script>
