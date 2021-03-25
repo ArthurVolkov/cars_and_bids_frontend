@@ -44,7 +44,7 @@
 
       <div class="flex flex-col align-center">
         <h3>Likes</h3>
-        <h3>{{ car.likes.length }}</h3>
+        <h3>{{ likesCount }}</h3>
       </div>
       <div class="bid-info-btn-container flex align-center">
         <button class="round-main bid" @click="modalOpen = true">
@@ -274,7 +274,7 @@ export default {
     },
     findLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
-      if (this.$store.getters.loggedinUser && this.car.likes.length) {
+      if (this.$store.getters.loggedinUser && this.likesCount) {
         const idx = this.car.likes.findIndex(like => {
           return like.by._id === this.$store.getters.loggedinUser._id
         })
@@ -296,12 +296,16 @@ export default {
         this.car.likes.splice(idx, 1)
       }
     },
+    timesUp(car){
+      alert(car._id)
+    }
   },
   async created() {
     socketService.emit('details topic', this.topic)
     socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details addComment', this.someOneAddComment)
     socketService.on('details changeLike', this.someOneChangeLike)
+    socketService.on('cars time', this.timesUp)
     await this.loadCar()
     this.findLike()
     this.timeLeftInterval = setInterval(() => {
