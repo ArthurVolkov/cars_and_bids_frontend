@@ -55,7 +55,7 @@
                   {{ msg.vendor }} {{ msg.model }}
                   {{ msg.year }}
                   <div>
-                    {{ msg.by.fullname }}, 
+                    {{ msg.by.fullname }},
                     <span>{{ msg.createdAt | moment("calendar") }}</span>
                   </div>
                 </h6>
@@ -162,6 +162,7 @@ export default {
     },
     onScroll() {
       this.windowTop = window.top.scrollY < 10 ? true : false
+      this.openCollapsingBtns = false
     },
     openLogin() {
       console.log('openLogin:')

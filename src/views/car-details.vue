@@ -37,7 +37,7 @@
         <h3>{{ car.auction.bids.length }}</h3>
       </div>
 
-      <div class="flex flex-col align-center">
+      <div class="flex flex-col align-center coments-count">
         <h3>Comments</h3>
         <h3>{{ car.comments.length }}</h3>
       </div>
@@ -46,17 +46,16 @@
         <h3>Likes</h3>
         <h3>{{ car.likes.length }}</h3>
       </div>
-
       <div class="bid-info-btn-container flex align-center">
+        <button class="round-main bid" @click="modalOpen = true">
+          Place Bid
+        </button>
         <button
           @click.stop="toggleLike"
           :class="isActive"
           class="round-main watch"
         >
           <font-awesome-icon icon="heart" class="main-info-icon" />
-        </button>
-        <button class="round-main bid" @click="modalOpen = true">
-          Place Bid
         </button>
       </div>
     </div>
@@ -301,9 +300,9 @@ export default {
     findLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
       if (this.$store.getters.loggedinUser && this.car.likes.length) {
-        const idx = this.car.likes.findIndex(like=> {
+        const idx = this.car.likes.findIndex(like => {
           return like.by._id === this.$store.getters.loggedinUser._id
-        })        
+        })
         if (idx >= 0) this.isLiked = true
       }
     },
@@ -316,10 +315,10 @@ export default {
     someOneChangeLike(like) {
       if (like.isAdd) this.car.likes.unshift(like)
       else {
-          var idx = this.car.likes.findIndex(currLike => {
-            return like.id === currLike.id
-          })
-          this.car.likes.splice(idx, 1)                  
+        var idx = this.car.likes.findIndex(currLike => {
+          return like.id === currLike.id
+        })
+        this.car.likes.splice(idx, 1)
       }
     },
   },

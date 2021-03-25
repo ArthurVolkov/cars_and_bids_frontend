@@ -6,37 +6,68 @@
         height: 100vh;
         position: relative;
         margin-bottom: 20px;
+
+        &::before {
+            content: "";
+            position: absolute;
+            border-radius: 10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.2) 0%,
+                rgba(0, 0, 0, 0.7) 40%,
+                rgba(0, 0, 0, 0) 50%,
+            );
+            @include for-normal-layout {
+                display: none;
+            }
+        }
     }
 
     .hero-slogan-container {
-        width: 95%;
+        max-width: 90%;
         position: absolute;
-        top: 82vh;
-        left: 20px;
+        top: 22vh;
+        left: 1rem;
         color: white;
+        font-size: .7em;
         & h1 {
-            font-size: 2rem;
+            font-size: 2em;
         }
         & span {
+            white-space: nowrap;
             font-family: Montserrat;
+        }
+        @include for-narrow-layout {
+            font-size: .8em;
+            left: 2rem;
+        }
+
+        @include for-normal-layout {
+            top: 80vh;
+            font-size: 1.2em;
         }
     }
 
     .home-nav {
         position: absolute;
         height: 3.5rem;
-        width: 70%;
-        left: 15%;
-        top: 20vh;
+        width: 100%;
+        // left: 3%;
+        top: 10vh;
         grid-column: 2/-2;
         background-color: $clr11;
-        border-radius: 5em;
+        // border-radius: 5em;
         // z-index: 50;
-        font-size: 1.1em;
+
+        // font-size: 1.1em;
         *,
         *::placeholder {
             // font-size: 1.05em;
-            font-weight: 600;
+            font-weight: 500;
             color: $clr2;
         }
 
@@ -44,17 +75,30 @@
             height: 80%;
         }
 
-        > *:first-child {
+        .years-range-open {
             background-color: $clr11;
             // font-size: 1em;
-            width: 150px;
+            width: 100px;
             border: none;
-            border-right: 1px solid $clr3;
+            // border-right: 1px solid $clr3;
             border-radius: 5em 0 0 5em;
+            @include for-normal-layout {
+                width: 150px;
+            }
         }
 
-        > * {
+        // > *:first-child {
+        //     background-color: $clr11;
+        //     // font-size: 1em;
+        //     width: 150px;
+        //     border: none;
+        //     border-right: 1px solid $clr3;
+        //     border-radius: 5em 0 0 5em;
+        // }
+
+        > :first-child > * {
             border-right: 1px solid $clr3;
+            height: 100%;
         }
 
         .el-input,
@@ -63,6 +107,18 @@
             height: 100%;
             border: none;
             outline: none;
+            padding: 0 3px;
+            text-align: center;
+        }
+
+        & .el-input--suffix {
+            padding: 0;
+            i {
+                display: none;
+                @include for-normal-layout {
+                    display: inline-block;
+                }
+            }
         }
 
         .years-range {
@@ -82,26 +138,44 @@
         }
 
         .body-style {
-            width: 30%;
+            width: 32%;
+            min-width: 7em;
+        }
+
+        .vendor {
+            // min-width: 5em;
         }
 
         .search {
-            width: 50%;
+            min-width: 8em;
+
+            @include for-normal-layout {
+                max-width: 35%;
+            }
+            * {
+                border: none;
+            }
             & ::placeholder {
                 color: $clr3;
                 font-weight: 500;
             }
         }
 
-        .go {
-            // height: 80%;
-            font-size: 1.1rem;
-            width: 160px;
-            margin: 6px;
-            color: $clr11;
-            .main-info-icon * {
-                color: white;
-            }
+        // @include for-narrow-layout {
+        //     font-size: 1.1em;
+        //     top: 10%;
+        // }
+
+        @include for-normal-layout {
+            width: 94%;
+            left: 3%;
+            top: 20vh;
+            border-radius: 5em;
+            font-size: 1.1em;
+        }
+        @include for-wide-layout {
+            width: 70%;
+            left: 15%;
         }
     }
 
@@ -112,7 +186,7 @@
             border-radius: 10px;
             cursor: pointer;
         }
-        > *{
+        > * {
             margin-bottom: 30px;
         }
         // flex-wrap: wrap;
@@ -161,7 +235,7 @@
                 font-family: Montserrat;
             }
             & * {
-                font-size: .8em;
+                font-size: 0.8em;
 
                 @include for-narrow-layout {
                     font-size: 1.1em;
@@ -173,21 +247,21 @@
                     top: 10%;
                 }
                 @include for-wide-layout {
-                    font-size: 2.6em
+                    font-size: 2.6em;
                 }
             }
         }
 
         .sell-btn {
             margin-top: 5px;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 600;
             padding: 5px 10px;
             border: none;
             color: $clr2;
             border-radius: 10px;
             @include for-narrow-layout {
-                font-size: .8rem;
+                font-size: 0.8rem;
                 margin-top: 10px;
                 padding: 10px 20px;
             }

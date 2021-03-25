@@ -1,15 +1,31 @@
 .car-details {
     position: relative;
-    margin-top: 100px;
+    margin-top: 13vh;
 
     .details-img-container {
         margin-bottom: 30px;
         :first-child {
             grid-row: 1/ 3;
-            border-radius: 10px 0 0 10px;
+            border-radius: 10px 0 0 0;
+            @include for-narrow-layout {
+            }
+            @include for-normal-layout {
+                border-radius: 10px 0 0 10px;
+            }
         }
         :nth-child(3) {
-            border-radius: 0 10px 0 0;
+            @include for-narrow-layout {
+            }
+            @include for-normal-layout {
+                border-radius: 0 10px 0 0;
+            }
+        }
+
+        :nth-child(4) {
+            border-radius: 0 0 0 10px;
+            @include for-normal-layout {
+                border-radius: 0;
+            }
         }
 
         :nth-child(5) {
@@ -20,9 +36,9 @@
     .details-bid-info {
         // height: 50px;
         position: sticky;
-        top: 85px;
+        top: 10vh;
         width: 100%;
-        border-radius: 5em;
+        // border-radius: 5em;
         padding: 0 5px 0 10px;
         margin-bottom: 50px;
         background-color: $clr2;
@@ -42,6 +58,28 @@
         }
         .bid-info-btn-container {
             justify-self: flex-end;
+        }
+
+        .coments-count {
+            display: none;
+            @include for-narrow-layout {
+                // grid-gap: 32px;
+            }
+            @include for-normal-layout {
+       
+            }
+            @include for-wide-layout {
+                display: flex;
+
+            }
+        }
+        @include for-narrow-layout {
+            // grid-gap: 32px;
+        }
+        @include for-normal-layout {
+            top: 85px;
+            width: 100%;
+            border-radius: 5em;
         }
     }
 

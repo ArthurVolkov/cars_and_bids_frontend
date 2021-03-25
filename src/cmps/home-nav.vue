@@ -1,6 +1,56 @@
 <template>
   <section class="home-nav flex justify-between align-center">
-    <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
+    <div v-if="filterBtnsOpen" class="flex justify-between align-center">
+      <button
+        @click="yearsRangeIsOpen = !yearsRangeIsOpen"
+        class="filter-btn years-range-open"
+      >
+        Years
+      </button>
+      <div v-if="yearsRangeIsOpen" class="block years-range">
+        <el-slider
+          v-model="filterBy.byYears"
+          range
+          :min="1970"
+          :max="2021"
+          :marks="marks"
+        >
+          >
+        </el-slider>
+      </div>
+
+      <el-select
+        v-model="filterBy.bodyStyles"
+        placeholder="Body styles"
+        class="body-style"
+      >
+        <el-option
+          v-for="item in bodyStyles"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+
+      <el-select
+        v-model="filterBy.vendors"
+        placeholder="Vendors"
+        multiple
+        collapse-tags
+        class="vendor"
+      >
+        <el-option
+          v-for="item in vendors"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </div>
+
+    <!-- <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
       Years
     </button>
     <div v-if="yearsRangeIsOpen" class="block years-range">
@@ -34,6 +84,7 @@
       placeholder="Vendors"
       multiple
       collapse-tags
+      class="vendor"
     >
       <el-option
         v-for="item in vendors"
@@ -42,10 +93,9 @@
         :value="item.value"
       >
       </el-option>
-    </el-select>
-
+    </el-select> -->
     <el-input
-      placeholder='Try "Audi 2008 gray"'
+      placeholder='Try "Audi S6"'
       v-model="filterName"
       ref="search"
       class="search"
@@ -92,7 +142,10 @@ export default {
         [this.filterBy.byYears[0]]: '' + this.filterBy.byYears[0],
         [this.filterBy.byYears[1]]: '' + this.filterBy.byYears[1],
       }
-    }
+    },
+    filterBtnsOpen() {
+      return this.$store.getters.windowWidth >= 460 ? true : false
+    },
   },
   methods: {
     setFilter() {

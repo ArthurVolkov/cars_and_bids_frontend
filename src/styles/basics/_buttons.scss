@@ -1,15 +1,16 @@
 button {
     cursor: pointer;
+    font-family: Roboto;
 }
 
 button.sort-btn {
     padding: 0;
     border: none;
-    width: 100px;
+    width: 120px;
     background-color: transparent;
-    font-weight: 500;
+    font-weight: 600;
     border-bottom: 1px solid $clr1;
-
+    font-size: 1em;
     &:hover {
         border-bottom: 2px solid $clr1;
         margin-bottom: -1px;
@@ -21,6 +22,10 @@ button.filter-btn {
     border: 1px solid $clr4;
     border-radius: 5em;
     outline: none;
+    width: 120px;
+    font-weight: 500;
+    font-size: .9em;
+    color: $clr3;
     &:hover {
         // border-color: $clr3;
     }
@@ -35,7 +40,7 @@ button.filter-btn {
 //     }
 // }
 
-button.round-main {
+button.round-main.bid {
     height: 50px;
     padding: 5px 10px;
     font-size: 1.2em;
@@ -43,40 +48,52 @@ button.round-main {
     border-radius: 2em;
     outline: none;
     font-weight: 600;
+    margin-inline-end: 10px;
+    width: 120px;
+    padding: 7px 10px;
+    background: $grad1;
+    color: $clr11;
+}
 
-    &.bid,
-    &.go {
-        width: 120px;
-        padding: 7px 10px;
-        background: $grad1;
-        color: $clr11;
-        // background-image: linear-gradient(to top, #b224ef 0%, #7579ff 100%);
-        // background-image: radial-gradient(
-        //     circle at center,
-        //     #ff385c 0%,
-        //     #e61e4d 27.5%,
-        //     #e31c5f 40%,
-        //     #d70466 57.5%,
-        //     #bd1e59 75%,
-        //     #bd1e59 100%
-        // );
-
-        // background-repeat: no-repeat;
-        // background-attachment: fixed;
-        // background-position: center;
+button.round-main.go {
+    height: 50px;
+    font-size: 1.1em;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    width: 165px;
+    padding: 3px 5px;
+    background: $grad1;
+    color: $clr11;
+    min-height: 100%;
+    .main-info-icon * {
+        color: white;
     }
 
-    &.watch {
-        background-color: $clr11;
-        font-size: 2em;
-        width: 80px;
-        margin-inline-end: 5px;
-        path {
-            color: $clr3;
-        }
-        &.active path {
-            color: $clr6;
-        }
+    @include for-normal-layout {
+        border-radius: 3em;
+        margin: 6px;
+        min-height: 0;
+        padding: 7px 10px;
+    }
+}
+
+button.round-main.watch {
+    height: 50px;
+    padding: 5px 10px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5em;
+    outline: none;
+    font-weight: 600;
+    background-color: $clr11;
+    font-size: 2em;
+    // width: 80px;
+    path {
+        color: $clr3;
+    }
+    &.active path {
+        color: $clr6;
     }
 }
 
