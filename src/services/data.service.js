@@ -28,7 +28,8 @@ function getCars(Make){
       return car.make === Make
   })
 
-  return newCars.map(item => { return { value: item.model, label: item.model } })    
+  var mapCars = newCars.map(item => { return { value: item.model, label: item.model } })    
+  return mapCars
 }
 
 var colors = [
@@ -34804,55 +34805,6 @@ var cars = [
         "updatedAt": "2020-01-27T20:44:21.408Z"
       },
       {
-        "objectId": "BKFFHChy9f",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.434Z",
-        "updatedAt": "2020-01-27T20:44:19.434Z"
-      },
-      {
-        "objectId": "Fa01YGzNJC",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.579Z",
-        "updatedAt": "2020-01-27T20:44:19.579Z"
-      },
-      {
-        "objectId": "rkVAtVg6jX",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.739Z",
-        "updatedAt": "2020-01-27T20:44:19.739Z"
-      },
-      {
-        "objectId": "O3tsyM93l8",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.864Z",
-        "updatedAt": "2020-01-27T20:44:19.864Z"
-      },
-      {
-        "objectId": "ifVOxXgdDY",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:20.006Z",
-        "updatedAt": "2020-01-27T20:44:20.006Z"
-      },
-      {
-        "objectId": "MSR3Cuex5s",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:20.118Z",
-        "updatedAt": "2020-01-27T20:44:20.118Z"
-      },
-      {
-        "objectId": "8RdUKTuWhr",
-        "Make": "Dodge",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:20.235Z",
-        "updatedAt": "2020-01-27T20:44:20.235Z"
-      },
-      {
         "objectId": "BRXemXeHH5",
         "Make": "Dodge",
         "Model": "Sprinter 2500 Passenger",
@@ -41823,55 +41775,6 @@ var cars = [
         "Model": "ZX2",
         "createdAt": "2020-01-27T20:44:20.497Z",
         "updatedAt": "2020-01-27T20:44:20.497Z"
-      },
-      {
-        "objectId": "CYIgiVYHb7",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.078Z",
-        "updatedAt": "2020-01-27T20:44:18.078Z"
-      },
-      {
-        "objectId": "X5KwgjdJdL",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.224Z",
-        "updatedAt": "2020-01-27T20:44:18.224Z"
-      },
-      {
-        "objectId": "nUyWwBDtho",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.406Z",
-        "updatedAt": "2020-01-27T20:44:18.406Z"
-      },
-      {
-        "objectId": "i4XQ2TE9Ex",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.551Z",
-        "updatedAt": "2020-01-27T20:44:18.551Z"
-      },
-      {
-        "objectId": "X093WiK9cM",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.685Z",
-        "updatedAt": "2020-01-27T20:44:18.685Z"
-      },
-      {
-        "objectId": "1bv3j1sDkz",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.825Z",
-        "updatedAt": "2020-01-27T20:44:18.825Z"
-      },
-      {
-        "objectId": "8kg8lV4Lkb",
-        "Make": "Freightliner",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.971Z",
-        "updatedAt": "2020-01-27T20:44:18.971Z"
       },
       {
         "objectId": "bcyzzOTY25",
@@ -63542,69 +63445,6 @@ var cars = [
         "objectId": "1AjgIDwE2H",
         "Make": "Mercedes-Benz",
         "Model": "SLS-Class",
-        "createdAt": "2020-01-27T20:44:19.265Z",
-        "updatedAt": "2020-01-27T20:44:19.265Z"
-      },
-      {
-        "objectId": "WMlA28JnT7",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.151Z",
-        "updatedAt": "2020-01-27T20:44:18.151Z"
-      },
-      {
-        "objectId": "3V5050nXrb",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.296Z",
-        "updatedAt": "2020-01-27T20:44:18.296Z"
-      },
-      {
-        "objectId": "FgZ5fezLU5",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.442Z",
-        "updatedAt": "2020-01-27T20:44:18.442Z"
-      },
-      {
-        "objectId": "EQaFHH0lRV",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.614Z",
-        "updatedAt": "2020-01-27T20:44:18.614Z"
-      },
-      {
-        "objectId": "EXEqc8H8aM",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.755Z",
-        "updatedAt": "2020-01-27T20:44:18.755Z"
-      },
-      {
-        "objectId": "GVQ0UtPFiY",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:18.862Z",
-        "updatedAt": "2020-01-27T20:44:18.862Z"
-      },
-      {
-        "objectId": "wlCS1uYk0s",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.009Z",
-        "updatedAt": "2020-01-27T20:44:19.009Z"
-      },
-      {
-        "objectId": "uo9jIHvQem",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
-        "createdAt": "2020-01-27T20:44:19.122Z",
-        "updatedAt": "2020-01-27T20:44:19.122Z"
-      },
-      {
-        "objectId": "eVnNmsd39b",
-        "Make": "Mercedes-Benz",
-        "Model": "Sprinter 2500 Cargo",
         "createdAt": "2020-01-27T20:44:19.265Z",
         "updatedAt": "2020-01-27T20:44:19.265Z"
       },

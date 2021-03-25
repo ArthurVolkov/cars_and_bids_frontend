@@ -39,7 +39,7 @@ export const userStore = {
             }
         },
         async addUserMsg( {state}, {msg}) {
-            if (msg.type === 'car') state.msgs.push(msg)
+            if (msg.type === 'car') state.msgs.unshift(msg)
             else {
                 const userCars = await carService.queryUserCars(state.user._id);
                 const carFound = userCars.find(car=>{

@@ -1,5 +1,6 @@
 // import { utilService } from './util.service.js'
 import { httpService } from './http.service.js'
+import { userService} from './user.service.js'
 
 const vendors = ['Audi', 'BMW', 'Golf', 'Mazda', 'Ferari']
 const bodyStyles = ['Coupe', 'Sedan', 'Truck', 'Hatchback'];
@@ -7,59 +8,23 @@ const transmissions = ['Automatic', 'Manual', 'Robotic'];
 const drivetrains = ['Rear-wheel drive', 'Front-wheel drive', 'All-wheel drive'];
 const colors = ['Blue', 'Black', 'Red', 'Yellow', 'Green', 'Gray'];
 
-const usersDemo =
-    [
-        {
-            "_id": "u101",
-            "fullname": "Shuki ben Shuki",
-            "imgUrl": "/img/img1.jpg",
-            "isAdmin": false,
-            "username": "a",
-            "password": "a"
-        },
-        {
-            "_id": "u102",
-            "fullname": "Puki ben Puki",
-            "imgUrl": "/img/img2.jpg",
-            "isAdmin": false,
-            "username": "b",
-            "password": "b"
-        },
-        {
-            "_id": "u103",
-            "fullname": "Muki ben Muki",
-            "imgUrl": "/img/img3.jpg",
-            "isAdmin": false,
-            "username": "c",
-            "password": "c"
-        },
-        {
-            "_id": "u104",
-            "fullname": "Cooki ben Cooki",
-            "imgUrl": "/img/img4.jpg",
-            "isAdmin": false,
-            "username": "d",
-            "password": "d"
-        },
-        {
-            "_id": "u105",
-            "fullname": "Ruti be Ruti",
-            "imgUrl": "/img/img5.jpg",
-            "isAdmin": true,
-            "username": "e",
-            "password": "e"
-        }
-    ]
 
 const CAR_KEY = 'cars'
 const CAR_URL = '//localhost:3030/api/car/'
 
-// save(_createDemoCar1());
-// save(_createDemoCar2());
-// save(_createDemoCar3());
-// save(_createDemoCar4());
-// save(_createDemoCar5());
-// save(_createDemoCar6());
+//createDemoData()
+
+async function createDemoData(){
+    save(await _createDemoCar1());
+    save(await _createDemoCar2());
+    save(await _createDemoCar3());
+    save(await _createDemoCar4());
+    save(await _createDemoCar5());
+    save(await _createDemoCar6());
+    save(await _createDemoCar7());
+    save(await _createDemoCar8());
+    save(await _createDemoCar9());    
+}
 
 
 //_createCars()
@@ -83,7 +48,8 @@ export const carService = {
     saveBid,
     saveLike,
     removeLike,
-    getEmptyFilter
+    getEmptyFilter,
+    getLastBid
     // getCarsCountByUserId
 }
 
@@ -143,8 +109,14 @@ async function save(car) {
     if (car._id) {
         return await httpService.put('car', car)
     } else {
+        console.log('KKKKKKKKKKKKK',car)
         return await httpService.post('car', car)
     }
+}
+
+function getLastBid(car) {
+    if (car.auction.bids.length) return car.auction.bids[0].price
+    else return car.auction.startPrice
 }
 
 function getVendorList() {
@@ -178,8 +150,6 @@ function getEmptyFilter() {
         sortBy: '',
     }
 }
-
-
 
 function getEmptyCar() {
     return {
@@ -215,79 +185,6 @@ function getEmptyCar() {
     }
 }
 
-
-function _createCar() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const car = {
-        id: makeId(),
-        vendor: makeRandom(vendors),
-        model: makeId(4),
-        bodyStyle: makeRandom(bodyStyles),
-        year: makeRandomInt(2010, 2021),
-        transmission: makeRandom(transmissions),
-        drivetrain: makeRandom(drivetrains),
-        mileage: makeRandomInt(45000, 70000),
-        engine: '3.0L I-6',
-        exteriorColor: makeRandom(colors),
-        interiorColor: makeRandom(colors),
-        desc: 'very nice car',
-        equipments: ['equip1', 'equip2', 'equip3', 'equip4'],
-        owner: makeRandomUser(usersDemo),
-        imgUrls: ['shop.jpg', 'more1.jpg', 'more2.jpg'],
-        location: {
-            address: "Tel-Aviv, Rotshild 25",
-            lat: 32.9898,
-            lng: 12.28
-        },
-        comments: [
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                by: makeRandomUser(usersDemo),
-                createdAt: Date.now()
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                by: makeRandomUser(usersDemo)
-            },
-            {
-                id: makeId(4),
-                txt: "if i had the cash Id still be bidding",
-                by: makeRandomUser(usersDemo)
-            }
-        ],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now(),
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: [
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(30001, 40000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(20001, 30000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 2
-                },
-                {
-                    id: makeId(4),
-                    by: makeRandomUser(usersDemo),
-                    bidPrice: startPrice + makeRandomInt(10001, 20000),
-                    createdAt: Date.now() + 1000 * 60 * 60 * 24 * 3
-                },
-            ],
-        }
-    }
-    return car
-}
-
 function makeId(length = 5) {
     var txt = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -297,15 +194,12 @@ function makeId(length = 5) {
     return txt;
 }
 
-function makeRandom(array) {
-    return array[Math.floor(Math.random() * array.length)];
-}
-
 function makeRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function makeRandomUser(users = usersDemo) {
+async function makeRandomUser() {
+    var users = await userService.getUsers();
     const idx = makeRandomInt(0, users.length - 1);
     var minimalUser = {
         _id: users[idx]._id,
@@ -315,9 +209,8 @@ function makeRandomUser(users = usersDemo) {
     return minimalUser
 }
 
-function _createDemoCar1() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '11111'
+async function _createDemoCar1() {
+    const _id = '1'
     const car = {
         vendor: 'BMW',
         model: '550i',
@@ -329,13 +222,8 @@ function _createDemoCar1() {
         engine: '4.4L Turbocharged V8',
         exteriorColor: 'Carbon Black Metallic',
         interiorColor: 'Black',
-        desc: 'very nice carTHIS... is a 2014 BMW 550i xDrive, finished in Carbon Black with a black leather interior.',
-        equipments: [
-            'M Sport Package (19-inch wheels, M Sport body kit, LED fog lights, Shadowline exterior trim, aluminum-look interior trim, M steering wheel, and anthracite headliner)',
-            'Executive Package (Comfort Access keyless entry, soft-close doors, power-operated trunk lid, head-up display, and Harman-Kardon surround-sound system)equip2',
-            'Cold Weather Package (heated front and rear seats, heated steering wheel, and retractable headlight washers)',
-            'Adaptive headlights'],
-        owner: makeRandomUser(usersDemo),
+        desc: 'THIS... is a 2014 BMW 550i xDrive, finished in Carbon Black with a black leather interior.',
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -345,26 +233,14 @@ function _createDemoCar1() {
         ],
         location: {
             address: 'Chicago, IL 60634',
-            lat: 41.950401,
-            lng: -87.793808
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 14,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
     }
     return car
 }
 
-function _createDemoCar2() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '22222'
+async function _createDemoCar2() {
+    const _id = '2'
     const car = {
         vendor: 'Audi',
         model: 'S6',
@@ -377,12 +253,7 @@ function _createDemoCar2() {
         exteriorColor: 'Quartz Gray Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2008 Audi S6, finished in Quartz Gray Metallic with a black leather interior.',
-        equipments: [
-            '19-inch alloy wheels',
-            '6-speed Tiptronic automatic transmission with shift paddles',
-            'Electronic Differential Lock (EDL)',
-            'Sport-tuned suspension'],
-        owner: makeRandomUser(usersDemo),
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -391,26 +262,14 @@ function _createDemoCar2() {
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Martinez, CA 94553',
-            lat: 37.992489,
-            lng: -122.114357
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 46,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
     }
     return car
 }
 
-function _createDemoCar3() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '33333'
+async function _createDemoCar3() {
+    const _id = '3'
     const car = {
         vendor: 'Porsche',
         model: 'Boxster',
@@ -423,12 +282,7 @@ function _createDemoCar3() {
         exteriorColor: 'Guards Red',
         interiorColor: 'Savannah Beige',
         desc: 'THIS... is a 1998 Porsche Boxster, finished in Guards Red with a beige cloth soft top and a Savannah Beige leather interior.',
-        equipments: [
-            '17-inch wheels',
-            '5-speed manual transmission',
-            'Cloth soft top',
-            'Leather upholstery'],
-        owner: makeRandomUser(usersDemo),
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -437,26 +291,14 @@ function _createDemoCar3() {
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Austin, TX 78750',
-            lat: 30.430460,
-            lng: -97.804008
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 3,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
     }
     return car
 }
 
-function _createDemoCar4() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '44444'
+async function _createDemoCar4() {
+    const _id = '4'
     const car = {
         vendor: 'BMW',
         model: 'M5',
@@ -469,12 +311,7 @@ function _createDemoCar4() {
         exteriorColor: 'Marina Bay Blue',
         interiorColor: 'Silverstone',
         desc: 'THIS... is a 2018 BMW M5, finished in Marina Bay Blue with a Silverstone full leather interior.',
-        equipments: [
-            'Driving Assistance Plus (Active Driving Assistant Plus)',
-            '20-inch M light-alloy wheels',
-            '8-speed M Steptronic automatic transmission',
-            'M carbon ceramic brakes'],
-        owner: makeRandomUser(usersDemo),
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -483,26 +320,14 @@ function _createDemoCar4() {
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Humble, TX 77346',
-            lat: 29.988130,
-            lng: -95.175490
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 12,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
     }
     return car
 }
 
-function _createDemoCar5() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '55555'
+async function _createDemoCar5() {
+    const _id = '5'
     const car = {
         vendor: 'Audi',
         model: 'S5',
@@ -515,12 +340,7 @@ function _createDemoCar5() {
         exteriorColor: 'Ibis White',
         interiorColor: 'Black/Magma Red',
         desc: 'THIS... is a 2013 Audi S5 coupe, finished in Ibis White with a black and Magma Red leather interior.',
-        equipments: [
-            '7-speed S tronic dual-clutch automatic transmission',
-            'Quattro all-wheel-drive system with sports differential',
-            'Xenon headlights',
-            'Panoramic glass sunroof'],
-        owner: makeRandomUser(usersDemo),
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -529,30 +349,18 @@ function _createDemoCar5() {
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Clayton, NC 27527',
-            lat: 35.648659,
-            lng: -78.385597
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 2,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
     }
     return car
 }
 
-function _createDemoCar6() {
-    const startPrice = makeRandomInt(20000, 40000)
-    const _id = '66666'
+async function _createDemoCar6() {
+    const _id = '6'
     const car = {
         vendor: 'Mercedes-Benz',
         model: 'G550',
-        bodyStyle: 'SUV',
+        bodyStyle: 'SUV/Crossove',
         year: 2017,
         transmission: 'Automatic',
         drivetrain: '4WD/AWD',
@@ -561,12 +369,7 @@ function _createDemoCar6() {
         exteriorColor: 'Obsidian Black Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2017 Mercedes-Benz G550 4×4², finished in Obsidian Black with a black interior.',
-        equipments: [
-            '22-inch wheels',
-            'Adjustable suspension system',
-            'Portal axles',
-            'AMG carbon fiber exterior trim'],
-        owner: makeRandomUser(usersDemo),
+        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -575,19 +378,95 @@ function _createDemoCar6() {
             'images/' + _id + '/4.jpg'],
         location: {
             address: 'Fort Worth, TX 76108',
-            lat: 35.648659,
-            lng: -78.385597
         },
-        comments: [],
-        likes:[],
-        auction:
-        {
-            startPrice: startPrice,
-            status: 'active',
-            createdAt: Date.now() - 604800000 + 1000 * 60 * 60 * 24 * 4,
-            duration: 1000 * 60 * 60 * 24 * 7,
-            bids: []
-        }
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar7() {
+    const _id = '7'
+    const car = {
+        vendor: 'Tesla',
+        model: 'Model Y',
+        bodyStyle: 'SUV/Crossove',
+        year: 2020,
+        transmission: 'Automatic',
+        drivetrain: '4WD/AWD',
+        mileage: 3400,
+        engine: 'Dual Motors',
+        exteriorColor: 'Solid Black',
+        interiorColor: 'White/Black',
+        desc: 'THIS... is a 2020 Tesla Model Y, finished in Solid Black with a white and black interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Greensboro, NC 27410',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar8() {
+    const _id = '8'
+    const car = {
+        vendor: 'Porsche',
+        model: '911',
+        bodyStyle: 'Convertible',
+        year: 2004,
+        transmission: 'Manual',
+        drivetrain: '4WD/AWD',
+        mileage: 45100,
+        engine: '3.6L Flat-6',
+        exteriorColor: 'Black',
+        interiorColor: 'Black',
+        desc: 'THIS... is a 2004 Porsche 911 Carrera 4S Cabriolet, finished in black with a black cloth soft top and a black leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Santa Barbara, CA 93101',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar9() {
+    const _id = '9'
+    const car = {
+        vendor: 'Aston Martin',
+        model: 'V8 Vantage',
+        bodyStyle: 'Convertible',
+        year: 2009,
+        transmission: 'Automatic',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 44500,
+        engine: '4.7L V8',
+        exteriorColor: 'Titanium Silver Metallic',
+        interiorColor: 'Black',
+        desc: 'THIS... is a 2009 Aston Martin V8 Vantage Roadster, finished in Titanium Silver Metallic with a black interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'North Hollywood, CA 91605',
+        },
+        fake: true
     }
     return car
 }

@@ -132,7 +132,6 @@ import { faHeart, faClock } from '@fortawesome/free-solid-svg-icons'
 library.add(faHeart, faClock)
 var moment = require("moment");
 
-import { userService } from '../services/user.service.js';
 import avatar from 'vue-avatar'
 
 export default {
@@ -140,12 +139,8 @@ export default {
   data() {
     return {
       car: null,
-      comment: {
-        txt: '',
-      },
-      bid: {
-        price: 0,
-      },
+      comment: {txt: ''},
+      bid: {price: 0},
       like: {},
       isLoading: false,
       now: Date.now(),
@@ -157,32 +152,10 @@ export default {
   },
   computed: {
     lastBid() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      // return bid
-      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+      return carService.getLastBid(this.car).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     lastBidNum() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      return bid
-    },
-    currentPrice() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      return bid
+      return carService.getLastBid(this.car)
     },
     timeLeft() {
       const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
@@ -190,10 +163,10 @@ export default {
       return moment.duration(diff).format()
     },
     commentsToShow() {
-      return this.car.comments
+      return this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
     },
     bidsToShow() {
-      return this.car.auction.bids
+      return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
     },
     isActive() {
       return this.isLiked ? 'active' : ''
@@ -212,8 +185,6 @@ export default {
       this.isLoading = true
       try {
         this.car = await carService.getById(carId)
-        this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
-        this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
       } catch (err) {
         console.log(err)
         showMsg('Cannot load car', 'danger')
@@ -258,7 +229,7 @@ export default {
           this.$store.commit('toggleLogin', { isShown: true })
         }
         else {
-          if (this.bid.price > this.currentPrice) {
+          if (this.bid.price > this.lastBidNum) {
             this.bid.carId = this.car._id;
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
             socketService.emit('details newBid', bidToAdd)
@@ -266,7 +237,7 @@ export default {
             this.bid.price = 0
             showMsg('Bid placed successfuly')
           } else {
-            showMsg('Bid price must be over ' + this.currentPrice, 'danger')
+            showMsg('Bid price must be over ' + this.lastBidNum, 'danger')
           }
         }
       } catch (err) {
