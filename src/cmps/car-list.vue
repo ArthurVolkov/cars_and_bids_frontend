@@ -1,5 +1,5 @@
 <template>
-  <section class="list-container main-container">
+  <section class="list-container">
     <div class="block">
       <!-- <el-pagination
         layout="prev, pager, next"

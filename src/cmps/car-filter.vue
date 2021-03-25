@@ -1,66 +1,70 @@
 <template>
-  <section class="car-filter flex justify-between">
+  <section class="car-filter flex flex-col justify-between">
     <!-- <div class="flex flex-col justify-center align-center"> -->
 
-    <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
-      Years
-    </button>
-    <div v-if="yearsRangeIsOpen" class="block years-range">
-      <el-slider
-        @change="setFilter"
-        v-model="filterBy.byYears"
-        range
-        :min="1970"
-        :max="2021"
-        :marks="marks"
-      >
+    <div class="flex btn-container">
+      <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
+        Years
+      </button>
+      <div v-if="yearsRangeIsOpen" class="block years-range">
+        <el-slider
+          @change="setFilter"
+          v-model="filterBy.byYears"
+          range
+          :min="1970"
+          :max="2021"
+          :marks="marks"
         >
-      </el-slider>
-    </div>
+          >
+        </el-slider>
+      </div>
 
-    <div class="flex flex-col justify-center align-center">
-      <el-select
-        v-model="filterBy.bodyStyles"
-        @change="setFilter"
-        placeholder="Body style"
-      >
-        <el-option
-          v-for="item in bodyStyles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+      <div class="flex flex-col justify-center align-center">
+        <el-select
+          v-model="filterBy.bodyStyles"
+          @change="setFilter"
+          placeholder="Body style"
         >
-        </el-option>
-      </el-select>
-    </div>
+          <el-option
+            v-for="item in bodyStyles"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
 
-    <div class="flex flex-col justify-center align-center">
-      <!-- <label for="sort">Sort:</label> -->
-      <el-select
-        v-model="filterBy.vendors"
-        @change="setFilter"
-        placeholder="vendors"
-        multiple
-        collapse-tags
-      >
-        <el-option
-          v-for="item in vendors"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+      <div class="flex flex-col justify-center align-center">
+        <!-- <label for="sort">Sort:</label> -->
+        <el-select
+          v-model="filterBy.vendors"
+          @change="setFilter"
+          placeholder="vendors"
+          multiple
+          collapse-tags
         >
-        </el-option>
-      </el-select>
+          <el-option
+            v-for="item in vendors"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
+      </div>
     </div>
-    <button @click="setSort('ending-soon')" class="sort-btn">
-      Ending soon
-    </button>
-    <button @click="setSort('newly-listed')" class="sort-btn">
-      Newly listed
-    </button>
-    <button @click="setSort('lowest-mileage')" class="sort-btn">
-      Lowest mileage
-    </button>
+    <div class="flex align-center sort-btn-container">
+      <button @click="setSort('ending-soon')" class="sort-btn">
+        Ending soon
+      </button>
+      <button @click="setSort('newly-listed')" class="sort-btn">
+        Newly listed
+      </button>
+      <button @click="setSort('lowest-mileage')" class="sort-btn">
+        Lowest mileage
+      </button>
+    </div>
   </section>
 </template>
 

@@ -1,23 +1,55 @@
 .car-app {
-
-    margin-top: 80px;
+    margin-top: 12vh;
 
     .car-filter {
         position: relative;
         display: flex;
-        padding: 10px 0;
+        padding: 10px 5px;
         border-radius: 10px;
+        margin-bottom: 20px;
+        // div > *:not(.el-slider)*:not(.years-range) {
+        //     min-height: 100%;
+        // }
+        // div > *:not(.el-slider)*:not(.years-range) {
+        //     min-height: 100%;
+        // }
+        // div >* :not(.el-slider) {
+        //     min-height: 100%;
+        // }
 
-        > * {
+        .btn-container {
+            flex-grow: 1;
+            margin-inline-end: 10px;
+            margin-bottom: 10px;
+            * {
+                margin-inline-end: 10px;
+            }
+            @include for-normal-layout {
+                margin-bottom: 0;
+             }
+        }
+
+        .sort-btn-container {
+            // min-height: 100%;
+            * {
+                padding: 5px 0 10px;
+                margin-inline-start: 10px;
+            }
+        }
+
+        // div > *:not(.years-range) {
+        //     margin: 0 5px;
+        // }
+        div > *:not(.el-slider)*:not(.years-range) {
             margin: 0 5px;
         }
 
-        > *:first-child {
+        div > *:first-child {
             margin-left: 0;
-            width: 120px;
+            // min-width: 120px;
         }
 
-        > *:last-child {
+        div > *:last-child {
             margin-right: 0;
         }
 
@@ -40,8 +72,11 @@
             padding: 15px 40px;
             z-index: 20;
         }
-    }
 
+        @include for-normal-layout {
+            flex-direction: row;
+        }
+    }
 }
 
 .login-container {
@@ -76,7 +111,6 @@
         background-color: rgb(122, 11, 11);
     }
 }
-
 
 .main-layout.login-shown {
     overflow: hidden;
