@@ -72,18 +72,13 @@ export default {
       this.isDragOver = true;
     },
     handleFile(ev) {
-      console.log('ev:', ev)
       let files;
       if (ev.type === "change") files = ev.target.files;
       else if (ev.type === "drop") files = ev.dataTransfer.files;
-      // if (ev.type === "change") file = ev.target.files[0];
-      // else if (ev.type === "drop") file = ev.dataTransfer.files[0];
-      console.log('file:', files)
       this.onUploadImg(files);
     },
 
     async onUploadImg(files) {
-      // console.log('file:', file)
       this.isDragOver = false;
       try {
 

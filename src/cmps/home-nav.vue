@@ -152,12 +152,10 @@ export default {
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
     },
     setFilterName() {
-      console.log('in nav', this.filterName)
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
     },
     findCars() {
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
-      console.log('filter byin nav:', this.filterBy)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$router.push('/car')
       this.$store.dispatch({ type: 'loadCars' })

@@ -48,11 +48,7 @@ export default {
     }
   },
   methods: {
-    // remove(car) {
-    //   this.$emit('remove', car);
-    // },
     nextCar(diff) {
-      console.log('diff:', diff)
       this.pageIdx += diff
       if (this.pageIdx > this.cars.length - 3) this.pageIdx = 0
       else if (this.pageIdx < 0) this.pageIdx = this.cars.length - 3

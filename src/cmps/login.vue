@@ -90,7 +90,6 @@ export default {
       return this.isRegistration ? 'Login' : 'Registration'
     },
     loggedinUser() {
-      //console.log('this.$store.getters.loggedinUser:', this.$store.getters.loggedinUser)
       return this.$store.getters.loggedinUser
     },
     isAdmin() {
@@ -116,13 +115,6 @@ export default {
         this.closeLogin()
       }
     },
-    // login(response) {
-    //   console.log('AAAAAAAAAAAA', response.authResponse)
-    //   this.img = 'http://graph.facebook.com/' + response.authResponse.userID + '/picture?type=large&access_token=' + response.authResponse.accessToken
-    //   FB.api('/me', (res) => {
-    //     this.fbName = res.name
-    //   })
-    // },
     async login() {
       if (!this.user.username || !this.user.password) {
         showMsg('Enter username and password!')
@@ -132,7 +124,6 @@ export default {
 
         await this.$store.dispatch({ type: 'login', user: this.user })
         await this.$store.dispatch({ type: 'getUserMsgs'});
-        console.log('USER MSGS:',this.$store.getters.userMsgs)
         showMsg('signupp success')
       } catch (err) {
         showMsg('Cannot signupp', 'danger')
@@ -140,16 +131,6 @@ export default {
         this.closeLogin()
       }
     },
-    // async logout() {
-    //   console.log('Logout!');
-    //   try {
-    //     await this.$store.dispatch({ type: 'logout' })
-    //     showMsg('logged out success')
-
-    //   } catch (err) {
-    //     showMsg('Cannot logout', 'danger')
-    //   }
-    // },
     toggleRegistration() {
       this.isRegistration = !this.isRegistration
     },

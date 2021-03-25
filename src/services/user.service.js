@@ -44,11 +44,6 @@ async function signUp(user) {
     const signedUser = await httpService.post('auth/signup', user)
     // _handleLoggedinUser(signedUser)
     return signedUser
-
-    // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}`
-    // const cars = await httpService.get(`car${queryStr}`)
-    // console.log('cars:', cars)
-    // return cars
 }
 async function login(user) {
     console.log('user in serv signUp:', user)
@@ -56,11 +51,6 @@ async function login(user) {
     const loginedUser = await httpService.post('auth/login', user)
     // _handleLoggedinUser(loginedUser)
     return loginedUser
-
-    // var queryStr = (!filterBy) ? '' : `?name=${filterBy.name}&inStock=${filterBy.inStock}&type=${filterBy.type}`
-    // const cars = await httpService.get(`car${queryStr}`)
-    // console.log('cars:', cars)
-    // return cars
 }
 
 async function logout() {
@@ -72,7 +62,6 @@ async function logout() {
 
 async function getLoggedinUser() {
     const loggedinUser = await httpService.get('auth/user')
-    //console.log('loggedinUser:', loggedinUser)
     return loggedinUser
 }
 
@@ -85,7 +74,6 @@ async function getUsers() {
 
 // function _handleLoggedinUser(user) {
 //     gLoggedinUser = user;
-//     console.log('user:', user)
 //     sessionStorage.setItem('loggedinUser', JSON.stringify(user))
 //     return user;
 // }

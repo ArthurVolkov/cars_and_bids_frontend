@@ -84,16 +84,7 @@ export default {
     return {
       filterBy: {
         byYears: [1970, 2021]
-        // year: {
-        //   from: 0,
-        //   to: 2021
-        // },
-        // years: [1970, 2021],
-        // bodyStyles: '',
-        // vendors: [],
-        // sortBy: '',
       },
-      // years: [],
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
       yearsRangeIsOpen: false,
@@ -109,7 +100,6 @@ export default {
   },
   methods: {
     setFilter() {
-      console.log(' this.filterBy:', this.filterBy)
       this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
       this.$store.dispatch({ type: 'loadCars' })
     },
@@ -117,13 +107,11 @@ export default {
       this.filterBy.sortBy = sortBy
       this.$store.commit({ type: 'setSort', sortBy: this.filterBy.sortBy })
       this.$store.dispatch({ type: 'loadCars' })
-
     }
   },
   created() {
     // this.filterBy = JSON.parse(JSON.stringify(this.$store.getters.filterBy));
     this.filterBy = { byYears: this.filterBy.byYears, ...this.$store.getters.filterBy };
-    // if (!this.filterBy.byYears) this.filterBy.byYears = [1970, 2021]
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.yearsRangeIsOpen = false
@@ -131,10 +119,10 @@ export default {
     })
   },
   destroyed() {
-    this.filterBy.byYears = [1970, 2021],
-      this.filterBy.bodyStyles = '',
-      this.filterBy.vendors = [],
-      this.filterBy.sortBy = ''
+    this.filterBy.byYears = [1970, 2021]
+    this.filterBy.bodyStyles = ''
+    this.filterBy.vendors = []
+    this.filterBy.sortBy = ''
     this.$store.commit({ type: 'setFilter', filterBy: this.filterBy })
   }
 }

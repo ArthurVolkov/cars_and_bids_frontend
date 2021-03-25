@@ -116,9 +116,6 @@ export default {
     isShown() {
       return this.windowTop ? true : false;
     },
-    carsToShow() {
-      return this.$store.getters.carsToShow;
-    },
   },
   methods: {
     onScroll() {

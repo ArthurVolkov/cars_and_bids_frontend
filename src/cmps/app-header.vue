@@ -165,11 +165,9 @@ export default {
       this.openCollapsingBtns = false
     },
     openLogin() {
-      console.log('openLogin:')
       this.$store.commit('toggleLogin', { isShown: true })
     },
     async logout() {
-      console.log('Logout!');
       try {
         await this.$store.dispatch({ type: 'logout' })
         showMsg('logged out success')
@@ -198,7 +196,6 @@ export default {
       this.filterName = this.$store.getters.filterBy.name
       //this.filterBy = this.$store.getters.filterBy;
     },
-
   },
   async created() {
     this.isHomeRout = (this.$route.path === '/') ? true : false
