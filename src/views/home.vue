@@ -1,10 +1,11 @@
 <template>
   <div class="home-page-container main-layout full">
-    <div class="main-hero full">
-      <img src="../assets/images/hero.png" alt="" />
-      <transition name="slide-fade">
+    <div class="flex justify-center align-center main-hero full">
+      <!-- <img src="../assets/images/hero.png" alt="" /> -->
+        <home-nav :class="isShown"></home-nav>
+      <!-- <transition name="slide-fade">
         <home-nav v-if="isShown"></home-nav>
-      </transition>
+      </transition> -->
       <div class="hero-slogan-container flex flex-col">
         <h1>Find your dream car in <span>Cars & Bids</span>,</h1>
         <h2>the modern enthusiast cars auctions all around the world</h2>
@@ -114,8 +115,11 @@ export default {
       return this.$store.getters.carsToShowHome
     },
     isShown() {
-      return this.windowTop ? true : false;
+      return this.windowTop ? '' : 'hide';
     },
+    // isShown() {
+    //   return this.windowTop ? true : false;
+    // },
   },
   methods: {
     onScroll() {

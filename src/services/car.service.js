@@ -12,7 +12,7 @@ const colors = ['Blue', 'Black', 'Red', 'Yellow', 'Green', 'Gray'];
 const CAR_KEY = 'cars'
 const CAR_URL = '//localhost:3030/api/car/'
 
-//createDemoData()
+// createDemoData()
 
 async function createDemoData(){
     save(await _createDemoCar1());
