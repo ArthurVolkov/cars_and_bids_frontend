@@ -7,6 +7,11 @@
         position: relative;
         margin-bottom: 20px;
 
+        background-image: url(../assets/images/hero.png);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+
         &::before {
             content: "";
             position: absolute;
@@ -17,38 +22,43 @@
             bottom: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(0, 0, 0, 0.2) 0%,
-                rgba(0, 0, 0, 0.7) 40%,
+                rgba(0, 0, 0, .8) 0%,
+                rgba(0, 0, 0, .6) 40%,
                 rgba(0, 0, 0, 0) 50%,
+                rgba(0, 0, 0, 0) 100%,
             );
             @include for-normal-layout {
-                display: none;
+                // display: none;
             }
         }
     }
 
     .hero-slogan-container {
-        max-width: 90%;
-        position: absolute;
-        top: 22vh;
-        left: 1rem;
+        // max-width: 90%;
+        // position: absolute;
+        // top: 22vh;
+        // left: 1rem;
+        font-size: .8rem;
+        text-align: center;
+        margin-bottom: 250px;
+        z-index: 1;
         color: white;
-        font-size: .7em;
         & h1 {
-            font-size: 2em;
+            font-size: 1.5rem;
+            @include for-narrow-layout {
+                font-size: 2rem;
+            }
         }
         & span {
             white-space: nowrap;
             font-family: Montserrat;
         }
         @include for-narrow-layout {
-            font-size: .8em;
-            left: 2rem;
+            font-size: 1rem;
         }
 
         @include for-normal-layout {
-            top: 80vh;
-            font-size: 1.2em;
+            margin-bottom: 170px;
         }
     }
 
@@ -57,7 +67,7 @@
         height: 3.5rem;
         width: 100%;
         // left: 3%;
-        top: 10vh;
+        top: 50px;
         grid-column: 2/-2;
         background-color: $clr11;
         // border-radius: 5em;
@@ -148,7 +158,6 @@
 
         .search {
             min-width: 8em;
-
             @include for-normal-layout {
                 max-width: 35%;
             }
@@ -167,15 +176,32 @@
         // }
 
         @include for-normal-layout {
+            top: 100px;
+
             width: 94%;
-            left: 3%;
-            top: 20vh;
+            right: 3%;
+            // top: 20vh;
             border-radius: 5em;
             font-size: 1.1em;
         }
         @include for-wide-layout {
             width: 70%;
             left: 15%;
+        }
+
+        &.hide {
+            transition: width 1s, right 1s top 5s;
+            width: 300px;
+            border-radius: 4px;
+            left: auto;
+            right: 37%;
+            height: 40px;
+            // top: -10px;
+            & *:not(.search) {
+                max-width: 0;
+                max-height: 0;
+                opacity: 0;
+            }
         }
     }
 

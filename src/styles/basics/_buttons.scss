@@ -56,25 +56,31 @@ button.round-main.bid {
 }
 
 button.round-main.go {
-    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
     font-size: 1.1em;
     border: none;
     outline: none;
     font-weight: 500;
-    width: 165px;
-    padding: 3px 5px;
+    min-width: 110px;
+    padding: 7px 10px;
     background: $grad1;
     color: $clr11;
     min-height: 100%;
+    margin-inline-end: -1px;
+    margin-inline-start: 20px;
     .main-info-icon * {
         color: white;
+    }
+    svg {
+        font-size: 1rem;
+        // margin-inline-end: 10px;
     }
 
     @include for-normal-layout {
         border-radius: 3em;
-        margin: 6px;
-        min-height: 0;
-        padding: 7px 10px;
     }
 }
 

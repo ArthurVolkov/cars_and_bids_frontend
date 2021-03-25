@@ -84,7 +84,7 @@
             icon="user-circle"
             class="main-info-icon user-img"
           />
-          <avatar v-else :size="30" :username="loggedInUser.fullname"></avatar>
+          <avatar backgroundColor="#AC32E4" color="#F6F6F8" v-else :size="28" :username="loggedInUser.fullname"></avatar>
           <div
             v-if="openOptions"
             tabindex="0"

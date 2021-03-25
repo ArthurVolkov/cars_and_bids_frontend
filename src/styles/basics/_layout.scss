@@ -36,17 +36,6 @@
     // }
 }
 
-.header .el-input {
-    @include for-wide-layout {
-        width: 300px;
-    }
-}
-
-.header .collapsing-btn-container.collapsing {
-    @include for-normal-layout {
-    }
-}
-
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
