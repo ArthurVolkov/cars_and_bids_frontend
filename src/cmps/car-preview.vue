@@ -61,7 +61,7 @@
 //import carPreview from "@/cmps/car-preview.vue";
 var moment = require("moment");
 var momentDurationFormatSetup = require("moment-duration-format");
-
+import { carService } from "@/services/car.service.js";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart, faClock } from '@fortawesome/free-solid-svg-icons'
 library.add(faHeart, faClock)
@@ -80,20 +80,11 @@ export default {
       timeLeftInterval: null,
       isLiked: false,
       like: {},
-      topic: this.car._id
     }
   },
   computed: {
     lastBid() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        var sortBids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
-        bid = sortBids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      //  return bid
-      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+      return carService.getLastBid(this.car).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
     timeLeft() {
       // const diff = this.now - this.car.auction.createdAt + this.car.auction.duration
@@ -157,9 +148,9 @@ export default {
       }
     },
     findLike() {
-      this.$store.dispatch({ type: "getLoggedinUser" });
+      //this.$store.dispatch({ type: "getLoggedinUser" });
       if (this.$store.getters.loggedinUser && this.car.likes.length) {
-        const idx = this.car.likes.findIndex(like=> {
+        var idx = this.car.likes.findIndex(like=> {
           return like.by._id === this.$store.getters.loggedinUser._id
         })
         
@@ -167,10 +158,27 @@ export default {
           this.isLiked = true
         }
       }
+      console.log('LIKE:',this.isLiked)
+    },
+    someOneAddBid(bid) {
+      if (bid.carId === this.car._id) this.car.auction.bids.unshift(bid)
+    },
+    someOneChangeLike(like) {
+      if (like.carId === this.car._id) { 
+        if (like.isAdd) this.car.likes.unshift(like)
+        else {
+          var idx = this.car.likes.findIndex(currLike => {
+            return like.id === currLike.id
+          })
+          this.car.likes.splice(idx, 1)
+        }
+      }
     },
   },
   created() {
     this.findLike()
+    socketService.on('details addBid', this.someOneAddBid)
+    socketService.on('details changeLike', this.someOneChangeLike)
     this.timeLeftInterval = setInterval(() => {
       this.now = Date.now()
     }, 1000);

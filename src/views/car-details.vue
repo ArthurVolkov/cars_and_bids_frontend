@@ -99,7 +99,6 @@
       <form @submit="addBid" class="flex add-bid-container">
         <el-input-number
           v-model.number="bid.price"
-          :min="lastBidNum + 100"
           :controls="false"
         ></el-input-number>
         <button class="clean-btn">Place bid</button>
@@ -109,7 +108,7 @@
       <button class="clean-btn close-btn" @click="modalOpen = false">x</button>
     </div>
   </div>
-
+          <!-- :min="lastBidNum + 100" -->
   <div
     v-else
     v-loading.fullscreen.lock="isLoading"
@@ -145,7 +144,6 @@ export default {
       now: Date.now(),
       timeLeftInterval: null,
       modalOpen: false,
-      topic: this.$route.params.carId,
       isLiked: false
     };
   },
@@ -198,21 +196,19 @@ export default {
       }
     },
     getImgUrl(pic) {
-      if (!pic.includes('images')) {
-        return pic
-      }
+      if (!pic.includes('images')) return pic
       return require('../assets/' + pic)
     },
     async addComment() {
       try {
         this.$store.dispatch({ type: "getLoggedinUser" });
-        if (!this.$store.getters.loggedinUser) {
-          this.$store.commit('toggleLogin', { isShown: true })
-        }
+        if (!this.$store.getters.loggedinUser) this.$store.commit('toggleLogin', { isShown: true })
         else {
           this.comment.carId = this.car._id;
           const commentToAdd = await this.$store.dispatch({ type: 'addComment', comment: this.comment })
+          commentToAdd.carId = this.car._id;
           socketService.emit('details newComment', commentToAdd)
+          delete commentToAdd.carId
           this.car.comments.unshift(commentToAdd)
           this.comment.txt = ''
           showMsg('Comment saved successfuly')
@@ -231,7 +227,9 @@ export default {
           if (this.bid.price > this.lastBidNum) {
             this.bid.carId = this.car._id;
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
+            bidToAdd.carId = this.car._id;
             socketService.emit('details newBid', bidToAdd)
+            delete bidToAdd.carId
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
             showMsg('Bid placed successfuly')
@@ -282,30 +280,27 @@ export default {
       }
     },
     someOneAddBid(bid) {
-      this.car.auction.bids.unshift(bid)
+      if (bid.carId === this.car._id) this.car.auction.bids.unshift(bid)
     },
     someOneAddComment(comment) {
-      this.car.comments.unshift(comment)
+      if (comment.carId === this.car._id) this.car.comments.unshift(comment)
     },
     someOneChangeLike(like) {
-      if (like.isAdd) this.car.likes.unshift(like)
-      else {
-        var idx = this.car.likes.findIndex(currLike => {
-          return like.id === currLike.id
-        })
-        this.car.likes.splice(idx, 1)
+      if (like.carId === this.car._id) { 
+        if (like.isAdd) this.car.likes.unshift(like)
+        else {
+          var idx = this.car.likes.findIndex(currLike => {
+            return like.id === currLike.id
+          })
+          this.car.likes.splice(idx, 1)
+        }
       }
     },
-    timesUp(car){
-      alert(car._id)
-    }
   },
   async created() {
-    socketService.emit('details topic', this.topic)
-    socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details addComment', this.someOneAddComment)
+    socketService.on('details addBid', this.someOneAddBid)
     socketService.on('details changeLike', this.someOneChangeLike)
-    socketService.on('cars time', this.timesUp)
     await this.loadCar()
     this.findLike()
     this.timeLeftInterval = setInterval(() => {

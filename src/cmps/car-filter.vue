@@ -83,7 +83,8 @@ export default {
   data() {
     return {
       filterBy: {
-        byYears: [1970, 2021]
+        byYears: [1970, 2021],
+        sortBy: 'ending-soon'
       },
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),

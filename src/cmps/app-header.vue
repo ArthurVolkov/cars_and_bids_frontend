@@ -34,10 +34,11 @@
           @click="
             openNotifications = !openNotifications;
             openOptions = false;
+            newMsgCount = 0;
           "
           class="clean-btn msgs-open-btn"
         >
-          <el-badge :value="0" class="item">
+          <el-badge :value="newMsgCount" class="item">
             <font-awesome-icon icon="bell" class="main-info-icon" />
           </el-badge>
         </button>
@@ -45,6 +46,7 @@
           <div v-if="userMsgs && userMsgs.length" class="">
             <li
               v-for="(msg, idx) in userMsgs"
+              @click="msgClicked(msg)"
               :key="idx"
               class="user-msg flex align-center"
             >
@@ -129,7 +131,9 @@ export default {
       isHomeRout: false,
       openOptions: false,
       openNotifications: false,
-      openCollapsingBtns: false
+      openCollapsingBtns: false,
+      newMsgCount: 0,
+      msgCount: this.$store.getters.userMsgs.length
     }
   },
   computed: {
@@ -147,13 +151,13 @@ export default {
       return this.$store.getters.windowWidth >= 810 ? false : true
     },
     userMsgs() {
-      return this.$store.getters.userMsgs
+      var sortMsg = JSON.parse(JSON.stringify(this.$store.getters.userMsgs))
+      sortMsg.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })
+      return sortMsg
     }
-
   },
   methods: {
     setFilterName() {
-      //socketService.emit('admin change', 'Admin change toy')
       this.$store.commit({ type: 'setFilterName', name: this.filterName })
       this.$store.dispatch({ type: 'loadCars' })
     },
@@ -178,7 +182,11 @@ export default {
     },
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
-      console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
+      //console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
+      if (this.msgCount < this.$store.getters.userMsgs.length) {
+        this.newMsgCount++ 
+        this.msgCount = this.$store.getters.userMsgs.length
+      }
     },
     getMsgData(msg) {
       if (msg.type === 'bid') {
@@ -188,6 +196,13 @@ export default {
         return msg.data.slice(0, 30) + '...'
       }
     },
+    msgClicked(msg) {
+      this.$router.push('/car/details/' + msg.carId)
+      this.openNotifications = false
+    },
+    timesUp(car){
+      alert(car._id)
+    }
   },
   watch: {
     $route(route) {
@@ -206,7 +221,8 @@ export default {
       }
     })
     socketService.on('cars newMsg', this.newMsg)
-    console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
+    socketService.on('cars time', this.timesUp)
+    //console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
 
     try {
       await this.$store.dispatch({ type: "getLoggedinUser" });
@@ -216,7 +232,7 @@ export default {
 
     try {
       await this.$store.dispatch({ type: 'getUserMsgs' });
-      console.log('USER MSGS:', this.$store.getters.userMsgs)
+      //console.log('USER MSGS:', this.$store.getters.userMsgs)
     } catch (err) {
       showMsg('Cannot load Messeges', 'danger')
     }

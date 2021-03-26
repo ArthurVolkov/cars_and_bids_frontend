@@ -42,6 +42,7 @@ export const userStore = {
             if (msg.type === 'car') state.msgs.unshift(msg)
             else {
                 const userCars = await carService.queryUserCars(state.user._id);
+                console.log('MY CARS:',userCars)
                 const carFound = userCars.find(car=>{
                     return car._id === msg.carId                
                 })

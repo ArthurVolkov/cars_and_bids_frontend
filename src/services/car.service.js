@@ -72,6 +72,8 @@ async function query(filterBy) {
 
     var queryStr = (!filterBy) ? '' : `?name=${currFiletr.name}&bodyStyles=${currFiletr.bodyStyles}&vendors=${currFiletr.vendors}&years=${currFiletr.byYears}&pageIdx=${currFiletr.pageIdx}&pageSize=${currFiletr.pageSize}&sortBy=${currFiletr.sortBy}`
     const data = await httpService.get(`car${queryStr}`)
+    console.log('currFiletr.sortBy:', currFiletr.sortBy)
+    console.log('DATA:',data)
     return data
 }
 
@@ -109,14 +111,15 @@ async function save(car) {
     if (car._id) {
         return await httpService.put('car', car)
     } else {
-        console.log('KKKKKKKKKKKKK',car)
         return await httpService.post('car', car)
     }
 }
 
 function getLastBid(car) {
-    if (car.auction.bids.length) return car.auction.bids[0].price
-    else return car.auction.startPrice
+    var currCar = JSON.parse(JSON.stringify(car))
+    currCar.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+    if (car.auction.bids.length) return currCar.auction.bids[0].price
+    else return currCar.auction.startPrice
 }
 
 function getVendorList() {
