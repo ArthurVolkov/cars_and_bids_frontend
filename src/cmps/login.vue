@@ -42,13 +42,13 @@
       </el-form>
     </el-card>
     <button class="clean-btn close-btn" @click="closeLogin">x</button>
-    <facebook-login class="button"
+    <!-- <facebook-login class="button"
       appId="1015104252644196"
       @login="onLogin"
       @logout="onLogout"
       @get-initial-status="getUserData"
       @sdk-loaded="sdkLoaded">
-    </facebook-login>
+    </facebook-login> -->
     <!-- <div v-if="isConnected" class="information">  
       <p>{{name}} | {{email}} | {{personalID}}</p> 
       <img :src="picture">
