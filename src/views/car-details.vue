@@ -284,7 +284,7 @@ export default {
       }
     },
     findLike() {
-      this.$store.dispatch({ type: "getLoggedinUser" });
+//      this.$store.dispatch({ type: "getLoggedinUser" });
       if (this.$store.getters.loggedinUser && this.likesCount) {
         const idx = this.car.likes.findIndex(like => {
           return like.by._id === this.$store.getters.loggedinUser._id
