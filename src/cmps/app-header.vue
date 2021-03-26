@@ -53,7 +53,7 @@
               <avatar
                 :size="28"
                 :username="msg.by.fullname"
-                :src="loggedInUser.imgUrl"
+                :src="msg.by.imgUrl"
               ></avatar>
               <div>
                 <h6>
