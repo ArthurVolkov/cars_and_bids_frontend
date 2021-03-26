@@ -4,12 +4,17 @@
     <ul v-if="bids.length" class="bid-list clean-list">
       <li v-for="bid in bids" :key="bid.id">
         <div class="flex align-center bid-by">
-          <avatar :size="30" :username="bid.by.fullname"> </avatar>
+          <avatar
+            :size="30"
+            :username="bid.by.fullname"
+            :src="bid.by.imgUrl"
+          >
+          </avatar>
           <p>{{ bid.by.fullname }}</p>
           <span>{{ bid.createdAt | moment("calendar") }}</span>
         </div>
         <div class="bid-price flex justify-center align-center">
-          {{ bid.price }}
+          {{ priceToShow(bid.price) }}
         </div>
       </li>
     </ul>
@@ -36,55 +41,20 @@ export default {
     };
   },
   computed: {
-    lastBid() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      // return bid
-      return bid.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
-    },
-    currentPrice() {
-      var bid = 0
-      if (this.car.auction.bids.length) {
-        bid = this.car.auction.bids[0].price
-      } else {
-        bid = this.car.auction.startPrice
-      }
-      return bid
-    },
-    timeLeft() {
-      const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
-      if (diff <= 0) return 'Finished'
-      return moment.duration(diff).format()
-    },
-    commentsToShow() {
-      return this.car.comments
-    },
-    bidsToShow() {
-      return this.car.auction.bids
-    }
   },
 
   methods: {
-
     getImgUrl(pic) {
       if (!pic.includes('images')) {
         return pic
       }
       return require('../assets/' + pic)
     },
-  },
-  created() {
-
-  },
-  watch: {
-
-  },
-  destroyed() {
-
+    priceToShow(price) {
+      return price.toLocaleString('en-US', {
+        style: 'currency', currency: 'USD', minimumFractionDigits: 0
+      })
+    },
   },
   components: {
     avatar,

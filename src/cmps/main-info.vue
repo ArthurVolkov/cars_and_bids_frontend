@@ -39,17 +39,17 @@
 
       <pre
         class="flex align-center"
-      ><font-awesome-icon icon="cogs" class="main-info-icon" />  Transmission:</pre>
+      ><font-awesome-icon icon="cogs" class="main-info-icon" />  Gear:</pre>
       <span>{{ car.transmission }}</span>
 
       <pre
         class="flex align-center"
-      ><font-awesome-icon icon="palette" class="main-info-icon" />  Exterior Color:</pre>
+      ><font-awesome-icon icon="palette" class="main-info-icon" />  Ext. color:</pre>
       <span>{{ car.exteriorColor }}</span>
 
       <pre
         class="flex align-center"
-      ><font-awesome-icon icon="palette" class="main-info-icon" />  Interior Color:</pre>
+      ><font-awesome-icon icon="palette" class="main-info-icon" />  Int. color:</pre>
       <span>{{ car.interiorColor }}</span>
     </div>
   </div>

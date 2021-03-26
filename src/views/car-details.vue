@@ -3,7 +3,7 @@
     <div class="short-info align-self-start">
       <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
       <h3>
-        ~ {{ mileage }} Miles, {{ car.engine }} Engine,
+        {{ mileage }} Miles, {{ car.engine }} Engine,
         {{ car.transmission }} Gear
       </h3>
     </div>
@@ -22,34 +22,33 @@
       <div class="flex align-center">
         <font-awesome-icon icon="clock" class="main-info-icon" />
         <div class="flex flex-col align-center">
-          <h3>Time Left</h3>
+          <!-- <h3>Time Left</h3> -->
           <h3>{{ timeLeft }}</h3>
         </div>
       </div>
 
       <div class="flex flex-col align-center">
-        <h3>Current Bid</h3>
+        <!-- <h3>Current Bid</h3> -->
         <h3>{{ lastBid }}</h3>
       </div>
 
-      <div class="flex flex-col align-center">
+      <!-- <div class="flex flex-col align-center"> -->
+      <div class="flex flex align-center">
         <h3># Bids</h3>
         <h3>{{ car.auction.bids.length }}</h3>
       </div>
 
-      <div class="flex flex-col align-center coments-count">
+      <!-- <div class="flex flex-col align-center coments-count">
         <h3>Comments</h3>
         <h3>{{ car.comments.length }}</h3>
-      </div>
+      </div> -->
 
-      <div class="flex flex-col align-center">
+      <div class="flex flex align-center">
+        <!-- <div class="flex flex-col align-center"> -->
         <h3>Likes</h3>
         <h3>{{ car.likes.length }}</h3>
       </div>
       <div class="bid-info-btn-container flex align-center">
-        <button class="round-main bid" @click="modalOpen = true">
-          Place Bid
-        </button>
         <button
           @click.stop="toggleLike"
           :class="isActive"
@@ -57,10 +56,13 @@
         >
           <font-awesome-icon icon="heart" class="main-info-icon" />
         </button>
+        <button class="round-main bid" @click="modalOpen = true">
+          Place Bid
+        </button>
       </div>
     </div>
 
-    <div class="flex justify-between">
+    <div class="flex justify-between info-container">
       <main-info :car="car"></main-info>
       <bid-list :bids="bidsToShow.slice(0, 4)"></bid-list>
     </div>
@@ -81,7 +83,12 @@
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment._id">
           <div class="flex align-center bid-by">
-            <avatar :size="30" :username="comment.by.fullname"> </avatar>
+            <avatar
+              :size="28"
+              :username="comment.by.fullname"
+              :src="comment.by.imgUrl"
+            >
+            </avatar>
             <p>{{ comment.by.fullname }}</p>
             <span>{{ comment.createdAt | moment("calendar") }}</span>
           </div>
@@ -100,13 +107,16 @@
         <el-input-number
           v-model.number="bid.price"
           :min="lastBidNum + 100"
+          :max="999999"
           :controls="false"
         ></el-input-number>
         <button class="clean-btn">Place bid</button>
       </form>
 
       <bid-list :bids="bidsToShow"></bid-list>
-      <button class="clean-btn close-btn" @click="modalOpen = false">x</button>
+      <button class="clean-btn close-btn" @click="modalOpen = false">
+        <font-awesome-icon icon="times" class="main-info-icon" />
+      </button>
     </div>
   </div>
 
@@ -127,8 +137,8 @@ import { showMsg } from '../services/eventBus.service.js'
 import mainInfo from '../cmps/main-info'
 import bidList from '../cmps/bid-list'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faHeart, faClock } from '@fortawesome/free-solid-svg-icons'
-library.add(faHeart, faClock)
+import { faHeart, faClock, faTimes } from '@fortawesome/free-solid-svg-icons'
+library.add(faHeart, faClock, faTimes)
 var moment = require("moment");
 
 import avatar from 'vue-avatar'
@@ -138,8 +148,8 @@ export default {
   data() {
     return {
       car: null,
-      comment: {txt: ''},
-      bid: {price: 0},
+      comment: { txt: '' },
+      bid: { price: 0 },
       like: {},
       isLoading: false,
       now: Date.now(),
@@ -165,7 +175,9 @@ export default {
       return this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
     },
     bidsToShow() {
-      return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+      // return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+      const bids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+      return this.modalOpen ? bids : bids.slice(0, 3)
     },
     isActive() {
       return this.isLiked ? 'active' : ''

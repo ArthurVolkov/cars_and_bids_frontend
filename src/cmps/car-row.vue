@@ -1,6 +1,9 @@
 <template>
   <section class="row-container main-container">
-    <button @click="nextCar(1)" class="clean-btn arrow-btn flex align-center justify-center right">
+    <button
+      @click.stop="nextCar(1)"
+      class="clean-btn arrow-btn flex align-center justify-center right"
+    >
       <font-awesome-icon icon="angle-right" class="main-info-icon" />
     </button>
     <ul
@@ -16,7 +19,10 @@
         class="car-item-container flex flex-col justify-between align-center"
       ></car-preview>
     </ul>
-    <button @click="nextCar(-1)" class="clean-btn arrow-btn flex align-center justify-center left">
+    <button
+      @click.stop="nextCar(-1)"
+      class="clean-btn arrow-btn flex align-center justify-center left"
+    >
       <font-awesome-icon icon="angle-left" class="main-info-icon" />
     </button>
 
@@ -44,7 +50,6 @@ export default {
   data() {
     return {
       pageIdx: 0,
-      rowSize: 3
     }
   },
   methods: {
@@ -66,7 +71,18 @@ export default {
     carsToShow() {
 
       return this.cars.slice(this.pageIdx, this.pageIdx + this.rowSize)
+    },
+    rowSize() {
+      // return this.$store.getters.windowWidth >= 785 ? false : true
+      const width = this.$store.getters.windowWidth
+      console.log('width:', width)
+      if (width >= 908) return 3
+      // else if (width >= 730) return 3
+      else if (width >= 627) return 2
+      else return 1
+
     }
+
   },
   components: {
     carPreview,

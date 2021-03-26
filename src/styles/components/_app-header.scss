@@ -22,6 +22,13 @@
     }
     .msgs-open-btn {
         font-size: 1.1rem;
+        sup {
+            background-color: $clr6;
+            font-size: .7rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            // padding: 3px;
+        }
     }
     // img {
     //     height: auto;
@@ -126,7 +133,7 @@
 
     .user-msg-container {
         position: absolute;
-        top: 85px;
+        top: 55px;
         right: 0;
         background-color: white;
         box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.9);
@@ -134,6 +141,8 @@
         width: 360px;
         padding: 20px 10px;
         margin: 0;
+        max-height: 80vh;
+        overflow: auto;
         .user-msg {
             color: $clr1;
             background-color: $clr10;

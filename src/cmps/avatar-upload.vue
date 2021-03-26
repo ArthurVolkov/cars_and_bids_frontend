@@ -1,12 +1,10 @@
 <template>
   <div class="img-upload-container flex flex-col">
-    <template>
+    <img v-if="imgUrl" :src="imgUrl" alt="" />
+
+    <template v-else>
       <!-- <template v-if="!isLoading"> -->
       <!-- UPLOAD IMG -->
-      <h2>Photos</h2>
-      <p>
-        Please upload at least 5 photos of the exterior and interior of the car.
-      </p>
       <label
         for="imgUploader"
         @drop.prevent="handleFile"
@@ -14,24 +12,16 @@
         @dragleave="isDragOver = false"
         :class="{ drag: isDragOver }"
       >
-        <div class="drag-container flex flex-col justify-center align-center">
+        <div
+          class="drag-container flex flex-col justify-center align-center"
+          v-loading.lock="isLoading"
+        >
           <div class="upload-logo-container">
-            <img src="../assets/images/upload.png" alt="" />
+            <img src="../assets/images/plus.png" alt="" />
           </div>
-          <p>Click to select photos, or drag and drop here</p>
+          <!-- <p>➕</p> -->
         </div>
-
-        <!-- <h3 v-else>Drop image here</h3> -->
       </label>
-      <!-- <img-list v-if="imgUrls.length" :imgUrls="imgUrls" :isLoading="isLoading"/> -->
-      <!-- <img-list v-if="imgUrls.length || isLoading" :imgUrls="imgUrls" :isLoading="isLoading"/> -->
-      <img-list
-        v-if="imgUrls.length || isLoading"
-        :imgUrls="imgUrls"
-        v-loading.lock="isLoading"
-        element-loading-spinner="el-icon-loading"
-        element-loading-background="rgba(0, 0, 0, 0.5)"
-      />
 
       <!-- HIDDEN INPUT -->
       <input
@@ -39,7 +29,6 @@
         name="img-uploader"
         accept="image/png, image/jpeg"
         id="imgUploader"
-        :multiple="true"
         @change="handleFile"
       />
     </template>
@@ -60,11 +49,12 @@ import imgList from '../cmps/img-list';
 
 
 export default {
+  name: 'avatar-upload',
   data() {
     return {
       isLoading: false,
       isDragOver: false,
-      imgUrls: [],
+      imgUrl: '',
     };
   },
   methods: {
@@ -72,24 +62,22 @@ export default {
       this.isDragOver = true;
     },
     handleFile(ev) {
-      let files;
-      if (ev.type === "change") files = ev.target.files;
-      else if (ev.type === "drop") files = ev.dataTransfer.files;
-      this.onUploadImg(files);
+      console.log('ev:', ev)
+      let file;
+      if (ev.type === "change") file = ev.target.files[0];
+      else if (ev.type === "drop") file = ev.dataTransfer.files[0];
+      this.onUploadImg(file);
     },
 
-    async onUploadImg(files) {
+    async onUploadImg(file) {
       this.isDragOver = false;
       try {
 
         this.isLoading = true;
-        const res = await uploadImg(files);
+        const res = await uploadImg([file]);
         console.log('res in upload cmp:', res)
-        res.forEach(img => {
-
-          this.imgUrls.push(img.url)
-        });
-        this.$emit('saveImgs', this.imgUrls)
+        this.imgUrl = res[0].url
+        this.$emit('saveImg', this.imgUrl)
       } catch (err) {
         console.log('can`t upload images', err);
       } finally {

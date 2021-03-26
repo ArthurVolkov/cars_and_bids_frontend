@@ -55,13 +55,25 @@
       </div>
     </div>
     <div class="flex align-center sort-btn-container">
-      <button @click="setSort('ending-soon')" class="sort-btn">
+      <button
+        @click="setSort('ending-soon')"
+        class="sort-btn"
+        :class="endingSoonActive"
+      >
         Ending soon
       </button>
-      <button @click="setSort('newly-listed')" class="sort-btn">
+      <button
+        @click="setSort('newly-listed')"
+        class="sort-btn"
+        :class="newlyListedActive"
+      >
         Newly listed
       </button>
-      <button @click="setSort('lowest-mileage')" class="sort-btn">
+      <button
+        @click="setSort('lowest-mileage')"
+        class="sort-btn"
+        :class="lowestMileageActive"
+      >
         Lowest mileage
       </button>
     </div>
@@ -83,7 +95,8 @@ export default {
   data() {
     return {
       filterBy: {
-        byYears: [1970, 2021]
+        byYears: [1970, 2021],
+        // sortBy: '' ///////////////////////////////
       },
       bodyStyles: carService.getBodyStyleList(),
       vendors: carService.getVendorList(),
@@ -96,6 +109,15 @@ export default {
         [this.filterBy.byYears[0]]: '' + this.filterBy.byYears[0],
         [this.filterBy.byYears[1]]: '' + this.filterBy.byYears[1],
       }
+    },
+    endingSoonActive() {
+      return this.filterBy.sortBy === 'ending-soon' ? 'active' : ''
+    },
+    newlyListedActive() {
+      return this.filterBy.sortBy === 'newly-listed' ? 'active' : ''
+    },
+    lowestMileageActive() {
+      return this.filterBy.sortBy === 'lowest-mileage' ? 'active' : ''
     }
   },
   methods: {
@@ -112,6 +134,7 @@ export default {
   created() {
     // this.filterBy = JSON.parse(JSON.stringify(this.$store.getters.filterBy));
     this.filterBy = { byYears: this.filterBy.byYears, ...this.$store.getters.filterBy };
+    // if (!this.filterBy.sortBy) this.filterBy.sortBy = 'ending-soon' //////////////////////
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.yearsRangeIsOpen = false

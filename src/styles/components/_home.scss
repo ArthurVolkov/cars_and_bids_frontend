@@ -11,6 +11,8 @@
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        box-shadow: 0 0 10px 10px #9c9c9c;
+
 
         &::before {
             content: "";
@@ -52,6 +54,7 @@
         & span {
             white-space: nowrap;
             font-family: Montserrat;
+            font-weight: 400;
         }
         @include for-narrow-layout {
             font-size: 1rem;
@@ -65,11 +68,13 @@
     .home-nav {
         position: absolute;
         height: 3.5rem;
-        width: 100%;
+        width: 99.7%;
         // left: 3%;
         top: 50px;
         grid-column: 2/-2;
         background-color: $clr11;
+        z-index: 200;
+
         // border-radius: 5em;
         // z-index: 50;
 
@@ -177,29 +182,45 @@
 
         @include for-normal-layout {
             top: 100px;
-
-            width: 94%;
-            right: 3%;
+            max-width: 690px;
+            // width: 93%;
+            // right: 3.5%;
             // top: 20vh;
             border-radius: 5em;
             font-size: 1.1em;
+
+
+
+
+            // top: 100px;
+
+            // width: 93%;
+            // right: 3.5%;
+            // // top: 20vh;
+            // border-radius: 5em;
+            // font-size: 1.1em;
         }
         @include for-wide-layout {
-            width: 70%;
-            left: 15%;
+            // width: 70%;
+            // left: 15%;
         }
+        transition: width .3s, right .3s, opacity .5s .3s, top .3s, z-index .3s .3s;
+        // transition: width .5s, right .5s, opacity .8s .4s, top 1s;
 
         &.hide {
-            transition: width 1s, right 1s top 5s;
+            position: fixed;
+            z-index: 0;
             width: 300px;
             border-radius: 4px;
             left: auto;
-            right: 37%;
+            right: 320px;
             height: 40px;
-            // top: -10px;
+            opacity: 0;
+            top: 5px;
+            border: 1px solid $clr3;
             & *:not(.search) {
-                max-width: 0;
-                max-height: 0;
+                width: 0;
+                height: 0;
                 opacity: 0;
             }
         }

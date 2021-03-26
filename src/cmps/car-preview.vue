@@ -2,7 +2,12 @@
   <li class="car-preview flex flex-col justify-start">
     <!-- <img :src="getImgUrl(car.imgUrls[0])" alt=""> -->
     <!-- <div class="block"> -->
-    <el-carousel trigger="click" :autoplay="false" height="200px" indicator-position="none">
+    <el-carousel
+      trigger="click"
+      :autoplay="false"
+      height="200px"
+      indicator-position="none"
+    >
       <el-carousel-item
         v-for="(img, idx) in car.imgUrls.slice(0, 4)"
         :key="idx"
@@ -14,9 +19,9 @@
       </el-carousel-item>
     </el-carousel>
     <!-- </div> -->
-    <div @click.stop="toggleLike" class="like-btn pointer" :class="isActive">
+    <!-- <div @click.stop="toggleLike" class="like-btn pointer" :class="isActive">
       <font-awesome-icon icon="heart" class="main-info-icon" />
-    </div>
+    </div> -->
     <!-- <button class="like-btn">🤍</button> -->
     <div class="bid-info flex justify-between align-center">
       <div class="flex flex-col justify-center align-center">
@@ -26,7 +31,7 @@
         </p>
         <p class="description">Before ends</p>
       </div>
-      <div class="flex flex-col justify-center align-center">
+      <div class="flex flex-col justify-center align-center last-bid">
         <p>{{ lastBid }}</p>
         <p class="description">Current Bid</p>
       </div>
@@ -45,14 +50,20 @@
     <!-- <p>Mileage: {{ car.mileage }}</p> -->
     <div class="flex justify-between align-center">
       <p class="preview-address">{{ car.location.address }}</p>
-      <p class="flex align-center">
+      <div class="flex align-center">
         <!-- <font-awesome-icon icon="heart" class="main-info-icon" /><span
           >(8)</span
         > -->
-        <font-awesome-icon icon="heart" class="main-info-icon" /><span
-          >({{ likesCount }})</span
+        <!-- <font-awesome-icon icon="heart" class="main-info-icon" /> -->
+        <div
+          @click.stop="toggleLike"
+          class="like-btn pointer"
+          :class="isActive"
         >
-      </p>
+          <font-awesome-icon icon="heart" class="main-info-icon" />
+        </div>
+        <span>({{ likesCount }})</span>
+      </div>
     </div>
   </li>
 </template>
@@ -104,7 +115,7 @@ export default {
     isActive() {
       return this.isLiked ? 'active' : ''
     },
-    likesCount(){
+    likesCount() {
       return this.car.likes.length
     },
     mileage() {
@@ -118,17 +129,17 @@ export default {
     getImgUrl(pic) {
       if (!pic.includes('images')) {
         return pic
-      }      
+      }
       return require('../assets/' + pic)
     },
     async toggleLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
-      if (!this.$store.getters.loggedinUser) {        
-          this.$store.commit('toggleLogin', {isShown: true})
+      if (!this.$store.getters.loggedinUser) {
+        this.$store.commit('toggleLogin', { isShown: true })
       }
       else {
         this.isLiked = !this.isLiked
-        if (this.isLiked){
+        if (this.isLiked) {
           this.like.carId = this.car._id;
           var likeToAdd = await this.$store.dispatch({ type: 'addLike', like: this.like })
           var carToEdit = JSON.parse(JSON.stringify(this.car))
@@ -139,13 +150,13 @@ export default {
           socketService.emit('details newLike', likeToAdd)
 
         } else {
-          var idx = this.car.likes.findIndex(like=> {
+          var idx = this.car.likes.findIndex(like => {
             return like.by._id === this.$store.getters.loggedinUser._id
           })
           this.like.carId = this.car._id;
           await this.$store.dispatch({ type: 'removeLike', like: this.like })
           carToEdit = JSON.parse(JSON.stringify(this.car))
-          carToEdit.likes.splice(idx,1)        
+          carToEdit.likes.splice(idx, 1)
           this.$store.commit({ type: 'setCar', car: carToEdit })
           likeToAdd = {}
           likeToAdd.carId = this.car._id
@@ -159,10 +170,10 @@ export default {
     findLike() {
       this.$store.dispatch({ type: "getLoggedinUser" });
       if (this.$store.getters.loggedinUser && this.car.likes.length) {
-        const idx = this.car.likes.findIndex(like=> {
+        const idx = this.car.likes.findIndex(like => {
           return like.by._id === this.$store.getters.loggedinUser._id
         })
-        
+
         if (idx >= 0) {
           this.isLiked = true
         }
