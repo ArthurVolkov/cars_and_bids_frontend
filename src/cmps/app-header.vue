@@ -50,7 +50,11 @@
               :key="idx"
               class="user-msg flex align-center"
             >
-              <avatar :size="30" :username="msg.by.fullname"></avatar>
+              <avatar
+                :size="28"
+                :username="msg.by.fullname"
+                :src="loggedInUser.imgUrl"
+              ></avatar>
               <div>
                 <h6>
                   <span>New</span> {{ msg.type }} <span>added on</span>
@@ -87,8 +91,6 @@
             class="main-info-icon user-img"
           />
           <avatar
-            backgroundColor="#AC32E4"
-            color="#F6F6F8"
             v-else
             :size="28"
             :username="loggedInUser.fullname"
@@ -201,7 +203,7 @@ export default {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
       //console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
       if (this.msgCount < this.$store.getters.userMsgs.length) {
-        this.newMsgCount++ 
+        this.newMsgCount++
         this.msgCount = this.$store.getters.userMsgs.length
       }
     },
@@ -217,7 +219,7 @@ export default {
       this.$router.push('/car/details/' + msg.carId)
       this.openNotifications = false
     },
-    timesUp(car){
+    timesUp(car) {
       alert(car._id)
     }
   },

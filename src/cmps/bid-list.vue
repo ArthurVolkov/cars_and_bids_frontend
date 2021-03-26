@@ -5,7 +5,7 @@
       <li v-for="bid in bids" :key="bid.id">
         <div class="flex align-center bid-by">
           <avatar
-            :size="30"
+            :size="28"
             :username="bid.by.fullname"
             :src="bid.by.imgUrl"
           >

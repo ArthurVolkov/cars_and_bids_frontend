@@ -19,7 +19,7 @@ export const carStore = {
             return state.cars
         },
         carsToShowHome(state) {
-            sortCars = JSON.parse(JSON.stringify(state.cars))
+            var sortCars = JSON.parse(JSON.stringify(state.cars))
             return sortCars.sort((car1, car2) => { return car2.likes.length - car1.likes.length })
         },
         commentsToShow(state) {
