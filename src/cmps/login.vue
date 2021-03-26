@@ -49,10 +49,10 @@
       @get-initial-status="getUserData"
       @sdk-loaded="sdkLoaded">
     </facebook-login>
-    <div v-if="isConnected" class="information">  
+    <!-- <div v-if="isConnected" class="information">  
       <p>{{name}} | {{email}} | {{personalID}}</p> 
-      <!-- <img :src="picture"> -->
-</div>
+      <img :src="picture">
+    </div> -->
   </section>
 </template>
 
@@ -151,6 +151,10 @@ export default {
           this.email = user.email;
           this.name = user.name;
           this.picture = user.picture.data.url;
+          console.log(this.personalID)
+          console.log(this.email)
+          console.log(this.name)
+          console.log(this.picture)
         }
       )
     },
