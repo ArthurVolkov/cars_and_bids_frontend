@@ -202,6 +202,8 @@ export default {
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
       //console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
+      console.log(this.msgCount)
+      console.log(this.$store.getters.userMsgs.length)
       if (this.msgCount < this.$store.getters.userMsgs.length) {
         this.newMsgCount++
         this.msgCount = this.$store.getters.userMsgs.length
