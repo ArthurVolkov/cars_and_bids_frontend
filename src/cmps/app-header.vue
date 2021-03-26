@@ -86,7 +86,14 @@
             icon="user-circle"
             class="main-info-icon user-img"
           />
-          <avatar backgroundColor="#AC32E4" color="#F6F6F8" v-else :size="28" :username="loggedInUser.fullname"></avatar>
+          <avatar
+            backgroundColor="#AC32E4"
+            color="#F6F6F8"
+            v-else
+            :size="28"
+            :username="loggedInUser.fullname"
+            :src="loggedInUser.imgUrl"
+          ></avatar>
           <div
             v-if="openOptions"
             tabindex="0"
@@ -95,7 +102,7 @@
             <button v-if="!loggedInUser" class="clean-btn" @click="openLogin">
               Sign in
             </button>
-            <button v-else class="clean-btn" @click="logout">Sign out</button>
+            <button v-else class="clean-btn" @click="logout">Logout</button>
             <router-link to="/activity">Activites</router-link>
           </div>
         </div>
@@ -115,7 +122,7 @@
 
 
 import avatar from 'vue-avatar'
-import { showMsg } from '../services/eventBus.service.js'
+// import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUserCircle, faBell, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 library.add(faBars, faUserCircle, faBell, faCaretDown, faCaretUp)
@@ -145,10 +152,10 @@ export default {
       return this.$store.getters.loggedinUser ? this.$store.getters.loggedinUser : false
     },
     collapsing() {
-      return this.$store.getters.windowWidth >= 810 ? '' : 'collapsing';
+      return this.$store.getters.windowWidth >= 785 ? '' : 'collapsing';
     },
     hamburgerOpen() {
-      return this.$store.getters.windowWidth >= 810 ? false : true
+      return this.$store.getters.windowWidth >= 785 ? false : true
     },
     userMsgs() {
       var sortMsg = JSON.parse(JSON.stringify(this.$store.getters.userMsgs))
@@ -174,10 +181,20 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch({ type: 'logout' })
-        showMsg('logged out success')
+        // showMsg('logged out success')
+        this.$message({
+          showClose: true,
+          message: 'Logged out successfuly',
+          type: 'success'
+        });
 
       } catch (err) {
-        showMsg('Cannot logout', 'danger')
+        // showMsg('Cannot logout', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Cannot logout',
+          type: 'error'
+        });
       }
     },
     async newMsg(msg) {
@@ -227,14 +244,17 @@ export default {
     try {
       await this.$store.dispatch({ type: "getLoggedinUser" });
     } catch (err) {
-      showMsg('Cannot get user', 'danger')
+      // showMsg('Cannot get user', 'danger')
+      console.log('Cannot get user', err);
     }
 
     try {
       await this.$store.dispatch({ type: 'getUserMsgs' });
       //console.log('USER MSGS:', this.$store.getters.userMsgs)
     } catch (err) {
-      showMsg('Cannot load Messeges', 'danger')
+      // showMsg('Cannot load Messeges', 'danger')
+      console.log('Cannot load Messeges', err);
+
     }
 
   },

@@ -8,13 +8,19 @@ button.sort-btn {
     border: none;
     width: 120px;
     background-color: transparent;
-    font-weight: 600;
+    font-weight: 500;
     border-bottom: 1px solid $clr1;
     font-size: 1em;
+    outline: none;
     &:hover {
         border-bottom: 2px solid $clr1;
         margin-bottom: -1px;
     }
+    &.active {
+        border-bottom: 2px solid $clr1;
+        margin-bottom: -1px;
+        font-weight: 700;
+        }
 }
 
 button.filter-btn {
@@ -24,7 +30,7 @@ button.filter-btn {
     outline: none;
     width: 120px;
     font-weight: 500;
-    font-size: .9em;
+    font-size: 0.8em;
     color: $clr3;
     &:hover {
         // border-color: $clr3;
@@ -43,13 +49,12 @@ button.filter-btn {
 button.round-main.bid {
     height: 50px;
     padding: 5px 10px;
-    font-size: 1.2em;
+    font-size: 1.3rem;
     border: none;
     border-radius: 2em;
     outline: none;
     font-weight: 600;
-    margin-inline-end: 10px;
-    width: 120px;
+    width: 140px;
     padding: 7px 10px;
     background: $grad1;
     color: $clr11;
@@ -92,11 +97,11 @@ button.round-main.watch {
     border-radius: 5em;
     outline: none;
     font-weight: 600;
-    background-color: $clr11;
+    background-color: transparent;
     font-size: 2em;
     // width: 80px;
     path {
-        color: $clr3;
+        color: $clr11;
     }
     &.active path {
         color: $clr6;
@@ -121,17 +126,18 @@ button.round-main.watch {
 
 .close-btn {
     position: absolute;
-    top: 5px;
-    right: 8px;
+    top: 3px;
+    right: 5px;
     font-size: 1.5em;
+    color: $clr2;
 }
 
 .arrow-btn {
     background-color: $clr11;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: $clr2;
-    height: 2.8rem;
-    width: 2.8rem;
-    border-radius: 3rem;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 2rem;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.9);
 }

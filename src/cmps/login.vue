@@ -8,7 +8,11 @@
         >
         <button @click="logout">Logout</button>
       </section> -->
-      <el-form class="login-form" ref="form" @submit.native.prevent="send">
+      <el-form
+        class="login-form flex flex-col"
+        ref="form"
+        @submit.native.prevent="send"
+      >
         <h2>{{ title }}</h2>
         <el-form-item v-if="isRegistration" prop="fullname">
           <el-input v-model="user.fullname" placeholder="Full name"></el-input>
@@ -26,6 +30,8 @@
             show-password
           ></el-input>
         </el-form-item>
+
+        <avatar-upload v-if="isRegistration" @saveImg="saveImg"></avatar-upload>
 
         <div class="flex justify-between">
           <el-form-item>
@@ -49,7 +55,9 @@
         </div>
       </el-form>
     </el-card>
-    <button class="clean-btn close-btn" @click="closeLogin">x</button>
+    <button class="clean-btn close-btn" @click="closeLogin">
+      <font-awesome-icon icon="times" class="main-info-icon" />
+    </button>
     <!-- <pre> {{ users }} </pre> -->
     <!-- <v-facebook-login @login="login" app-id="1015104252644196"></v-facebook-login>
     <img :src="img" width="50" height="50">
@@ -60,9 +68,14 @@
 
 <script>
 
-import { showMsg } from '../services/eventBus.service.js'
+// import { showMsg } from '../services/eventBus.service.js'
 import { userService } from '../services/user.service.js'
 import VFacebookLogin from 'vue-facebook-login-component'
+import avatarUpload from "../cmps/avatar-upload.vue";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+library.add(faTimes)
+
 
 export default {
   name: 'login',
@@ -71,12 +84,14 @@ export default {
       user: {
         fullname: '',
         username: '',
-        password: ''
+        password: '',
+        imgUrl: ''
       },
       users: [],
       isRegistration: false,
       img: '',
-      fbName: ''
+      fbName: '',
+      isLoading: false,
     }
   },
   computed: {
@@ -103,30 +118,60 @@ export default {
     },
     async signUp() {
       if (!this.user.username || !this.user.password || !this.user.fullname) {
-        showMsg('Enter full name, username and password!');
+        // showMsg('Enter full name, username and password!');
+        this.$message({
+          showClose: true,
+          message: 'Enter full name, username and password!',
+          type: 'warning'
+        });
         return
       }
       try {
         await this.$store.dispatch({ type: 'signUp', user: this.user })
-        showMsg('signupp success')
+        // showMsg('signupp success')
+        this.$message({
+          showClose: true,
+          message: 'Sign up successfuly',
+          type: 'success'
+        });
       } catch (err) {
-        showMsg('Cannot signupp', 'danger')
+        // showMsg('Cannot signupp', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Cannot sign up',
+          type: 'error'
+        });
       } finally {
         this.closeLogin()
       }
     },
     async login() {
       if (!this.user.username || !this.user.password) {
-        showMsg('Enter username and password!')
+        // showMsg('Enter username and password!')
+        this.$message({
+          showClose: true,
+          message: 'Enter username and password!',
+          type: 'warning'
+        });
         return
       }
       try {
 
         await this.$store.dispatch({ type: 'login', user: this.user })
-        await this.$store.dispatch({ type: 'getUserMsgs'});
-        showMsg('signupp success')
+        await this.$store.dispatch({ type: 'getUserMsgs' });
+        // showMsg('signupp success')
+        this.$message({
+          showClose: true,
+          message: 'Sign up successfuly',
+          type: 'success'
+        });
       } catch (err) {
-        showMsg('Cannot signupp', 'danger')
+        // showMsg('Cannot signupp', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Cannot sign up',
+          type: 'error'
+        });
       } finally {
         this.closeLogin()
       }
@@ -136,6 +181,23 @@ export default {
     },
     closeLogin() {
       this.$store.commit('toggleLogin', { isShown: false })
+    },
+    saveImg(imgUrl) {
+      this.user.imgUrl = imgUrl
+      console.log('imgUrl in login:', imgUrl)
+    },
+
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('Avatar picture must be JPG format!');
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!');
+      }
+      return isJPG && isLt2M;
     }
   },
   async created() {
@@ -146,6 +208,7 @@ export default {
   },
   components: {
     VFacebookLogin,
+    avatarUpload
   },
 }
 </script>
