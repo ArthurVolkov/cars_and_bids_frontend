@@ -15,7 +15,7 @@ export default {
   name: "activity",
   date() {
     return {
-      userCars: null
+      userCars: null,
     }
   },
   computed: {
@@ -23,14 +23,14 @@ export default {
       return this.$store.getters.loggedinUser._id;
     },
     carsOwnerToShow() {
-      var carsOwner = this.userCars.filter(car=>{
+      var carsOwner = this.userCars.filter(car => {
         return car.owner._id === this.userId
       })
       return carsOwner;
     },
     carsLikedToShow() {
-      var carsLiked = this.userCars.filter(car=>{
-        var likes = car.likes.filter(like=>{
+      var carsLiked = this.userCars.filter(car => {
+        var likes = car.likes.filter(like => {
           return like.by._id === this.userId
         })
         car.myLikes = likes
@@ -39,24 +39,24 @@ export default {
       return carsLiked;
     },
     carsCommentedToShow() {
-        var carsCommented = this.userCars.filter(car=>{
-          var comments = car.comments.filter(comment=>{
-            return comment.by._id === this.userId
-          })
-          car.myComments = comments
-          return comments.length
+      var carsCommented = this.userCars.filter(car => {
+        var comments = car.comments.filter(comment => {
+          return comment.by._id === this.userId
         })
+        car.myComments = comments
+        return comments.length
+      })
       return carsCommented;
     },
     carsBidedToShow() {
-      var carsBided = this.userCars.filter(car=>{
-      var bids = car.auction.bids.filter((bid,idx)=>{
+      var carsBided = this.userCars.filter(car => {
+        var bids = car.auction.bids.filter((bid, idx) => {
           if (idx === 0) {
             if (bid.by._id === this.userId) {
-              bid.lastBid = {price: bid.price,isMine: true}
+              bid.lastBid = { price: bid.price, isMine: true }
               bid.idx = idx
             }
-          } 
+          }
           return bid.by._id === this.userId
         })
         car.auction.myBids = bids
@@ -64,16 +64,19 @@ export default {
       })
       return carsBided;
     },
+    user() {
+      return this.$store.getters.loggedinUser
+    }
   },
   methods: {
     async loadUserCars() {
-      this.userCars = await carService.queryUserCars(this.$store.getters.loggedinUser._id);  
+      this.userCars = await carService.queryUserCars(this.$store.getters.loggedinUser._id);
     }
   },
   components: {
     // carList,
   },
-  async created(){
+  async created() {
     await this.loadUserCars()
     console.log(this.userCars)
     console.log(this.carsOwnerToShow)
