@@ -119,7 +119,7 @@
       </button>
     </div>
   </div>
-          <!-- :min="lastBidNum + 100" -->
+  <!-- :min="lastBidNum + 100" -->
   <div
     v-else
     v-loading.fullscreen.lock="isLoading"
@@ -299,7 +299,7 @@ export default {
       if (comment.carId === this.car._id) this.car.comments.unshift(comment)
     },
     someOneChangeLike(like) {
-      if (like.carId === this.car._id) { 
+      if (like.carId === this.car._id) {
         if (like.isAdd) this.car.likes.unshift(like)
         else {
           var idx = this.car.likes.findIndex(currLike => {
