@@ -265,7 +265,7 @@ export default {
     async saveCar() {
       console.log("Saving...", this.carToEdit);
       try {
-        this.$store.dispatch({ type: "getLoggedinUser" });
+        // this.$store.dispatch({ type: "getLoggedinUser" });
         if (!this.$store.getters.loggedinUser) {
           this.$store.commit("toggleLogin", { isShown: true });
         } else {

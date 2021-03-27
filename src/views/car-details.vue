@@ -203,7 +203,7 @@ export default {
       }
     },
     async placeBid() {
-      this.$store.dispatch({ type: "getLoggedinUser" });
+      // this.$store.dispatch({ type: "getLoggedinUser" });
       if (!this.$store.getters.loggedinUser) {
         this.$store.commit('toggleLogin', { isShown: true })
       }
@@ -214,7 +214,7 @@ export default {
     },
     async addComment() {
       try {
-        this.$store.dispatch({ type: "getLoggedinUser" });
+        // this.$store.dispatch({ type: "getLoggedinUser" });
         if (!this.$store.getters.loggedinUser) this.$store.commit('toggleLogin', { isShown: true })
         else {
           this.comment.carId = this.car._id;
@@ -232,7 +232,7 @@ export default {
     },
     async addBid() {
       try {
-        this.$store.dispatch({ type: "getLoggedinUser" });
+        // this.$store.dispatch({ type: "getLoggedinUser" });
         if (!this.$store.getters.loggedinUser) {
           this.$store.commit('toggleLogin', { isShown: true })
         }
@@ -257,7 +257,7 @@ export default {
       }
     },
     async toggleLike() {
-      this.$store.dispatch({ type: "getLoggedinUser" });
+      // this.$store.dispatch({ type: "getLoggedinUser" });
       if (!this.$store.getters.loggedinUser) {
         this.$store.commit('toggleLogin', { isShown: true })
       }

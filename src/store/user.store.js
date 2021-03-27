@@ -3,7 +3,7 @@ import { carService } from "../services/car.service";
 
 export const userStore = {
     state: {
-        user: null,
+        user: userService.getLoggedinUser(),
         msgs: [],
         loginShown: false,
     },
@@ -23,6 +23,9 @@ export const userStore = {
             state.loginShown = isShown
             console.log('state.loginShown:', state.loginShown)
         },
+        setLoggedinUser(state, { user }) {
+            state.user = user;
+        }
     },
     actions: {
         async getUserMsgs({state}) {
@@ -49,14 +52,11 @@ export const userStore = {
                 if (carFound && msg.by._id !== state.user._id) state.msgs.unshift(msg)
             }
         },
-        async getLoggedinUser({state}) {
-            state.user = await userService.getLoggedinUser()
-        },
         async signUp(context, { user }) {
             console.log('user in store signUp:', user)
             try {
                 const signupedUser = await userService.signUp(user)
-                context.state.user = await userService.getLoggedinUser()
+                context.commit({ type: 'setLoggedinUser', user: signupedUser })
                 return signupedUser
             } catch (err) {
                 throw err
@@ -67,7 +67,7 @@ export const userStore = {
             console.log('user in store login:', user)
             try {
                 const loggedinUser = await userService.login(user)
-                context.state.user = await userService.getLoggedinUser()
+                context.commit({ type: 'setLoggedinUser', user: loggedinUser })
                 return loggedinUser
             } catch (err) {
                 throw err
@@ -78,7 +78,7 @@ export const userStore = {
             console.log('store logout:')
             try {
                 const logout = await userService.logout()
-                context.state.user = null
+                context.commit({ type: 'setLoggedinUser', user: null })
                 console.log('logout:', logout)
                 return logout
             } catch (err) {

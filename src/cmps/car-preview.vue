@@ -124,7 +124,7 @@ export default {
       return require('../assets/' + pic)
     },
     async toggleLike() {
-      this.$store.dispatch({ type: "getLoggedinUser" });
+      // this.$store.dispatch({ type: "getLoggedinUser" });
       if (!this.$store.getters.loggedinUser) {
         this.$store.commit('toggleLogin', { isShown: true })
       }
