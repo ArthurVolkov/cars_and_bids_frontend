@@ -23,22 +23,23 @@ async function createDemoData(){
     save(await _createDemoCar6());
     save(await _createDemoCar7());
     save(await _createDemoCar8());
-    save(await _createDemoCar9());    
+    save(await _createDemoCar9());
+    save(await _createDemoCar10());
+    save(await _createDemoCar11());    
+    save(await _createDemoCar12());
+    save(await _createDemoCar13());
+    save(await _createDemoCar14());
+    save(await _createDemoCar15());
+    save(await _createDemoCar16());
+    save(await _createDemoCar17());
+    save(await _createDemoCar18());
 }
-
-
-//_createCars()
-var gFilterBy = { name: '', pageIdx: 0 }
-
 export const carService = {
     query,
     queryUserCars,
     save,
     getEmptyCar,
     getById,
-    // setFilter,
-    // nextPage,
-    makeId,
     makeRandomUser,
     getBodyStyleList,
     getVendorList,
@@ -48,18 +49,8 @@ export const carService = {
     saveBid,
     saveLike,
     removeLike,
-    getEmptyFilter,
     getLastBid
-    // getCarsCountByUserId
 }
-
-// function setFilter(filterBy) {
-//     gFilterBy.title = filterBy.title
-//     gFilterBy.pageIdx = 0;
-// }
-// function nextPage() {
-//     gFilterBy.pageIdx++
-// }
 
 async function query(filterBy) {
     var currFiletr = JSON.parse(JSON.stringify(filterBy))
@@ -78,7 +69,6 @@ async function query(filterBy) {
 }
 
 async function queryUserCars(userId) {
-    // var queryStr = (!userId) ? '' : `?userId=${userId}`
     if (!userId) userId = ''
     const data = await httpService.get(`car/user/${userId}`)
     return data
@@ -140,20 +130,6 @@ function getDrivetrainList() {
     return drivetrains.map(item => { return { value: item, label: item } })
 }
 
-function getEmptyFilter() {
-    return {
-        byYears: [1970, 2021],
-        year: {
-            from: 0,
-            to: 2021
-        },
-        years: [1970, 2021],
-        bodyStyles: '',
-        vendors: [],
-        sortBy: '',
-    }
-}
-
 function getEmptyCar() {
     return {
         vendor: '',
@@ -177,6 +153,7 @@ function getEmptyCar() {
         },
         comments: [],
         likes: [],
+        msgs: [],
         auction:
         {
             bids: [],
@@ -186,15 +163,6 @@ function getEmptyCar() {
             duration: 1000 * 60 * 60 * 24 * 7
         }
     }
-}
-
-function makeId(length = 5) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return txt;
 }
 
 function makeRandomInt(min, max) {
@@ -473,3 +441,265 @@ async function _createDemoCar9() {
     }
     return car
 }
+
+async function _createDemoCar10() {
+    const _id = '10'
+    const car = {
+        vendor: 'Honda',
+        model: 'S2000',
+        bodyStyle: 'Convertible',
+        year: 2001,
+        transmission: 'Automatic',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 94500,
+        engine: '2.0L I4',
+        exteriorColor: 'Apex Blue Pearl',
+        interiorColor: 'Black/Blue',
+        desc: 'THIS... is a 2001 Honda S2000, refinished in Apex Blue Pearl with a black leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Butler, PA 16002',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar11() {
+    const _id = '11'
+    const car = {
+        vendor: 'Ferrari',
+        model: 'F430',
+        bodyStyle: 'Coupe',
+        year: 2006,
+        transmission: 'Automatic',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 34500,
+        engine: '4.3L 8V',
+        exteriorColor: 'Nero B/B',
+        interiorColor: 'Cuoio',
+        desc: 'THIS… is a 2006 Ferrari F430 Berlinetta, finished in Nero B/B with a Cuoio leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Jacksonville, FL 32207',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar12() {
+    const _id = '12'
+    const car = {
+        vendor: 'Ferrari',
+        model: '458',
+        bodyStyle: 'Coupe',
+        year: 2013,
+        transmission: 'Automatic',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 22500,
+        engine: '4.5L 8V',
+        exteriorColor: 'Rosso Corsa',
+        interiorColor: 'Beige',
+        desc: 'THIS... is a 2013 Ferrari 458 Italia, finished in Rosso Corsa with a beige leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Hayward, CA 94544',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar13() {
+    const _id = '13'
+    const car = {
+        vendor: 'Ferrari',
+        model: 'Spider',
+        bodyStyle: 'Convertible',
+        year: 2003,
+        transmission: 'Manual',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 24000,
+        engine: '3.6L 8V',
+        exteriorColor: 'Grigio Alloy',
+        interiorColor: 'Blue',
+        desc: 'THIS... is a 2003 Ferrari 360 Spider, finished in Grigio Alloy with a blue leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Toronto, ON, Canada',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar14() {
+    const _id = '14'
+    const car = {
+        vendor: 'Ferrari',
+        model: 'FF',
+        bodyStyle: 'Hatchback',
+        year: 2012,
+        transmission: 'Automatic',
+        drivetrain: '4WD/AWD',
+        mileage: 16800,
+        engine: '6.3L V12',
+        exteriorColor: 'Grigio Abu Dhabi',
+        interiorColor: 'Testa di Moro',
+        desc: 'THIS... is a 2012 Ferrari FF, finished in Grigio Abu Dhabi with a Testa di Moro (brown) leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Rancho Santa Fe, CA 92067',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar15() {
+    const _id = '15'
+    const car = {
+        vendor: 'Ferrari',
+        model: 'GTC4Lusso',
+        bodyStyle: 'Hatchback',
+        year: 2019,
+        transmission: 'Automatic',
+        drivetrain: '4WD/AWD',
+        mileage: 1500,
+        engine: '6.3L V12',
+        exteriorColor: 'Bianco Avus',
+        interiorColor: 'Rosso Ferrari',
+        desc: 'THIS... is a 2019 Ferrari GTC4Lusso, finished in Bianco Avus with a Rosso Ferrari leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'New Port Richey, FL 34652',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar16() {
+    const _id = '16'
+    const car = {
+        vendor: 'Lamborghini',
+        model: 'Gallardo',
+        bodyStyle: 'Convertible',
+        year: 2014,
+        transmission: 'Automatic',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 14000,
+        engine: '5.2L V10',
+        exteriorColor: 'Nero Noctis',
+        interiorColor: 'Nero Perseus',
+        desc: 'THIS… is a 2014 Lamborghini Gallardo LP550-2 Spyder, finished in Nero Noctis with a Nero Perseus leather interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Asheville, NC 28805',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar17() {
+    const _id = '17'
+    const car = {
+        vendor: 'Mazda',
+        model: 'MX-5 Miata',
+        bodyStyle: 'Convertible',
+        year: 1990,
+        transmission: 'Manual',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 38000,
+        engine: '1.6L I4',
+        exteriorColor: 'Classic Red',
+        interiorColor: 'Black',
+        desc: 'THIS... is a 1990 Mazda MX-5 Miata, finished in Classic Red with a black interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'Narberth, PA 19072',
+        },
+        fake: true
+    }
+    return car
+}
+
+async function _createDemoCar18() {
+    const _id = '18'
+    const car = {
+        vendor: 'Chevrolet',
+        model: 'SSR',
+        bodyStyle: 'Convertible',
+        year: 2005,
+        transmission: 'Manual',
+        drivetrain: 'Rear-wheel drive',
+        mileage: 65100,
+        engine: '6.0L V8',
+        exteriorColor: 'Smokin Asphalt',
+        interiorColor: 'Ebony',
+        desc: 'THIS... is a 2005 Chevrolet SSR, finished in Smokin Asphalt with an Ebony interior.',
+        owner: await makeRandomUser(),
+        imgUrls: [
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/2.jpg',
+            'images/' + _id + '/3.jpg',
+            'images/' + _id + '/1.jpg',
+            'images/' + _id + '/4.jpg'],
+        location: {
+            address: 'South Londonderry, PA 17015',
+        },
+        fake: true
+    }
+    return car
+}
+

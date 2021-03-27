@@ -61,7 +61,7 @@
 import { showMsg } from '../services/eventBus.service.js'
 import { userService } from '../services/user.service.js'
 import VFacebookLogin from 'vue-facebook-login-component'
-import facebookLogin from 'facebook-login-vuejs'
+// import facebookLogin from 'facebook-login-vuejs'
 
 export default {
   name: 'login',
@@ -76,12 +76,12 @@ export default {
       isRegistration: false,
       img: '',
       fbName: '',
-      isConnected: false,
-      name: '',
-      email: '',
-      personalID: '',
-      picture: '',
-      FB: undefined
+      // isConnected: false,
+      // name: '',
+      // email: '',
+      // personalID: '',
+      // picture: '',
+      // FB: undefined
     }
   },
   computed: {
@@ -144,32 +144,32 @@ export default {
     closeLogin() {
       this.$store.commit('toggleLogin', { isShown: false })
     },
-    getUserData() {
-      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
-        user => {
-          this.personalID = user.id;
-          this.email = user.email;
-          this.name = user.name;
-          this.picture = user.picture.data.url;
-          console.log(this.personalID)
-          console.log(this.email)
-          console.log(this.name)
-          console.log(this.picture)
-        }
-      )
-    },
-    sdkLoaded(payload) {
-      this.isConnected = payload.isConnected
-      this.FB = payload.FB
-      if (this.isConnected) this.getUserData()
-    },
-    onLogin() {
-      this.isConnected = true
-      this.getUserData()
-    },
-    onLogout() {
-      this.isConnected = false;
-    }
+    // getUserData() {
+    //   this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
+    //     user => {
+    //       this.personalID = user.id;
+    //       this.email = user.email;
+    //       this.name = user.name;
+    //       this.picture = user.picture.data.url;
+    //       console.log(this.personalID)
+    //       console.log(this.email)
+    //       console.log(this.name)
+    //       console.log(this.picture)
+    //     }
+    //   )
+    // },
+    // sdkLoaded(payload) {
+    //   this.isConnected = payload.isConnected
+    //   this.FB = payload.FB
+    //   if (this.isConnected) this.getUserData()
+    // },
+    // onLogin() {
+    //   this.isConnected = true
+    //   this.getUserData()
+    // },
+    // onLogout() {
+    //   this.isConnected = false;
+    // }
   },
   async created() {
     this.users = await userService.getUsers();
@@ -178,8 +178,8 @@ export default {
     this.closeLogin()
   },
   components: {
-    VFacebookLogin,
-    facebookLogin
+    // VFacebookLogin,
+    // facebookLogin
   },
 }
 </script>
