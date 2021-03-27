@@ -60,7 +60,11 @@
 
 import { showMsg } from '../services/eventBus.service.js'
 import { userService } from '../services/user.service.js'
+<<<<<<< HEAD
 import VFacebookLogin from 'vue-facebook-login-component'
+=======
+// import VFacebookLogin from 'vue-facebook-login-component'
+>>>>>>> 4c2da0777deae9f6ecec114d2213767d02149e56
 // import facebookLogin from 'facebook-login-vuejs'
 
 export default {

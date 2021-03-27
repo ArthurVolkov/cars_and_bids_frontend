@@ -1,8 +1,129 @@
 <template>
-  <section class="activity flex flex-col">
-    <h1>User Activites</h1>
-    <!-- {{userCars}} -->
+  <section v-if="userCars && user" class="activity-container flex">
+    <div class="user-info-container flex flex-col">
+      <div class="user-avatar-container">
+        <img v-if="user.imgUrl" :src="user.imgUrl" alt="" />
+        <img v-else src="../assets/images/no-image-available.jpg" alt="" />
+      </div>
+      <div class="user-info">
+        <h2>{{ user.fullname }}</h2>
+        <h3>Cars in auction:</h3>
+        <h4>{{ carsOwnerToShow.length }}</h4>
+        <!-- <h4>2</h4> -->
+        <h3>Likes:</h3>
+        <h4>{{ carsLikedToShow.length }}</h4>
+        <h3>Comments:</h3>
+        <h4>{{ carsCommentedToShow.length }}</h4>
+      </div>
+    </div>
+
+    <div class="flex flex-col own-car-container">
+      <h2>My cars</h2>
+      <ul class="clean-list flex flex-col minilist-container">
+        <li
+          v-for="car in carsOwnerToShow"
+          :key="car._id"
+          class="liked-car-mini flex"
+        >
+          <div class="img-container">
+            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+          </div>
+          <div class="w-full flex flex-col justify-between">
+            <div class="flex justify-between align-center w-full">
+              <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
+              <div>
+                <font-awesome-icon icon="heart" class="main-info-icon heart" />
+                <span>({{ car.likes.length }})</span>
+              </div>
+            </div>
+            <div>
+              <p class="address">{{ car.location.address }}</p>
+            </div>
+            <div class="flex justify-between align-center w-full">
+              <h3>{{ lastBid(car) }} #Bids ({{ car.auction.bids.length }})</h3>
+              <p>
+                <font-awesome-icon icon="clock" class="main-info-icon clock" />
+                <span>{{ timeLeft(car) }}</span>
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col own-car-container">
+      <h2>My bids</h2>
+      <ul class="clean-list flex flex-col minilist-container">
+        <li
+          v-for="car in carsBidedToShow"
+          :key="car._id"
+          class="liked-car-mini flex"
+        >
+          <div class="img-container">
+            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+          </div>
+          <div class="w-full flex flex-col justify-between">
+            <div class="flex justify-between align-center w-full">
+              <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
+
+              <p>
+                <font-awesome-icon icon="clock" class="main-info-icon clock" />
+                <span>{{ timeLeft(car) }}</span>
+              </p>
+            </div>
+            <div>
+              <p class="address">{{ car.location.address }}</p>
+            </div>
+            <div class="flex justify-between align-center w-full">
+              <p>
+                My bid <span :class="isLastBid(car)">{{ myBid(car) }}</span>
+              </p>
+              <p>
+                Last bid <span>{{ lastBid(car) }}</span>
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col liked-car-container">
+      <h2>Subscribed cars</h2>
+      <ul class="clean-list flex flex-col minilist-container">
+        <li
+          v-for="car in carsLikedToShow"
+          :key="car._id"
+          class="liked-car-mini flex"
+        >
+          <div class="img-container">
+            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+          </div>
+          <div class="w-full flex flex-col justify-between">
+            <div class="flex justify-between align-center w-full">
+              <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
+              <div>
+                <font-awesome-icon icon="heart" class="main-info-icon heart" />
+                <span>({{ car.likes.length }})</span>
+              </div>
+            </div>
+            <div>
+              <p class="address">{{ car.location.address }}</p>
+            </div>
+            <div class="flex justify-between align-center w-full">
+              <h3>{{ lastBid(car) }} #Bids ({{ car.auction.bids.length }})</h3>
+              <p>
+                <font-awesome-icon icon="clock" class="main-info-icon clock" />
+                <span>{{ timeLeft(car) }}</span>
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </section>
+  <div v-else class="activity-container">
+    <h1>No such page...</h1>
+  </div>
 </template>
 
 <script>
@@ -10,12 +131,16 @@
 
 import { showMsg } from '../services/eventBus.service.js'
 import { carService } from '../services/car.service.js'
+var moment = require("moment");
+var momentDurationFormatSetup = require("moment-duration-format");
 
 export default {
   name: "activity",
-  date() {
+  data() {
     return {
-      userCars: null
+      userCars: null,
+      user: null,
+      now: Date.now(),
     }
   },
   computed: {
@@ -23,14 +148,15 @@ export default {
       return this.$store.getters.loggedinUser._id;
     },
     carsOwnerToShow() {
-      var carsOwner = this.userCars.filter(car=>{
+      console.log('this.userCars:', this.userCars)
+      var carsOwner = this.userCars.filter(car => {
         return car.owner._id === this.userId
       })
       return carsOwner;
     },
     carsLikedToShow() {
-      var carsLiked = this.userCars.filter(car=>{
-        var likes = car.likes.filter(like=>{
+      var carsLiked = this.userCars.filter(car => {
+        var likes = car.likes.filter(like => {
           return like.by._id === this.userId
         })
         car.myLikes = likes
@@ -39,24 +165,24 @@ export default {
       return carsLiked;
     },
     carsCommentedToShow() {
-        var carsCommented = this.userCars.filter(car=>{
-          var comments = car.comments.filter(comment=>{
-            return comment.by._id === this.userId
-          })
-          car.myComments = comments
-          return comments.length
+      var carsCommented = this.userCars.filter(car => {
+        var comments = car.comments.filter(comment => {
+          return comment.by._id === this.userId
         })
+        car.myComments = comments
+        return comments.length
+      })
       return carsCommented;
     },
     carsBidedToShow() {
-      var carsBided = this.userCars.filter(car=>{
-      var bids = car.auction.bids.filter((bid,idx)=>{
+      var carsBided = this.userCars.filter(car => {
+        var bids = car.auction.bids.filter((bid, idx) => {
           if (idx === 0) {
             if (bid.by._id === this.userId) {
-              bid.lastBid = {price: bid.price,isMine: true}
+              bid.lastBid = { price: bid.price, isMine: true }
               bid.idx = idx
             }
-          } 
+          }
           return bid.by._id === this.userId
         })
         car.auction.myBids = bids
@@ -64,22 +190,62 @@ export default {
       })
       return carsBided;
     },
+
   },
   methods: {
     async loadUserCars() {
-      this.userCars = await carService.queryUserCars(this.$store.getters.loggedinUser._id);  
+      this.userCars = await carService.queryUserCars(this.$store.getters.loggedinUser?._id);
+      // console.log('userCars:', userCars)
+    },
+    getImgUrl(pic) {
+      if (!pic.includes('images')) {
+        return pic
+      }
+      return require('../assets/' + pic)
+    },
+    lastBid(car) {
+      return carService.getLastBid(car).toLocaleString('en-US', {
+        style: 'currency', currency: 'USD', minimumFractionDigits: 0
+      })
+    },
+    timeLeft(car) {
+      // const diff = this.now - this.car.auction.createdAt + this.car.auction.duration
+      const diff = car.auction.createdAt + car.auction.duration - this.now
+      if (diff <= 0) return 'Finished'
+      return moment.duration(diff).format()
+    },
+    myBid(car) {
+      return car.auction.myBids[0].price.toLocaleString('en-US', {
+        style: 'currency', currency: 'USD', minimumFractionDigits: 0
+      })
+    },
+    isLastBid(car) {
+      return car.auction.myBids[0] >= car.auction.bids[0] ? '' : 'danger'
     }
+
   },
   components: {
     // carList,
   },
-  async created(){
-    await this.loadUserCars()
-    console.log(this.userCars)
-    console.log(this.carsOwnerToShow)
-    console.log(this.carsLikedToShow)
-    console.log(this.carsCommentedToShow)
-    console.log(this.carsBidedToShow)
+  async created() {
+    try {
+      this.user = await this.$store.getters.loggedinUser
+      console.log('this.user:', this.user)
+      await this.loadUserCars()
+      console.log('user cars in created', this.userCars)
+      console.log(this.carsOwnerToShow)
+      console.log(this.carsLikedToShow)
+      console.log(this.carsCommentedToShow)
+      console.log(this.carsBidedToShow)
+    } catch (err) {
+      console.log('can`t load user cars', err);
+    }
+    this.timeLeftInterval = setInterval(() => {
+      this.now = Date.now()
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.timeLeftInterval);
   }
 };
 </script>

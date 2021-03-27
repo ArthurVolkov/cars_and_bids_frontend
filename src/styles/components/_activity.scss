@@ -1,5 +1,81 @@
-
-
-.activity {
+.activity-container {
     margin-top: 90px;
+    flex-wrap: wrap;
+
+    .minilist-container {
+        margin: 10px;
+        // background-color: $clr10;
+        // padding: 10px;
+        border-radius: 6px;
+        .img-container {
+            width: 130px;
+            min-width: 130px;
+            height: 90px;
+            border-radius: 4px;
+            // margin: 10px;
+            margin-inline-end: 10px;
+
+            img {
+                border-radius: 4px;
+            }
+        }
+        .liked-car-mini {
+            padding: 10px;
+            // margin: 10px;
+            width: 420px;
+            &:not(:last-child) {
+                border-bottom: 1px solid $clr2;
+            }
+            h2 {
+                font-size: 1rem;
+                max-width: 20ch;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            h3 {
+                font-size: 0.9rem;
+            }
+            span {
+                font-weight: 600;
+            }
+            .address {
+                font-size: 0.9rem;
+                color: $clr2;
+                margin-bottom: 20px;
+            }
+            .heart {
+                color: $clr6;
+            }
+            .clock {
+                color: $clr2;
+            }
+            > :last-child {
+                margin-top: -5px;
+            }
+        }
+    }
+}
+
+.user-info-container {
+    background-color: $clr10;
+    width: 270px;
+    height: 500px;
+    padding: 10px;
+    border-radius: 6px;
+
+    margin-inline-end: 20px; //////////////////////
+    h3 {
+        font-weight: 800;
+    }
+
+    .user-avatar-container {
+        width: 250px;
+        height: 250px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        img {
+            border-radius: 6px;
+        }
+    }
 }
