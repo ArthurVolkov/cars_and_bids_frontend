@@ -177,7 +177,9 @@ export default {
       var carsOwner = this.userCars.filter(car => {
         return car.owner._id === this.userId
       })
-      return carsOwner;
+      var sortCars = JSON.parse(JSON.stringify(carsOwner))
+      sortCars.auction.sort((car1, car2) => { return car2.createdAt - car1.createdAt })
+      return sortCars;
     },
     carsLikedToShow() {
       var carsLiked = this.userCars.filter(car => {
@@ -210,10 +212,14 @@ export default {
           }
           return bid.by._id === this.userId
         })
-        car.auction.myBids = bids
-        return bids.length
+        var sortBids = JSON.parse(JSON.stringify(bids))
+        sortBids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+        car.auction.myBids = sortBids
+        return sortBids.length
       })
-      return carsBided;
+      var sortCars = JSON.parse(JSON.stringify(carsBided))
+      sortCars.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+      return sortCars;
     },
 
   },
@@ -251,7 +257,6 @@ export default {
     openDetails(carId) {
       this.$router.push(`car/details/${carId}`)
     }
-
   },
   components: {
     // carList,
