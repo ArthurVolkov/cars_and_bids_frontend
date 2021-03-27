@@ -267,12 +267,11 @@ export default {
     socketService.on('cars time', this.timesUp)
     //console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
 
-    try {
-      await this.$store.dispatch({ type: "getLoggedinUser" });
-    } catch (err) {
-      // showMsg('Cannot get user', 'danger')
-      console.log('Cannot get user', err);
-    }
+    // try {
+    //  await this.$store.dispatch({ type: "getLoggedinUser" });
+    // } catch (err) {
+    //   console.log('Cannot get user', err);
+    // }
 
     try {
       await this.$store.dispatch({ type: 'getUserMsgs' });

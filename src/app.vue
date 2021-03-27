@@ -36,12 +36,6 @@ export default {
   },
   created() {
     this.$store.dispatch({ type: "loadCars" });
-    this.$store.dispatch({ type: "getLoggedinUser" });
-    socketService.setup();
-  },
-  created() {
-    this.$store.dispatch({ type: "loadCars" });
-    this.$store.dispatch({ type: "getLoggedinUser" });
     socketService.setup();
     window.addEventListener('resize', () => {
       this.$store.commit('setWindowWidth')

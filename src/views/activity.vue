@@ -219,7 +219,8 @@ export default {
   },
   methods: {
     async loadUserCars() {
-      this.userCars = await carService.queryUserCars(this.$store.getters.loggedinUser?._id);
+      const userId = this.$route.params.userId
+      this.userCars = await carService.queryUserCars(userId);
       // console.log('userCars:', userCars)
     },
     getImgUrl(pic) {
@@ -257,14 +258,14 @@ export default {
   },
   async created() {
     try {
-      this.user = await this.$store.getters.loggedinUser
-      console.log('this.user:', this.user)
+      this.user = this.$store.getters.loggedinUser
+      //console.log('this.user:', this.user)
       await this.loadUserCars()
-      console.log('user cars in created', this.userCars)
-      console.log(this.carsOwnerToShow)
-      console.log(this.carsLikedToShow)
-      console.log(this.carsCommentedToShow)
-      console.log(this.carsBidedToShow)
+      // console.log('user cars in created', this.userCars)
+      // console.log(this.carsOwnerToShow)
+      // console.log(this.carsLikedToShow)
+      // console.log(this.carsCommentedToShow)
+      // console.log(this.carsBidedToShow)
     } catch (err) {
       console.log('can`t load user cars', err);
     }
