@@ -7,7 +7,13 @@ export const userService = {
     login,
     getLoggedinUser,
     getUsers,
-    logout
+    logout,
+    getById
+}
+
+function getById(userId) {
+    // return storageService.get('user', userId)
+    return httpService.get(`user/${userId}`)
 }
 
 async function signUp(user) {

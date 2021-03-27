@@ -143,6 +143,7 @@ export default {
         return
       }
       try {
+        await this.$store.dispatch({ type: "login", user: this.user });
         console.log('USER MSGS:', this.$store.getters.userMsgs)
         this.$message({
           showClose: true,

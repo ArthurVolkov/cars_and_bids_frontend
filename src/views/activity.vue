@@ -156,6 +156,7 @@
 
 import { showMsg } from '../services/eventBus.service.js'
 import { carService } from '../services/car.service.js'
+import { userService } from '../services/user.service.js'
 var moment = require("moment");
 var momentDurationFormatSetup = require("moment-duration-format");
 
@@ -177,8 +178,8 @@ export default {
       var carsOwner = this.userCars.filter(car => {
         return car.owner._id === this.userId
       })
-      var sortCars = JSON.parse(JSON.stringify(carsOwner))
-      sortCars.auction.sort((car1, car2) => { return car2.createdAt - car1.createdAt })
+      var sortCars = JSON.parse(JSON.stringify(carsOwner)) || null
+      sortCars?.sort((car1, car2) => { return car1.auction.createdAt - car2.auction.createdAt })
       return sortCars;
     },
     carsLikedToShow() {
@@ -189,7 +190,9 @@ export default {
         car.myLikes = likes
         return likes.length
       })
-      return carsLiked;
+      var sortCars = JSON.parse(JSON.stringify(carsLiked)) || null
+      sortCars?.sort((car1, car2) => { return car1.auction.createdAt - car2.auction.createdAt })
+      return sortCars;
     },
     carsCommentedToShow() {
       var carsCommented = this.userCars.filter(car => {
@@ -212,22 +215,22 @@ export default {
           }
           return bid.by._id === this.userId
         })
-        var sortBids = JSON.parse(JSON.stringify(bids))
-        sortBids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+        var sortBids = JSON.parse(JSON.stringify(bids)) || null
+        sortBids?.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
         car.auction.myBids = sortBids
         return sortBids.length
       })
-      var sortCars = JSON.parse(JSON.stringify(carsBided))
-      sortCars.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+
+      var sortCars = JSON.parse(JSON.stringify(carsBided)) || null
+      sortCars?.sort((car1, car2) => { return car1.auction.createdAt - car2.auction.createdAt })
       return sortCars;
     },
-
   },
   methods: {
     async loadUserCars() {
       const userId = this.$route.params.userId
       this.userCars = await carService.queryUserCars(userId);
-      // console.log('userCars:', userCars)
+      // console.log('userCars:', this.userCars)
     },
     getImgUrl(pic) {
       if (!pic.includes('images')) {
@@ -263,8 +266,9 @@ export default {
   },
   async created() {
     try {
-      this.user = this.$store.getters.loggedinUser
-      //console.log('this.user:', this.user)
+      const userId = this.$route.params.userId
+      this.user = await userService.getById(userId)
+      console.log('this.user:', this.user)
       await this.loadUserCars()
       // console.log('user cars in created', this.userCars)
       // console.log(this.carsOwnerToShow)
