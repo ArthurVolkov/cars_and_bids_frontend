@@ -102,10 +102,17 @@
             class="account-options flex flex-col"
           >
             <button v-if="!loggedInUser" class="clean-btn" @click="openLogin">
-              Sign in
+              Sign up
             </button>
             <button v-else class="clean-btn" @click="logout">Logout</button>
-            <router-link to="/activity">Activites</router-link>
+            <button
+              class="clean-btn"
+              :class="isBlocked"
+              @click="openActivities"
+            >
+              Activites
+            </button>
+            <!-- <router-link to="/activity" :class="isBlocked">Activites</router-link> -->
           </div>
         </div>
         <button
@@ -163,6 +170,9 @@ export default {
       var sortMsg = JSON.parse(JSON.stringify(this.$store.getters.userMsgs))
       sortMsg.sort((msg1, msg2) => { return msg2.createdAt - msg1.createdAt })
       return sortMsg
+    },
+    isBlocked() {
+      return this.$store.getters.loggedinUser ? '' : 'blocked'
     }
   },
   methods: {
@@ -223,6 +233,18 @@ export default {
     },
     timesUp(car) {
       alert(car._id)
+    },
+    openActivities() {
+      if (!this.loggedInUser) {
+        this.$message({
+          showClose: true,
+          message: 'Please login first',
+          type: 'warning'
+        });
+        // this.$router.push('/login')
+      } else {
+        this.$router.push(`/activity/${this.loggedInUser._id}`)
+      }
     }
   },
   watch: {

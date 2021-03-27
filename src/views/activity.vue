@@ -1,32 +1,47 @@
 <template>
-  <section v-if="userCars && user" class="activity-container flex">
-    <div class="user-info-container flex flex-col">
+  <section v-if="userCars && user" class="activity-container flex flex-col">
+    <div class="user-info-container flex justify-between">
       <div class="user-avatar-container">
         <img v-if="user.imgUrl" :src="user.imgUrl" alt="" />
         <img v-else src="../assets/images/no-image-available.jpg" alt="" />
       </div>
-      <div class="user-info">
-        <h2>{{ user.fullname }}</h2>
-        <h3>Cars in auction:</h3>
-        <h4>{{ carsOwnerToShow.length }}</h4>
-        <!-- <h4>2</h4> -->
-        <h3>Likes:</h3>
-        <h4>{{ carsLikedToShow.length }}</h4>
-        <h3>Comments:</h3>
-        <h4>{{ carsCommentedToShow.length }}</h4>
+      <div class="user-info flex justify-around">
+        <div class="flex flex-col justify-between">
+          <h2>{{ user.fullname }}</h2>
+          <h4>Joined at <span>25.03.2021</span></h4>
+        </div>
+        <div class="flex flex-col justify-between">
+          <h3>
+            Cars in auction: <span>{{ carsOwnerToShow.length }}</span>
+          </h3>
+
+          <!-- <h4>2</h4> -->
+          <h3>
+            Likes: <span>{{ carsLikedToShow.length }}</span>
+          </h3>
+
+          <h3>
+            Comments: <span>{{ carsCommentedToShow.length }}</span>
+          </h3>
+        </div>
       </div>
     </div>
 
     <div class="flex flex-col own-car-container">
-      <h2>My cars</h2>
-      <ul class="clean-list flex flex-col minilist-container">
+      <h2>Active auctions</h2>
+      <ul class="clean-list flex justify-between minilist-container">
         <li
           v-for="car in carsOwnerToShow"
           :key="car._id"
           class="liked-car-mini flex"
         >
           <div class="img-container">
-            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+            <img
+              :src="getImgUrl(car.imgUrls[0])"
+              alt=""
+              class="pointer"
+              @click="openDetails(car._id)"
+            />
           </div>
           <div class="w-full flex flex-col justify-between">
             <div class="flex justify-between align-center w-full">
@@ -53,14 +68,19 @@
 
     <div class="flex flex-col own-car-container">
       <h2>My bids</h2>
-      <ul class="clean-list flex flex-col minilist-container">
+      <ul class="clean-list flex justify-between minilist-container">
         <li
           v-for="car in carsBidedToShow"
           :key="car._id"
           class="liked-car-mini flex"
         >
           <div class="img-container">
-            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+            <img
+              :src="getImgUrl(car.imgUrls[0])"
+              alt=""
+              class="pointer"
+              @click="openDetails(car._id)"
+            />
           </div>
           <div class="w-full flex flex-col justify-between">
             <div class="flex justify-between align-center w-full">
@@ -89,14 +109,19 @@
 
     <div class="flex flex-col liked-car-container">
       <h2>Subscribed cars</h2>
-      <ul class="clean-list flex flex-col minilist-container">
+      <ul class="clean-list flex justify-between minilist-container">
         <li
           v-for="car in carsLikedToShow"
           :key="car._id"
           class="liked-car-mini flex"
         >
           <div class="img-container">
-            <img :src="getImgUrl(car.imgUrls[0])" alt="" />
+            <img
+              :src="getImgUrl(car.imgUrls[0])"
+              alt=""
+              class="pointer"
+              @click="openDetails(car._id)"
+            />
           </div>
           <div class="w-full flex flex-col justify-between">
             <div class="flex justify-between align-center w-full">
@@ -221,6 +246,9 @@ export default {
     },
     isLastBid(car) {
       return car.auction.myBids[0] >= car.auction.bids[0] ? '' : 'danger'
+    },
+    openDetails(carId) {
+      this.$router.push(`car/details/${carId}`)
     }
 
   },

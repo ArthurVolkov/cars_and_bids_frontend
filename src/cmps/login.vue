@@ -58,7 +58,7 @@
 
 <script>
 
-import { showMsg } from '../services/eventBus.service.js'
+// import { showMsg } from '../services/eventBus.service.js'
 import { userService } from '../services/user.service.js'
 // import VFacebookLogin from 'vue-facebook-login-component'
 // import facebookLogin from 'facebook-login-vuejs'
@@ -109,31 +109,56 @@ export default {
     },
     async signUp() {
       if (!this.user.username || !this.user.password || !this.user.fullname) {
-        showMsg('Enter full name, username and password!');
+        this.$message({
+          showClose: true,
+          message: 'Enter full name, username and password',
+          type: 'warning'
+        });
         return
       }
       try {
         await this.$store.dispatch({ type: 'signUp', user: this.user })
-        showMsg('signupp success')
+        this.$message({
+          showClose: true,
+          message: 'Signed up',
+          type: 'success'
+        });
       } catch (err) {
-        showMsg('Cannot signupp', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Can not sign up',
+          type: 'danger'
+        });
       } finally {
         this.closeLogin()
       }
     },
     async login() {
       if (!this.user.username || !this.user.password) {
-        showMsg('Enter username and password!')
+        this.$message({
+          showClose: true,
+          message: 'Enter username and password',
+          type: 'warning'
+        });
         return
       }
       try {
 
         await this.$store.dispatch({ type: 'login', user: this.user })
-        await this.$store.dispatch({ type: 'getUserMsgs'});
-        console.log('USER MSGS:',this.$store.getters.userMsgs)
-        showMsg('signupp success')
+        await this.$store.dispatch({ type: 'getUserMsgs' });
+        console.log('USER MSGS:', this.$store.getters.userMsgs)
+        this.$message({
+          showClose: true,
+          message: 'Logged in',
+          type: 'success'
+        });
       } catch (err) {
         showMsg('Cannot signupp', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Can not login',
+          type: 'danger'
+        });
       } finally {
         this.closeLogin()
       }

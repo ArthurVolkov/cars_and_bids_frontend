@@ -40,9 +40,11 @@
         // position: absolute;
         // top: 22vh;
         // left: 1rem;
+        align-self: flex-start;
+        margin-top: 120px;
         font-size: .8rem;
         text-align: center;
-        margin-bottom: 250px;
+        // margin-top: 50px;
         z-index: 1;
         color: white;
         & h1 {
@@ -61,7 +63,7 @@
         }
 
         @include for-normal-layout {
-            margin-bottom: 170px;
+            margin-top: 170px;
         }
     }
 
@@ -204,7 +206,7 @@
             // width: 70%;
             // left: 15%;
         }
-        transition: width .3s, right .3s, opacity .5s .3s, top .3s, z-index .3s .3s;
+        transition: width 0s, right .3s, opacity .6s .5s, top .4s .2s, z-index .3s .3s;
         // transition: width .5s, right .5s, opacity .8s .4s, top 1s;
 
         &.hide {

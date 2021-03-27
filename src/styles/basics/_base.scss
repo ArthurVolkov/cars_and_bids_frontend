@@ -13,9 +13,26 @@ body {
     background-color: $clr11;
     // background: $grad4;
 
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(14deg, #abb0b2 14%, #505556 65%);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(13deg, #abb0b2cb 14%, #505556cc 64%);
+    }
+    &::-webkit-scrollbar-track {
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: inset 7px 6px 12px #f0f0f0;
+    }
 }
 
-h1, h2 {
+h1,
+h2 {
     font-family: Roboto-Bold;
     margin: 0;
     font-weight: 600;
@@ -50,7 +67,8 @@ img {
     object-fit: cover;
 }
 
-.el-textarea, textarea {
+.el-textarea,
+textarea {
     textarea {
         resize: none;
     }

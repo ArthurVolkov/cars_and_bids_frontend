@@ -42,7 +42,7 @@ const routes = [
     component: carDetails
   },
   {
-    path: '/activity',
+    path: '/activity/:userId',
     name: 'activity',
     component: activity
   }
