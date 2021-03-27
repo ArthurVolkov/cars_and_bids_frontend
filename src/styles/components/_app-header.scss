@@ -51,6 +51,9 @@
         .collapsing-btn-container a {
             color: $clr11;
         }
+        & .collapsing-btn-container.collapsing a {
+            color: $clr1;
+        }
     }
     // .btn-container {
     .btn-container :not(.account-options-btn *) {
@@ -121,7 +124,7 @@
         background-color: $clr11;
         outline: none;
         padding: 10px 20px;
-        // z-index: 200;
+        // z-index: 100;
         * {
             font-size: 0.9em;
             color: $clr1;
