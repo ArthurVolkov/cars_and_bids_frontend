@@ -152,6 +152,7 @@ export default {
           likeToAdd = {}
           likeToAdd.carId = this.car._id
           likeToAdd.isAdd = false
+          likeToAdd.userId = this.$store.getters.loggedinUser._id
           socketService.emit('details newLike', likeToAdd)
 
         }
@@ -178,8 +179,8 @@ export default {
       if (like.carId === this.car._id) { 
         if (like.isAdd) this.car.likes.unshift(like)
         else {
-          var idx = this.car.likes.findIndex(currLike => {
-            return like.id === currLike.id
+          var idx = car.likes.findIndex(currLike => {
+            return like.userId === currLike.by._id
           })
           this.car.likes.splice(idx, 1)
         }
@@ -195,6 +196,8 @@ export default {
     }, 1000);
   },
   destroyed() {
+    socketService.off('details addBid', this.someOneAddBid)
+    socketService.off('details changeLike', this.someOneChangeLike)
     clearInterval(this.timeLeftInterval);
   }
 }
