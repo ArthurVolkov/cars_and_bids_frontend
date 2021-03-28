@@ -129,7 +129,7 @@
       <winner-modal v-if="winnerCarId" :car="winnerCarId"></winner-modal>
     </transition>
     <transition name="fade">
-      <owner-modal ></owner-modal>
+      <!-- <owner-modal ></owner-modal> -->
       <!-- <owner-modal v-if="winnerCarId" :car="winnerCarId"></owner-modal> -->
     </transition>
   </div>
