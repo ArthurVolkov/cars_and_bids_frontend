@@ -259,22 +259,43 @@ export default {
     },
     openDetails(carId) {
       this.$router.push(`car/details/${carId}`)
-    }
+    },
+    someOneAddBid(bid) {
+      this.userCars.forEach(car => {
+        if (car._id === bid.carId) car.auction.bids.unshift(bid)
+      })
+    },
+    someOneAddComment(comment) {
+      this.userCars.forEach(car => {
+        if (car._id === comment.carId) car.comments.unshift(bid)
+      })
+    },
+    someOneChangeLike(like) {
+      this.userCars.forEach(car => {
+        if (car._id === like.carId) {
+          if (like.isAdd) car.likes.unshift(like)
+          else {
+          var idx = car.likes.findIndex(currLike => {
+            return like.userId === currLike.by._id
+          })
+          car.likes.splice(idx, 1)
+        }
+        }
+      })
+    },
   },
   components: {
     // carList,
   },
   async created() {
     try {
+      socketService.on('details addBid', this.someOneAddBid)
+      socketService.on('details addComment', this.someOneAddComment)
+      socketService.on('details changeLike', this.someOneChangeLike)
       const userId = this.$route.params.userId
       this.user = await userService.getById(userId)
       console.log('this.user:', this.user)
       await this.loadUserCars()
-      // console.log('user cars in created', this.userCars)
-      // console.log(this.carsOwnerToShow)
-      // console.log(this.carsLikedToShow)
-      // console.log(this.carsCommentedToShow)
-      // console.log(this.carsBidedToShow)
     } catch (err) {
       console.log('can`t load user cars', err);
     }
@@ -284,6 +305,9 @@ export default {
   },
   destroyed() {
     clearInterval(this.timeLeftInterval);
+    socketService.off('details addBid', this.someOneAddBid)
+    socketService.off('details addComment', this.someOneAddComment)
+    socketService.off('details changeLike', this.someOneChangeLike)
   }
 };
 </script>

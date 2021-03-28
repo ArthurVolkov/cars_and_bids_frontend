@@ -316,6 +316,7 @@ export default {
           likeToAdd = await this.$store.dispatch({ type: 'removeLike', like: this.like })
           likeToAdd.carId = this.car._id
           likeToAdd.isAdd = false
+          likeToAdd.userId = this.$store.getters.loggedinUser._id
           socketService.emit('details newLike', likeToAdd)
           this.car.likes.splice(idx, 1)
         }
@@ -341,7 +342,7 @@ export default {
         if (like.isAdd) this.car.likes.unshift(like)
         else {
           var idx = this.car.likes.findIndex(currLike => {
-            return like.id === currLike.id
+            return like.userId === currLike.by._id
           })
           this.car.likes.splice(idx, 1)
         }
