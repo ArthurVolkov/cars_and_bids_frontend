@@ -258,7 +258,7 @@ export default {
       return car.auction.myBids[0] >= car.auction.bids[0] ? '' : 'danger'
     },
     openDetails(carId) {
-      this.$router.push(`car/details/${carId}`)
+      this.$router.push(`/car/details/${carId}`)
     },
     someOneAddBid(bid) {
       this.userCars.forEach(car => {

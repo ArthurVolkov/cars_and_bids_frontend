@@ -2,12 +2,13 @@
   <div class="bid-container flex flex-col align-center">
     <h2>Last bids</h2>
     <ul v-if="bids.length" class="bid-list clean-list">
-      <li v-for="bid in bids" :key="bid.id" @click="userProfil(bid.by._id)">
+      <li v-for="bid in bids" :key="bid.id" @click="userProfile(bid.by._id)">
         <div class="flex align-center bid-by">
           <avatar
             :size="28"
             :username="bid.by.fullname"
             :src="bid.by.imgUrl"
+            class="pointer"
           >
           </avatar>
           <p>{{ bid.by.fullname }}</p>
@@ -55,7 +56,7 @@ export default {
         style: 'currency', currency: 'USD', minimumFractionDigits: 0
       })
     },
-    userProfil(userId){
+    userProfile(userId){
       this.$router.push(`/activity/${userId}`)
     }
   },
