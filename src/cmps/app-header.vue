@@ -248,7 +248,7 @@ export default {
       // alert(car._id)
 
 
-      if (car.auction.bids[car.auction.bids.length - 1].by._id === this.loggedInUser._id) {
+      if (car.auction.bids[car.auction.bids.length - 1]?.by._id === this.loggedInUser._id) {
         this.winnerCarId = car
         setTimeout(() => {
           this.winnerCarId = null
@@ -263,14 +263,15 @@ export default {
           type: 'warning'
         });
         // this.$router.push('/login')
-      } else {
+      } else if (this.$route.path !== `/activity/${this.loggedInUser._id}`){
+        // console.log(this.$route);
         this.$router.push(`/activity/${this.loggedInUser._id}`)
       }
     }
   },
   watch: {
     $route(route) {
-      console.log('route:', route)
+      // console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
       //this.filterBy = this.$store.getters.filterBy;
