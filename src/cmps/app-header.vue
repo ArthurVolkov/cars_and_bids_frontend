@@ -128,6 +128,10 @@
     <transition name="fade">
       <winner-modal v-if="winnerCarId" :car="winnerCarId"></winner-modal>
     </transition>
+    <transition name="fade">
+      <owner-modal ></owner-modal>
+      <!-- <owner-modal v-if="winnerCarId" :car="winnerCarId"></owner-modal> -->
+    </transition>
   </div>
 </template>
 
@@ -136,6 +140,7 @@
 
 import avatar from 'vue-avatar'
 import winnerModal from './winner-modal.vue'
+import ownerModal from './owner-modal.vue'
 // import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUserCircle, faBell, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
@@ -311,7 +316,8 @@ export default {
   },
   components: {
     avatar,
-    winnerModal
+    winnerModal,
+    ownerModal,
   },
 
 };
