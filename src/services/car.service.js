@@ -109,7 +109,7 @@ async function save(car) {
 
 function getLastBid(car) {
     var currCar = JSON.parse(JSON.stringify(car))
-    currCar.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+    currCar.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
     if (car.auction.bids.length) return currCar.auction.bids[0].price
     else return currCar.auction.startPrice
 }
@@ -196,7 +196,6 @@ async function _createDemoCar1() {
         exteriorColor: 'Carbon Black Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2014 BMW 550i xDrive, finished in Carbon Black with a black leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -226,7 +225,6 @@ async function _createDemoCar2() {
         exteriorColor: 'Quartz Gray Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2008 Audi S6, finished in Quartz Gray Metallic with a black leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -255,7 +253,6 @@ async function _createDemoCar3() {
         exteriorColor: 'Guards Red',
         interiorColor: 'Savannah Beige',
         desc: 'THIS... is a 1998 Porsche Boxster, finished in Guards Red with a beige cloth soft top and a Savannah Beige leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -284,7 +281,6 @@ async function _createDemoCar4() {
         exteriorColor: 'Marina Bay Blue',
         interiorColor: 'Silverstone',
         desc: 'THIS... is a 2018 BMW M5, finished in Marina Bay Blue with a Silverstone full leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -313,7 +309,6 @@ async function _createDemoCar5() {
         exteriorColor: 'Ibis White',
         interiorColor: 'Black/Magma Red',
         desc: 'THIS... is a 2013 Audi S5 coupe, finished in Ibis White with a black and Magma Red leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -342,7 +337,6 @@ async function _createDemoCar6() {
         exteriorColor: 'Obsidian Black Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2017 Mercedes-Benz G550 4×4², finished in Obsidian Black with a black interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -371,7 +365,6 @@ async function _createDemoCar7() {
         exteriorColor: 'Solid Black',
         interiorColor: 'White/Black',
         desc: 'THIS... is a 2020 Tesla Model Y, finished in Solid Black with a white and black interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -400,7 +393,6 @@ async function _createDemoCar8() {
         exteriorColor: 'Black',
         interiorColor: 'Black',
         desc: 'THIS... is a 2004 Porsche 911 Carrera 4S Cabriolet, finished in black with a black cloth soft top and a black leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -429,7 +421,6 @@ async function _createDemoCar9() {
         exteriorColor: 'Titanium Silver Metallic',
         interiorColor: 'Black',
         desc: 'THIS... is a 2009 Aston Martin V8 Vantage Roadster, finished in Titanium Silver Metallic with a black interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -458,7 +449,6 @@ async function _createDemoCar10() {
         exteriorColor: 'Apex Blue Pearl',
         interiorColor: 'Black/Blue',
         desc: 'THIS... is a 2001 Honda S2000, refinished in Apex Blue Pearl with a black leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -487,7 +477,6 @@ async function _createDemoCar11() {
         exteriorColor: 'Nero B/B',
         interiorColor: 'Cuoio',
         desc: 'THIS… is a 2006 Ferrari F430 Berlinetta, finished in Nero B/B with a Cuoio leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -516,7 +505,6 @@ async function _createDemoCar12() {
         exteriorColor: 'Rosso Corsa',
         interiorColor: 'Beige',
         desc: 'THIS... is a 2013 Ferrari 458 Italia, finished in Rosso Corsa with a beige leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -545,7 +533,6 @@ async function _createDemoCar13() {
         exteriorColor: 'Grigio Alloy',
         interiorColor: 'Blue',
         desc: 'THIS... is a 2003 Ferrari 360 Spider, finished in Grigio Alloy with a blue leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -574,7 +561,6 @@ async function _createDemoCar14() {
         exteriorColor: 'Grigio Abu Dhabi',
         interiorColor: 'Testa di Moro',
         desc: 'THIS... is a 2012 Ferrari FF, finished in Grigio Abu Dhabi with a Testa di Moro (brown) leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -603,7 +589,6 @@ async function _createDemoCar15() {
         exteriorColor: 'Bianco Avus',
         interiorColor: 'Rosso Ferrari',
         desc: 'THIS... is a 2019 Ferrari GTC4Lusso, finished in Bianco Avus with a Rosso Ferrari leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -632,7 +617,6 @@ async function _createDemoCar16() {
         exteriorColor: 'Nero Noctis',
         interiorColor: 'Nero Perseus',
         desc: 'THIS… is a 2014 Lamborghini Gallardo LP550-2 Spyder, finished in Nero Noctis with a Nero Perseus leather interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -661,7 +645,6 @@ async function _createDemoCar17() {
         exteriorColor: 'Classic Red',
         interiorColor: 'Black',
         desc: 'THIS... is a 1990 Mazda MX-5 Miata, finished in Classic Red with a black interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',
@@ -690,7 +673,6 @@ async function _createDemoCar18() {
         exteriorColor: 'Smokin Asphalt',
         interiorColor: 'Ebony',
         desc: 'THIS... is a 2005 Chevrolet SSR, finished in Smokin Asphalt with an Ebony interior.',
-        owner: await makeRandomUser(),
         imgUrls: [
             'images/' + _id + '/1.jpg',
             'images/' + _id + '/2.jpg',

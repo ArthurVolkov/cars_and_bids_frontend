@@ -43,7 +43,7 @@ export const userStore = {
         },
         async addUserMsg( {state}, {msg}) {
             if (msg.type === 'car') state.msgs.unshift(msg)
-            else {
+            else if (state.user){
                 const userCars = await carService.queryUserCars(state.user._id);
                 console.log('MY CARS:',userCars)
                 const carFound = userCars.find(car=>{
@@ -79,6 +79,7 @@ export const userStore = {
             try {
                 const logout = await userService.logout()
                 context.commit({ type: 'setLoggedinUser', user: null })
+                context.state.msgs = []
                 console.log('logout:', logout)
                 return logout
             } catch (err) {

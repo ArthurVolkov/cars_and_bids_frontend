@@ -190,7 +190,7 @@ export default {
     },
     isBlocked() {
       return this.$store.getters.loggedinUser ? '' : 'blocked'
-    }
+    },
   },
   methods: {
     setFilterName() {
@@ -229,7 +229,7 @@ export default {
     async newMsg(msg) {
       await this.$store.dispatch({ type: 'addUserMsg', msg })
       //console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
-      console.log(this.msgCount)
+      // console.log(this.msgCount)
       console.log(this.$store.getters.userMsgs.length)
       if (this.msgCount < this.$store.getters.userMsgs.length) {
         this.newMsgCount++
@@ -251,10 +251,9 @@ export default {
     timesUp(car) {
       console.log('timesUp car:', car)
       // alert(car._id)
-
-
-      if (car.auction.bids[car.auction.bids.length - 1]?.by._id === this.loggedInUser._id) {
-        this.winnerCar = car
+      car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
+      if (car.auction.bids[0]?.by._id === this.loggedInUser._id) {
+        this.winnerCarId = car
         setTimeout(() => {
           this.winnerCar = null
         }, 10000);
@@ -274,14 +273,15 @@ export default {
           type: 'warning'
         });
         // this.$router.push('/login')
-      } else {
+      } else if (this.$route.path !== `/activity/${this.loggedInUser._id}`){
+        // console.log(this.$route);
         this.$router.push(`/activity/${this.loggedInUser._id}`)
       }
     }
   },
   watch: {
     $route(route) {
-      console.log('route:', route)
+      // console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
       //this.filterBy = this.$store.getters.filterBy;
@@ -297,23 +297,11 @@ export default {
     })
     socketService.on('cars newMsg', this.newMsg)
     socketService.on('cars time', this.timesUp)
-    //console.log('USER MSGS CREATED:', this.$store.getters.userMsgs)
-
-    // try {
-    //  await this.$store.dispatch({ type: "getLoggedinUser" });
-    // } catch (err) {
-    //   console.log('Cannot get user', err);
-    // }
-
     try {
       await this.$store.dispatch({ type: 'getUserMsgs' });
-      //console.log('USER MSGS:', this.$store.getters.userMsgs)
     } catch (err) {
-      // showMsg('Cannot load Messeges', 'danger')
       console.log('Cannot load Messeges', err);
-
     }
-
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)
