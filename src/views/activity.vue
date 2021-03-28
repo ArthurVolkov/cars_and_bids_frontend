@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-col justify-between">
           <h3>
-            Cars in auction: <span>{{ carsOwnerToShow.length }}</span>
+            Active auctions: <span>{{ carsOwnerToShow.length }}</span>
           </h3>
 
           <!-- <h4>2</h4> -->
@@ -108,7 +108,7 @@
     </div>
 
     <div class="flex flex-col liked-car-container">
-      <h2>Subscribed cars</h2>
+      <h2>My favorites</h2>
       <ul class="clean-list flex justify-between minilist-container">
         <li
           v-for="car in carsLikedToShow"

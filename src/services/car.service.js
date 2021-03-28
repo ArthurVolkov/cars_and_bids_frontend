@@ -109,7 +109,7 @@ async function save(car) {
 
 function getLastBid(car) {
     var currCar = JSON.parse(JSON.stringify(car))
-    currCar.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+    currCar.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
     if (car.auction.bids.length) return currCar.auction.bids[0].price
     else return currCar.auction.startPrice
 }

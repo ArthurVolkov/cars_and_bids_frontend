@@ -154,6 +154,7 @@ export default {
       }
       try {
         await this.$store.dispatch({ type: "login", user: this.user });
+        await this.$store.dispatch({ type: 'getUserMsgs' });
         console.log('USER MSGS:', this.$store.getters.userMsgs)
         this.$message({
           showClose: true,
