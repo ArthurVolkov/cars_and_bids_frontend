@@ -201,7 +201,7 @@ export default {
       if (like.carId === this.car._id) {
         if (like.isAdd) this.car.likes.unshift(like)
         else {
-          var idx = car.likes.findIndex(currLike => {
+          var idx = this.car.likes.findIndex(currLike => {
             return like.userId === currLike.by._id
           })
           this.car.likes.splice(idx, 1)
