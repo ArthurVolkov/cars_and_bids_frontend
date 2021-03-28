@@ -89,16 +89,76 @@
         .last-bid {
             :first-child {
                 color: $clr6;
+                &.on-timer {
+                    color: $clr1;
+                }
             }
         }
-        
-
 
         .description {
             font-size: 0.8em;
             font-weight: 500;
             color: $clr2;
         }
+    }
+
+    // @keyframes timer {
+    //     from {width: 100%;}
+    //     to {width: 0;}
+    //   }
+
+    .bid-info-timer {
+        position: absolute;
+        z-index: -1;
+        border-radius: 6px 0 0 6px;
+        background-color: $clr6;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        // animation-name: timer;
+        // animation-duration: 60s;
+        // animation-fill-mode: forwards;
+        // animation-timing-function: linear;
+        transition: width 2s;
+    }
+    @keyframes countdown-details {
+        0% {
+            // font-size: 0rem;
+            height: 0;
+            width: 0;
+        }
+        50% {
+            // font-size: 7rem;
+            height: 200px;
+            width: 200px;
+        }
+        100% {
+            // font-size: 0rem;
+            height: 0;
+            width: 0;
+        }
+    }
+
+    .inner-timer {
+        position: absolute;
+        top: -175px;
+        left: 40%;
+        // transform:translate(-50%);
+        font-size: 7rem;
+        font-weight: 800;
+        z-index: 200;
+        color: $clr6 !important;
+        overflow: hidden;
+        text-shadow: 3px 3px 5px $clr2;
+        // width: 200px;
+        // height: 200px;
+
+        animation-name: countdown-details;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
     }
 
     .preview-address {

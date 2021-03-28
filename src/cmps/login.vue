@@ -1,7 +1,7 @@
 <template>
   <section class="login-container">
     <el-card>
-      <el-form class="login-form" ref="form" @submit.native.prevent="send">
+      <el-form class="login-form flex flex-col" ref="form" @submit.native.prevent="send">
         <h2>{{ title }}</h2>
         <el-form-item v-if="isRegistration" prop="fullname">
           <el-input v-model="user.fullname" placeholder="Full name"></el-input>
@@ -18,6 +18,8 @@
             show-password
           ></el-input>
         </el-form-item>
+
+        <avatar-upload v-if="isRegistration" @saveImg="saveImg"></avatar-upload>
 
         <div class="flex justify-between">
           <el-form-item>
@@ -41,7 +43,9 @@
         </div>
       </el-form>
     </el-card>
-    <button class="clean-btn close-btn" @click="closeLogin">x</button>
+    <button class="clean-btn close-btn" @click="closeLogin">
+      <font-awesome-icon icon="times" class="main-info-icon" />
+    </button>
     <!-- <facebook-login class="button"
       appId="1015104252644196"
       @login="onLogin"
@@ -62,6 +66,11 @@
 import { userService } from '../services/user.service.js'
 // import VFacebookLogin from 'vue-facebook-login-component'
 // import facebookLogin from 'facebook-login-vuejs'
+import avatarUpload from "../cmps/avatar-upload.vue";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+library.add(faTimes)
+
 
 export default {
   name: 'login',
@@ -76,6 +85,7 @@ export default {
       isRegistration: false,
       img: '',
       fbName: '',
+
       // isConnected: false,
       // name: '',
       // email: '',
@@ -151,7 +161,7 @@ export default {
           type: 'success'
         });
       } catch (err) {
-        showMsg('Cannot signupp', 'danger')
+        // showMsg('Cannot signupp', 'danger')
         this.$message({
           showClose: true,
           message: 'Can not login',
@@ -193,6 +203,23 @@ export default {
     // onLogout() {
     //   this.isConnected = false;
     // }
+    saveImg(imgUrl) {
+      this.user.imgUrl = imgUrl
+      console.log('imgUrl in login:', imgUrl)
+    },
+
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error('Avatar picture must be JPG format!');
+      }
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!');
+      }
+      return isJPG && isLt2M;
+    }
   },
   async created() {
     this.users = await userService.getUsers();
@@ -203,6 +230,8 @@ export default {
   components: {
     // VFacebookLogin,
     // facebookLogin
+    avatarUpload
+
   },
 }
 </script>

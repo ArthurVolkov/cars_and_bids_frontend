@@ -1,3 +1,15 @@
+@keyframes blowing {
+    0% {
+        background-color: $clr1;
+    }
+    50% {
+        background-color: $clr6;
+    }
+    100% {
+        background-color: $clr1;
+    }
+}
+
 button {
     cursor: pointer;
     font-family: Roboto;
@@ -20,7 +32,7 @@ button.sort-btn {
         border-bottom: 2px solid $clr1;
         margin-bottom: -1px;
         font-weight: 700;
-        }
+    }
 }
 
 button.filter-btn {
@@ -51,13 +63,22 @@ button.round-main.bid {
     padding: 5px 10px;
     font-size: 1.3rem;
     border: none;
-    border-radius: 2em;
+    border-radius: 0 2em 2em 0;
     outline: none;
     font-weight: 600;
     width: 140px;
     padding: 7px 10px;
     background: $grad1;
     color: $clr11;
+
+    &.blowing {
+        background: none;
+        animation-name: blowing;
+        animation-duration: 2s;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
 }
 
 button.round-main.go {

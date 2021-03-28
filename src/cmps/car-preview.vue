@@ -32,12 +32,21 @@
         <p class="description">Before ends</p>
       </div>
       <div class="flex flex-col justify-center align-center last-bid">
-        <p>{{ lastBid }}</p>
+        <p :class="onTimer">{{ lastBid }}</p>
         <p class="description">Current Bid</p>
       </div>
       <div class="flex flex-col justify-center align-center">
         <p>{{ car.auction.bids.length }}</p>
         <p class="description">Bids</p>
+      </div>
+      <!-- <div class="bid-info-timer"></div> -->
+      <div
+        v-if="timeLeftRaw <= 60000"
+        class="bid-info-timer"
+        :style="cssProps"
+      ></div>
+      <div v-if="timeLeftRaw <= 10000" class="inner-timer">
+        {{ Math.floor(timeLeftRaw / 1000) }}
       </div>
     </div>
 
@@ -103,6 +112,11 @@ export default {
       if (diff <= 0) return 'Finished'
       return moment.duration(diff).format()
     },
+    timeLeftRaw() {
+      const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
+      if (diff <= 0) return 'Finished'
+      return diff
+    },
     isActive() {
       return this.isLiked ? 'active' : ''
     },
@@ -111,7 +125,15 @@ export default {
     },
     mileage() {
       return this.car.mileage.toLocaleString('en-US')
-    }
+    },
+    onTimer() {
+      return this.timeLeftRaw <= 60000 ? 'on-timer' : ''
+    },
+    cssProps() {
+      return {
+        '--cur-width': ((Math.floor(this.timeLeftRaw / 1000)) * 1.66) + "%",
+      }
+    },
   },
   methods: {
     removeCar(car) {
@@ -170,13 +192,13 @@ export default {
           this.isLiked = true
         }
       }
-      console.log('LIKE:',this.isLiked)
+      console.log('LIKE:', this.isLiked)
     },
     someOneAddBid(bid) {
       if (bid.carId === this.car._id) this.car.auction.bids.unshift(bid)
     },
     someOneChangeLike(like) {
-      if (like.carId === this.car._id) { 
+      if (like.carId === this.car._id) {
         if (like.isAdd) this.car.likes.unshift(like)
         else {
           var idx = car.likes.findIndex(currLike => {
@@ -202,3 +224,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.bid-info-timer {
+  width: var(--cur-width);
+}
+</style>

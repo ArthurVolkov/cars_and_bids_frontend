@@ -3,6 +3,13 @@
     margin-top: 13vh;
     font-size: 0.8rem;
 
+    // .countdown {
+    //     position: absolute;
+    //     top: 50px;
+    //     left: 50%;
+
+    // }
+
     .details-img-container {
         margin-bottom: 30px;
         :first-child {
@@ -41,14 +48,15 @@
         width: 100%;
         // border-radius: 5em;
         // padding: 0 5px 0 10px;
-        padding-inline-start:10px;
+        padding-inline-start: 10px;
         margin-bottom: 50px;
         background-color: $clr2;
         color: $clr3;
+        border-radius: 5em;
 
         background: $grad2;
         // background: linear-gradient(to right, #AC32E4 0%, #7918F2 100%) no-repeat center;
-
+        // width: 110%;
         // font-size: 1.1em;
         > * :last-child:not(path) {
             color: $clr11;
@@ -69,6 +77,13 @@
             margin-inline-start: 5px;
         }
 
+        .closeble {
+            display: none;
+            @include for-normal-layout {
+                display: flex;
+            }
+        }
+
         .coments-count {
             display: none;
             @include for-narrow-layout {
@@ -86,7 +101,32 @@
         @include for-normal-layout {
             top: 60px;
             width: 100%;
-            border-radius: 5em;
+        }
+
+        // @keyframes timer-details {
+        //     from {
+        //         right: 150px;
+        //     }
+        //     to {
+        //         right: 100%;
+        //     }
+        // }
+
+        .bid-info-timer {
+            position: absolute;
+            z-index: -1;
+            border-radius: 5rem 0 0 5rem;
+            background-color: $clr6;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin-right: 150px;
+            transition: width 2s;
+            // animation-name: timer-details;
+            // animation-duration: 60s;
+            // animation-fill-mode: forwards;
+            // animation-timing-function: linear;
         }
     }
 
@@ -100,16 +140,12 @@
 
     .main-info-container {
         width: 60%;
-        font-size: .9rem;
+        font-size: 0.9rem;
         h2 {
             margin-bottom: 10px;
         }
         .main-info-icon {
             color: $clr1;
-        }
-        
-        pre {
-
         }
     }
 
@@ -143,6 +179,43 @@
             color: $clr1;
         }
     }
+    @keyframes countdown-details {
+        0% {
+            // font-size: 0rem;
+            height: 0;
+            width: 0;
+        }
+        50% {
+            // font-size: 7rem;
+            height: 200px;
+            width: 200px;
+        }
+        100% {
+            // font-size: 0rem;
+            height: 0;
+            width: 0;
+        }
+    }
+
+    .bid-info-timer .inner-timer {
+        position: fixed;
+        top: 100px;
+        left: 50%;
+        font-size: 7rem;
+        font-weight: 800;
+        z-index: 200;
+        color: $clr6 !important;
+        overflow: hidden;
+        text-shadow: 3px 3px 5px $clr2;
+        // width: 200px;
+        // height: 200px;
+
+        animation-name: countdown-details;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
 }
 
 .comments-container {
@@ -166,6 +239,7 @@
             background: $grad2;
             color: $clr11;
             border: none;
+            outline: none;
             font-size: 1.2em;
             font-weight: 600;
             padding: 0 30px;
@@ -175,7 +249,7 @@
 }
 
 .bid-list {
-    max-height: 200px;
+    max-height: 175px;
     // height: 270px;
     width: 100%;
     overflow: auto;
