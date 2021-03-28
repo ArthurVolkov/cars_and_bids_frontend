@@ -253,7 +253,7 @@ export default {
       // alert(car._id)
       car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
       if (car.auction.bids[0]?.by._id === this.loggedInUser._id) {
-        this.winnerCarId = car
+        this.winnerCar = car
         setTimeout(() => {
           this.winnerCar = null
         }, 10000);

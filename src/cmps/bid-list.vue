@@ -1,5 +1,5 @@
 <template>
-  <div class="bid-container flex flex-col align-center">
+  <div class="bid-container flex flex-col">
     <h2>Last bids</h2>
     <ul v-if="bids.length" class="bid-list clean-list">
       <li v-for="bid in bids" :key="bid.id" @click="userProfile(bid.by._id)">

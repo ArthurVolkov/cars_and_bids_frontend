@@ -64,9 +64,6 @@
     // grid-gap: 16px;
     display: flex;
     flex-direction: column;
-    > * {
-        margin-bottom: 20px;
-    }
 
     @include for-narrow-layout {
         // grid-gap: 32px;
