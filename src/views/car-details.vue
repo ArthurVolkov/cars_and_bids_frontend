@@ -81,7 +81,7 @@
 
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
-        <li v-for="comment in commentsToShow" :key="comment._id">
+        <li v-for="comment in commentsToShow" :key="comment.id">
           <div class="flex align-center bid-by">
             <avatar
               :size="28"
@@ -171,7 +171,8 @@ export default {
       return moment.duration(diff).format()
     },
     commentsToShow() {
-      return this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+      const comments = this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+      return comments
     },
     bidsToShow() {
       // return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })

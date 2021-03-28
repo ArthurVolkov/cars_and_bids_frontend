@@ -2,7 +2,7 @@
   <div class="bid-container flex flex-col align-center">
     <h2>Last bids</h2>
     <ul v-if="bids.length" class="bid-list clean-list">
-      <li v-for="bid in bids" :key="bid.id">
+      <li v-for="bid in bids" :key="bid.id" @click="userProfil(bid.by._id)">
         <div class="flex align-center bid-by">
           <avatar
             :size="28"
@@ -55,6 +55,9 @@ export default {
         style: 'currency', currency: 'USD', minimumFractionDigits: 0
       })
     },
+    userProfil(userId){
+      this.$router.push(`/activity/${userId}`)
+    }
   },
   components: {
     avatar,

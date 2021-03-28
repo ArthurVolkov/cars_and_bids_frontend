@@ -171,7 +171,7 @@ export default {
   },
   computed: {
     userId() {
-      return this.$store.getters.loggedinUser._id;
+      return this.$route.params.userId;
     },
     carsOwnerToShow() {
       console.log('this.userCars:', this.userCars)
