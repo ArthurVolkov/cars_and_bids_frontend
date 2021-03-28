@@ -78,6 +78,12 @@
         font-family: Roboto-bold;
         font-size: 1.1rem;
         padding-top: 1px;
+        &.created-at {
+            font-family: Roboto;
+            font-size: .9rem;
+            font-weight: 400;
+            color: $clr2;
+        }
     }
 
     .user-info {

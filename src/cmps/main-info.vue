@@ -52,6 +52,7 @@
       ><font-awesome-icon icon="palette" class="main-info-icon" />  Int. color:</pre>
       <span>{{ car.interiorColor }}</span>
     </div>
+    <h3>{{car.desc}}</h3>
   </div>
 </template>
 

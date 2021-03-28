@@ -77,6 +77,8 @@
       <bid-list :bids="bidsToShow.slice(0, 4)"></bid-list>
     </div>
 
+    <bid-info :car="car"></bid-info>
+
     <div class="flex flex-col comments-container">
       <h2>Comments</h2>
 
@@ -147,6 +149,7 @@ import { socketService } from "@/services/socket.service.js";
 import { showMsg } from '../services/eventBus.service.js'
 import mainInfo from '../cmps/main-info'
 import bidList from '../cmps/bid-list'
+import bidInfo from '../cmps/bid-info'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHeart, faClock, faTimes } from '@fortawesome/free-solid-svg-icons'
 library.add(faHeart, faClock, faTimes)
@@ -386,7 +389,8 @@ export default {
   components: {
     avatar,
     mainInfo,
-    bidList
+    bidList,
+    bidInfo
   }
 }
 </script>

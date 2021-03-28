@@ -38,7 +38,11 @@
           "
           class="clean-btn msgs-open-btn"
         >
-          <el-badge :value="newMsgCount" class="item" :hidden="newMsgCount===0">
+          <el-badge
+            :value="newMsgCount"
+            class="item"
+            :hidden="newMsgCount === 0"
+          >
             <font-awesome-icon icon="bell" class="main-info-icon" />
           </el-badge>
         </button>
@@ -126,11 +130,11 @@
     </div>
 
     <transition name="fade">
-      <winner-modal v-if="winnerCarId" :car="winnerCarId"></winner-modal>
+      <winner-modal v-if="winnerCar" :car="winnerCar"></winner-modal>
     </transition>
     <transition name="fade">
       <!-- <owner-modal ></owner-modal> -->
-      <!-- <owner-modal v-if="winnerCarId" :car="winnerCarId"></owner-modal> -->
+      <owner-modal v-if="ownerCar" :car="ownerCar"></owner-modal>
     </transition>
   </div>
 </template>
@@ -161,7 +165,8 @@ export default {
       newMsgCount: 0,
       msgCount: this.$store.getters.userMsgs.length,
       // winnerModalOpen: false,
-      winnerCarId: null
+      winnerCar: null,
+      ownerCar: null
     }
   },
   computed: {
@@ -248,11 +253,17 @@ export default {
       // alert(car._id)
 
 
-      if (car.auction.bids[car.auction.bids.length - 1].by._id === this.loggedInUser._id) {
-        this.winnerCarId = car
+      if (car.auction.bids[car.auction.bids.length - 1]?.by._id === this.loggedInUser._id) {
+        this.winnerCar = car
         setTimeout(() => {
-          this.winnerCarId = null
+          this.winnerCar = null
         }, 10000);
+      } else if (car.owner_id === this.loggedInUser._id) {
+        this.ownerCar = car
+        console.log('this.ownerCar:', this.ownerCar)
+        setTimeout(() => {
+          this.ownerCar = null
+        }, 600000);
       }
     },
     openActivities() {

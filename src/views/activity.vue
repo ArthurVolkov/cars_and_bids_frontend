@@ -8,7 +8,7 @@
       <div class="user-info flex justify-around">
         <div class="flex flex-col justify-between">
           <h2>{{ user.fullname }}</h2>
-          <h4>Joined at <span>25.03.2021</span></h4>
+          <h4>Joined at <span class="created-at">{{ user.createdAt | moment("MMMM Do, HH:mm") }}</span></h4>
         </div>
         <div class="flex flex-col justify-between">
           <h3>
@@ -146,9 +146,15 @@
       </ul>
     </div>
   </section>
-  <div v-else class="activity-container">
+  <!-- <div v-else class="activity-container">
     <h1>No such page...</h1>
-  </div>
+  </div> -->
+  <div
+    v-else
+    v-loading.fullscreen.lock="isLoading"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.5)"
+  ></div>
 </template>
 
 <script>
@@ -167,6 +173,7 @@ export default {
       userCars: null,
       user: null,
       now: Date.now(),
+      isLoading: false
     }
   },
   computed: {
@@ -228,8 +235,19 @@ export default {
   },
   methods: {
     async loadUserCars() {
-      const userId = this.$route.params.userId
-      this.userCars = await carService.queryUserCars(userId);
+      try {
+        const userId = this.$route.params.userId
+        this.isLoading = true
+        this.userCars = await carService.queryUserCars(userId);
+      } catch (err) {
+        this.$message({
+          showClose: true,
+          message: 'Can not load cars',
+          type: 'danger'
+        });
+      } finally {
+        this.isLoading = false
+      }
       // console.log('userCars:', this.userCars)
     },
     getImgUrl(pic) {
@@ -275,11 +293,11 @@ export default {
         if (car._id === like.carId) {
           if (like.isAdd) car.likes.unshift(like)
           else {
-          var idx = car.likes.findIndex(currLike => {
-            return like.userId === currLike.by._id
-          })
-          car.likes.splice(idx, 1)
-        }
+            var idx = car.likes.findIndex(currLike => {
+              return like.userId === currLike.by._id
+            })
+            car.likes.splice(idx, 1)
+          }
         }
       })
     },
