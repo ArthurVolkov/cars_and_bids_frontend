@@ -194,13 +194,21 @@
                 margin-bottom: -15px;
             }
             & > :first-child {
-                width: 60%;
+                // width: 60%;
+                margin-bottom: 30px;
+                @include for-normal-layout {
+                    width: 60%;
+                    margin-bottom: 0;
+                }
                 * {
                     margin-inline-end: 10px;
                 }
             }
             & > :last-child {
-                width: 40%;
+                // width: 40%;
+                @include for-normal-layout {
+                    width: 40%;
+                }
                 * {
                     margin-inline-end: 10px;
                 }
