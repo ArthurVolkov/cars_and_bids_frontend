@@ -33,7 +33,7 @@
       </div>
 
       <!-- <div class="flex flex-col align-center"> -->
-      <div class="flex flex align-center">
+      <div class="flex flex align-center closeble">
         <h3># Bids</h3>
         <h3>{{ car.auction.bids.length }}</h3>
       </div>
@@ -43,10 +43,16 @@
         <h3>{{ car.comments.length }}</h3>
       </div> -->
 
-      <div class="flex flex align-center">
+      <div class="flex flex align-center closeble">
         <!-- <div class="flex flex-col align-center"> -->
         <h3>Likes</h3>
         <h3>{{ likesCount }}</h3>
+      </div>
+      <div v-if="timeLeftRaw <= 60000" class="bid-info-timer" :style="cssProps">
+        <!-- <div class="bid-info-timer" :style="cssProps"> -->
+        <div v-if="timeLeftRaw <= 10000" class="inner-timer">
+          {{ Math.floor(timeLeftRaw / 1000) }}
+        </div>
       </div>
       <div class="bid-info-btn-container flex align-center">
         <button
@@ -56,7 +62,11 @@
         >
           <font-awesome-icon icon="heart" class="main-info-icon" />
         </button>
-        <button class="round-main bid" @click="modalOpen = true">
+        <button
+          class="round-main bid"
+          :class="blowing"
+          @click="modalOpen = true"
+        >
           Place Bid
         </button>
       </div>
@@ -170,6 +180,12 @@ export default {
       if (diff <= 0) return 'Finished'
       return moment.duration(diff).format()
     },
+    timeLeftRaw() {
+      // const diff = this.now - this.car.auction.createdAt + this.car.auction.duration
+      const diff = this.car.auction.createdAt + this.car.auction.duration - this.now
+      if (diff <= 0) return 'Finished'
+      return diff
+    },
     commentsToShow() {
       return this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
     },
@@ -186,6 +202,14 @@ export default {
     },
     mileage() {
       return this.car.mileage.toLocaleString('en-US')
+    },
+    cssProps() {
+      return {
+        '--cur-width': ((Math.floor(this.timeLeftRaw / 1000)) * 1.66) + "%",
+      }
+    },
+    blowing() {
+      return this.timeLeftRaw <= 60000 ? 'blowing' : ''
     }
   },
 
@@ -239,19 +263,33 @@ export default {
         else {
           if (this.bid.price > this.lastBidNum) {
             this.bid.carId = this.car._id;
+            console.log('this.bid.carId:', this.bid)
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
             bidToAdd.carId = this.car._id;
             socketService.emit('details newBid', bidToAdd)
             delete bidToAdd.carId
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
-            showMsg('Bid placed successfuly')
+            this.$message({
+              showClose: true,
+              message: 'Bid placed!',
+              type: 'success'
+            });
           } else {
-            showMsg('Bid price must be over ' + this.lastBidNum, 'danger')
+            // showMsg('Bid price must be over ' + this.lastBidNum, 'danger')
+            this.$message({
+              showClose: true,
+              message: 'Bid price must be over the highest bid',
+              type: 'warning'
+            });
           }
         }
       } catch (err) {
-        showMsg('Cannot place bid', 'danger')
+            this.$message({
+              showClose: true,
+              message: 'Cannot place bid',
+              type: 'warning'
+            });
       } finally {
         this.modalOpen = false
       }
@@ -284,7 +322,7 @@ export default {
       }
     },
     findLike() {
-//      this.$store.dispatch({ type: "getLoggedinUser" });
+      //      this.$store.dispatch({ type: "getLoggedinUser" });
       if (this.$store.getters.loggedinUser && this.likesCount) {
         const idx = this.car.likes.findIndex(like => {
           return like.by._id === this.$store.getters.loggedinUser._id
@@ -340,3 +378,10 @@ export default {
   }
 }
 </script>
+
+
+<style scoped>
+.bid-info-timer {
+  width: var(--cur-width);
+}
+</style>

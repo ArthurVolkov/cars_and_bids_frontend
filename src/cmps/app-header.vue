@@ -124,6 +124,10 @@
         </button>
       </div>
     </div>
+
+    <transition name="fade">
+      <winner-modal v-if="winnerCarId" :car="winnerCarId"></winner-modal>
+    </transition>
   </div>
 </template>
 
@@ -131,6 +135,7 @@
 
 
 import avatar from 'vue-avatar'
+import winnerModal from './winner-modal.vue'
 // import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUserCircle, faBell, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
@@ -149,7 +154,9 @@ export default {
       openNotifications: false,
       openCollapsingBtns: false,
       newMsgCount: 0,
-      msgCount: this.$store.getters.userMsgs.length
+      msgCount: this.$store.getters.userMsgs.length,
+      // winnerModalOpen: false,
+      winnerCarId: null
     }
   },
   computed: {
@@ -232,7 +239,14 @@ export default {
       this.openNotifications = false
     },
     timesUp(car) {
-      alert(car._id)
+      // alert(car._id)
+
+      if (car.auction.bids[0].by._id === this.loggedInUser._id) {
+        this.winnerCarId = car
+        setTimeout(() => {
+          this.winnerCarId = null
+        }, 10000);
+      }
     },
     openActivities() {
       if (!this.loggedInUser) {
@@ -294,7 +308,8 @@ export default {
     socketService.off('cars newMsg', this.newMsg)
   },
   components: {
-    avatar
+    avatar,
+    winnerModal
   },
 
 };

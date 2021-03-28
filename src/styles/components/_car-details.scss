@@ -3,6 +3,13 @@
     margin-top: 13vh;
     font-size: 0.8rem;
 
+    // .countdown {
+    //     position: absolute;
+    //     top: 50px;
+    //     left: 50%;
+
+    // }
+
     .details-img-container {
         margin-bottom: 30px;
         :first-child {
@@ -41,14 +48,15 @@
         width: 100%;
         // border-radius: 5em;
         // padding: 0 5px 0 10px;
-        padding-inline-start:10px;
+        padding-inline-start: 10px;
         margin-bottom: 50px;
         background-color: $clr2;
         color: $clr3;
+        border-radius: 5em;
 
         background: $grad2;
         // background: linear-gradient(to right, #AC32E4 0%, #7918F2 100%) no-repeat center;
-
+        // width: 110%;
         // font-size: 1.1em;
         > * :last-child:not(path) {
             color: $clr11;
@@ -69,6 +77,13 @@
             margin-inline-start: 5px;
         }
 
+        .closeble {
+            display: none;
+            @include for-normal-layout {
+                display: flex;
+            }
+        }
+
         .coments-count {
             display: none;
             @include for-narrow-layout {
@@ -86,7 +101,34 @@
         @include for-normal-layout {
             top: 60px;
             width: 100%;
-            border-radius: 5em;
+        }
+
+        // @keyframes timer-details {
+        //     from {
+        //         right: 150px;
+        //     }
+        //     to {
+        //         right: 100%;
+        //     }
+        // }
+
+        .bid-info-timer {
+            position: absolute;
+            z-index: -1;
+            border-radius: 5rem 0 0 5rem;
+            background-color: $clr6;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin-right: 150px;
+            transition: width 2s;
+            // animation-name: timer-details;
+            // animation-duration: 60s;
+            // animation-fill-mode: forwards;
+            // animation-timing-function: linear;
+
+           
         }
     }
 
@@ -100,16 +142,12 @@
 
     .main-info-container {
         width: 60%;
-        font-size: .9rem;
+        font-size: 0.9rem;
         h2 {
             margin-bottom: 10px;
         }
         .main-info-icon {
             color: $clr1;
-        }
-        
-        pre {
-
         }
     }
 
