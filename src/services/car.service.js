@@ -85,9 +85,9 @@ async function saveComment(comment) {
 }
 
 async function saveBid(bid) {
-    var bid = await httpService.post('car/bid', bid)
-    console.log('bid:', bid)
-    // return await httpService.post('car/bid', bid)
+    // console.log('bid:', bid)
+    // var bid = await httpService.post('car/bid', bid)
+    return await httpService.post('car/bid', bid)
 }
 
 async function saveLike(like) {

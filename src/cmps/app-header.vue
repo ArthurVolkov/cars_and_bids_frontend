@@ -239,9 +239,11 @@ export default {
       this.openNotifications = false
     },
     timesUp(car) {
+      console.log('timesUp car:', car)
       // alert(car._id)
 
-      if (car.auction.bids[0].by._id === this.loggedInUser._id) {
+
+      if (car.auction.bids[car.auction.bids.length - 1].by._id === this.loggedInUser._id) {
         this.winnerCarId = car
         setTimeout(() => {
           this.winnerCarId = null

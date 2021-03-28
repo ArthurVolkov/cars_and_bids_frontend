@@ -262,11 +262,17 @@ export default {
         }
         else {
           if (this.bid.price > this.lastBidNum) {
+            console.log('1')
             this.bid.carId = this.car._id;
-            console.log('this.bid.carId:', this.bid)
+            console.log('2')
+//console.log('this.bid.carId:', this.bid)
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
+            console.log('BID',bidToAdd)
+            console.log('3')
             bidToAdd.carId = this.car._id;
+            console.log('4')
             socketService.emit('details newBid', bidToAdd)
+            console.log('5')
             delete bidToAdd.carId
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0

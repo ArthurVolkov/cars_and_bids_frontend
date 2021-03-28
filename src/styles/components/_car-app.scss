@@ -116,40 +116,4 @@
     overflow: hidden;
 }
 
-@keyframes countdown-details {
-    0% {
-        // font-size: 0rem;
-        height: 0;
-        width: 0;
-    }
-    50% {
-        // font-size: 7rem;
-        height: 200px;
-        width: 200px;
-    }
-    100% {
-        // font-size: 0rem;
-        height: 0;
-        width: 0;
-    }
-}
 
-.bid-info-timer .inner-timer {
-    position: fixed;
-    top: 100px;
-    left: 50%;
-    font-size: 7rem;
-    font-weight: 800;
-    z-index: 200;
-    color: $clr6 !important;
-    overflow: hidden;
-    text-shadow: 3px 3px 5px $clr2;
-    // width: 200px;
-    // height: 200px;
-
-    animation-name: countdown-details;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-}

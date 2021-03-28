@@ -40,10 +40,13 @@
         <p class="description">Bids</p>
       </div>
       <!-- <div class="bid-info-timer"></div> -->
-      <div v-if="timeLeftRaw <= 60000" class="bid-info-timer" :style="cssProps">
-        <div v-if="timeLeftRaw <= 10000" class="inner-timer">
-          {{ Math.floor(timeLeftRaw / 1000) }}
-        </div>
+      <div
+        v-if="timeLeftRaw <= 60000"
+        class="bid-info-timer"
+        :style="cssProps"
+      ></div>
+      <div v-if="timeLeftRaw <= 10000" class="inner-timer">
+        {{ Math.floor(timeLeftRaw / 1000) }}
       </div>
     </div>
 
