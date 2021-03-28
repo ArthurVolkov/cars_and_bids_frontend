@@ -38,7 +38,7 @@
           "
           class="clean-btn msgs-open-btn"
         >
-          <el-badge :value="newMsgCount" class="item">
+          <el-badge :value="newMsgCount" class="item" :hidden="newMsgCount===0">
             <font-awesome-icon icon="bell" class="main-info-icon" />
           </el-badge>
         </button>

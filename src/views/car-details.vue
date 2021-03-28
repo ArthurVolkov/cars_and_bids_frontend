@@ -91,12 +91,13 @@
 
       <h3>Comments:</h3>
       <ul class="comments-list clean-list">
-        <li v-for="comment in commentsToShow" :key="comment._id">
+        <li v-for="comment in commentsToShow" :key="comment.id" @click="userProfile(comment.by._id)">
           <div class="flex align-center bid-by">
             <avatar
               :size="28"
               :username="comment.by.fullname"
               :src="comment.by.imgUrl"
+              class="pointer"
             >
             </avatar>
             <p>{{ comment.by.fullname }}</p>
@@ -187,7 +188,8 @@ export default {
       return diff
     },
     commentsToShow() {
-      return this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+      const comments = this.car.comments.sort((comm1, comm2) => { return comm2.createdAt - comm1.createdAt })
+      return comments
     },
     bidsToShow() {
       // return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
@@ -269,17 +271,10 @@ export default {
         }
         else {
           if (this.bid.price > this.lastBidNum) {
-            console.log('1')
             this.bid.carId = this.car._id;
-            console.log('2')
-            //console.log('this.bid.carId:', this.bid)
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
-            console.log('BID', bidToAdd)
-            console.log('3')
             bidToAdd.carId = this.car._id;
-            console.log('4')
             socketService.emit('details newBid', bidToAdd)
-            console.log('5')
             delete bidToAdd.carId
             this.car.auction.bids.unshift(bidToAdd)
             this.bid.price = 0
@@ -343,6 +338,9 @@ export default {
         })
         if (idx >= 0) this.isLiked = true
       }
+    },
+    userProfile(userId){
+      this.$router.push(`/activity/${userId}`)
     },
     someOneAddBid(bid) {
       if (bid.carId === this.car._id) this.car.auction.bids.unshift(bid)
