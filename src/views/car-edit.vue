@@ -277,11 +277,21 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadCars" });
           } catch (err) {
-            showMsg("Cannot load cars", "danger");
+            // showMsg("Cannot load cars", "danger");
+            this.$message({
+              showClose: true,
+              message: 'Can not load cars',
+              type: 'danger'
+            });
           }
         }
       } catch (err) {
-        showMsg("Cannot save cars", "danger");
+        // showMsg("Cannot save cars", "danger");
+        this.$message({
+          showClose: true,
+          message: 'Can not save cars',
+          type: 'danger'
+        });
       }
     },
     saveImgs(imgUrls) {
@@ -298,7 +308,12 @@ export default {
           this.carToEdit = car;
         });
       } catch (err) {
-        showMsg("Cannot load car", "danger");
+        // showMsg("Cannot load car", "danger");
+        this.$message({
+          showClose: true,
+          message: 'Can not load car',
+          type: 'danger'
+        });
       }
     } else {
       this.carToEdit = carService.getEmptyCar();

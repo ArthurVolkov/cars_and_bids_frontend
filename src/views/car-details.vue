@@ -221,7 +221,11 @@ export default {
         this.car = await carService.getById(carId)
       } catch (err) {
         console.log(err)
-        showMsg('Cannot load car', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Cannot load car',
+          type: 'danger'
+        });
       } finally {
         this.isLoading = false
       }
@@ -248,10 +252,13 @@ export default {
           delete commentToAdd.carId
           this.car.comments.unshift(commentToAdd)
           this.comment.txt = ''
-          showMsg('Comment saved successfuly')
         }
       } catch (err) {
-        showMsg('Cannot save comment', 'danger')
+        this.$message({
+          showClose: true,
+          message: 'Cannot save comment',
+          type: 'danger'
+        });
       }
     },
     async addBid() {
@@ -265,9 +272,9 @@ export default {
             console.log('1')
             this.bid.carId = this.car._id;
             console.log('2')
-//console.log('this.bid.carId:', this.bid)
+            //console.log('this.bid.carId:', this.bid)
             const bidToAdd = await this.$store.dispatch({ type: 'addBid', bid: this.bid })
-            console.log('BID',bidToAdd)
+            console.log('BID', bidToAdd)
             console.log('3')
             bidToAdd.carId = this.car._id;
             console.log('4')
@@ -291,11 +298,11 @@ export default {
           }
         }
       } catch (err) {
-            this.$message({
-              showClose: true,
-              message: 'Cannot place bid',
-              type: 'warning'
-            });
+        this.$message({
+          showClose: true,
+          message: 'Cannot place bid',
+          type: 'warning'
+        });
       } finally {
         this.modalOpen = false
       }

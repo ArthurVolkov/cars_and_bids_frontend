@@ -161,7 +161,7 @@ export default {
           type: 'success'
         });
       } catch (err) {
-        showMsg('Cannot signupp', 'danger')
+        // showMsg('Cannot signupp', 'danger')
         this.$message({
           showClose: true,
           message: 'Can not login',
