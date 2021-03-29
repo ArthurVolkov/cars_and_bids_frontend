@@ -1,7 +1,11 @@
 <template>
   <div class="header full main-layout" :class="isDark">
     <div class="header-container flex align-center justify-between">
-      <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link>
+      <!-- <router-link to="/" class="logo">Cars<span>&</span>Bids</router-link> -->
+      <router-link to="/"
+        ><div class="logo">
+          <img src="../assets/logo.png" alt="" /></div
+      ></router-link>
 
       <div
         v-if="openCollapsingBtns"
@@ -274,7 +278,7 @@ export default {
           type: 'warning'
         });
         // this.$router.push('/login')
-      } else if (this.$route.path !== `/activity/${this.loggedInUser._id}`){
+      } else if (this.$route.path !== `/activity/${this.loggedInUser._id}`) {
         // console.log(this.$route);
         this.$router.push(`/activity/${this.loggedInUser._id}`)
       }

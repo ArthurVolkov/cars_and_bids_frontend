@@ -25,7 +25,7 @@
         .liked-car-mini {
             padding: 10px 10px 10px 0;
             // margin: 10px;
-            width: 380px;
+            width: 390px;
             &:not(:last-child) {
                 // border-bottom: 1px solid $clr2;
             }
@@ -55,6 +55,9 @@
             }
             > :last-child {
                 margin-top: -5px;
+            }
+            > :last-child >* :last-child {
+                margin-left: 5px;
             }
         }
     }

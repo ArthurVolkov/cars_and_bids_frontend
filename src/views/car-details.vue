@@ -91,7 +91,6 @@
         <button>Send</button>
       </form>
 
-      <h3>Comments:</h3>
       <ul class="comments-list clean-list">
         <li v-for="comment in commentsToShow" :key="comment.id" @click="userProfile(comment.by._id)">
           <div class="flex align-center bid-by">
@@ -119,7 +118,7 @@
       <form @submit="addBid" class="flex add-bid-container">
         <el-input-number
           v-model.number="bid.price"
-          :min="lastBidNum + 100"
+          :min="lastBidNum + 1000"
           :max="999999"
           :controls="false"
         ></el-input-number>

@@ -3,7 +3,7 @@
     <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2>
     <div class="bid-info flex flex-col justify-between">
       <div v-if="bidToShow" class="flex flex-col justify-between">
-        <div class="flex align-center">
+        <div @click="userProfile(bidToShow.by._id)" class="flex align-center">
           <h3>Current bid</h3>
           <avatar
             :size="18"
@@ -21,7 +21,7 @@
         <h1>{{ startPrice }}</h1>
       </div>
       <div class="flex flex-col justify-between">
-        <div class="flex align-center">
+        <div @click="userProfile(car.owner._id)" class="flex align-center">
           <h4>Seller</h4>
           <avatar
             :size="18"
@@ -34,7 +34,12 @@
         </div>
         <div class="flex align-center">
           <h4>Ending</h4>
-          <p>{{ car.auction.createdAt + car.auction.duration | moment("MMMM Do, HH:mm") }}</p>
+          <p>
+            {{
+              (car.auction.createdAt + car.auction.duration)
+                | moment("MMMM Do, HH:mm")
+            }}
+          </p>
         </div>
         <div class="flex align-center">
           <h4>Bids</h4>
@@ -76,6 +81,11 @@ export default {
     //   const bids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
     //   return bids[0]
     // },
+  },
+  methods: {
+    userProfile(userId) {
+      this.$router.push(`/activity/${userId}`)
+    },
   },
   created() {
     this.bidToShow = this.car.auction.bids?.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })[0]

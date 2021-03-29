@@ -39,7 +39,7 @@
     <div class="sell-img-container">
       <img src="../assets/images/sell-car.jpg" alt="" />
       <div>
-        <h1>Cars & Bids</h1>
+        <h1>Bids & Cars</h1>
         <h2>Is the best place</h2>
         <h2>to sell your modern</h2>
         <h2>enthusiast car</h2>

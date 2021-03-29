@@ -232,9 +232,12 @@
         .bid-by > * {
             margin-inline-end: 10px;
         }
+        & p {
+            font-family: Roboto-bold;
+        }
         .bid-price,
         .comment-txt {
-            margin-top: 5px;
+            // margin-top: 5px;
             margin-inline-start: 40px;
         }
         font-weight: 600;
@@ -250,6 +253,18 @@
             // font-size: 1.1em;
             border-radius: 5px;
             color: $clr1;
+        }
+        li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid $clr3;
+            padding-bottom: 10px;
+        }
+    }
+    .comments-list {
+        li {
+            margin-bottom: 10px;
+            // border-bottom: 1px solid $clr3;
+            // padding: 5px 0;
         }
     }
     @keyframes countdown-details {
@@ -294,6 +309,10 @@
 .comments-container {
     width: 100%;
     margin-top: 30px;
+    h3 {
+        font-family: Roboto-bold;
+        font-weight: 800;
+    }
     .add-comment {
         border: 1px solid $clr3;
         border-radius: 10px;
@@ -322,7 +341,7 @@
 }
 
 .bid-list {
-    max-height: 175px;
+    max-height: 240px;
     // height: 270px;
     width: 100%;
     overflow: auto;
@@ -351,7 +370,7 @@
 
 .place-bid-modal {
     position: fixed;
-    height: 400px;
+    height: 440px;
     width: 300px;
     left: 50%;
     transform: translate(-50%);
