@@ -1,10 +1,18 @@
 <template>
   <section class="owner-modal flex flex-col align-center">
     <h1>Congratulations!</h1>
-    <h2>You are the winner of this amazing</h2>
-    <!-- <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}</h2> -->
-    <h3>
-      <!-- with your <span>{{ lastBid }}</span> Bid -->
+    <h2>
+      You've got <span>{{ lastBid }}</span> for your
+    </h2>
+    <h2>{{ car.year }} {{ car.vendor }} {{ car.model }}!</h2>
+    <h3 class="flex align-center">
+      With highest bid by 
+      <avatar
+        :size="28"
+        :username="car.auction.bids[0].by.fullname"
+        :src="car.auction.bids[0].by.imgUrl"
+      ></avatar
+      ><span>{{ car.auction.bids[0].by.fullname }}</span>
     </h3>
 
     <div class="winner-galery">
@@ -25,6 +33,7 @@
 <script>
 
 import { carService } from "@/services/car.service.js";
+import avatar from 'vue-avatar'
 
 
 export default {
@@ -65,6 +74,9 @@ export default {
   },
   async created() {
 
+  },
+  components: {
+    avatar
   },
 }
 </script>

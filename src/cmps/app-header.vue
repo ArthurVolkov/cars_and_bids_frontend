@@ -249,20 +249,21 @@ export default {
       this.openNotifications = false
     },
     timesUp(car) {
-      console.log('timesUp car:', car)
-      alert(car._id)
+      // console.log('timesUp car.owner_id:', car.owner._id)
+      // console.log('this.loggedInUser._id:', this.loggedInUser._id)
+      // alert(car._id)
       car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
       if (car.auction.bids[0]?.by._id === this.loggedInUser._id) {
         this.winnerCar = car
         setTimeout(() => {
           this.winnerCar = null
         }, 10000);
-      } else if (car.owner_id === this.loggedInUser._id) {
+      } else if (car.owner._id === this.loggedInUser._id) {
         this.ownerCar = car
         console.log('this.ownerCar:', this.ownerCar)
         setTimeout(() => {
           this.ownerCar = null
-        }, 600000);
+        }, 10000);
       }
     },
     openActivities() {

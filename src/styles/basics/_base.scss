@@ -25,8 +25,8 @@ body {
         background: linear-gradient(13deg, #abb0b2cb 14%, #505556cc 64%);
     }
     &::-webkit-scrollbar-track {
-        background: #ffffff;
-        border-radius: 10px;
+        background: $clr1;
+        // border-radius: 10px;
         box-shadow: inset 7px 6px 12px #f0f0f0;
     }
 }

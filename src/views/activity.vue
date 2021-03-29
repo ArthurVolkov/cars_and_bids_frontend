@@ -273,7 +273,9 @@ export default {
       })
     },
     isLastBid(car) {
-      return car.auction.myBids[0] >= car.auction.bids[0] ? '' : 'danger'
+      console.log('car.auction.myBids[0].price :', car.auction.myBids[0].price )
+      console.log('car.auction.bids[0].price:', car.auction.bids[0].price)
+      return car.auction.myBids[0].price >= car.auction.bids[0].price ? '' : 'danger'
     },
     openDetails(carId) {
       this.$router.push(`/car/details/${carId}`)

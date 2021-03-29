@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div class="flex justify-between info-container">
+    <div class="flex flex-col justify-between info-container">
       <main-info :car="car"></main-info>
       <bid-list :bids="bidsToShow.slice(0, 4)"></bid-list>
     </div>
