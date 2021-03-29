@@ -257,13 +257,13 @@ export default {
         this.winnerCar = car
         setTimeout(() => {
           this.winnerCar = null
-        }, 10000);
+        }, 7000);
       } else if (car.owner._id === this.loggedInUser._id) {
         this.ownerCar = car
         console.log('this.ownerCar:', this.ownerCar)
         setTimeout(() => {
           this.ownerCar = null
-        }, 10000);
+        }, 7000);
       }
     },
     openActivities() {

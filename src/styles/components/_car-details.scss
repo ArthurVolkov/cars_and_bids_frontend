@@ -326,6 +326,23 @@
     // height: 270px;
     width: 100%;
     overflow: auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: linear-gradient(14deg, #abb0b2 14%, #505556 65%);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(13deg, #d31027 14%, #ff2800 64%);
+    }
+    &::-webkit-scrollbar-track {
+        background: $clr1;
+
+        // border-radius: 10px;
+        box-shadow: inset 7px 6px 12px #f0f0f0;
+    }
 }
 
 .place-bid-modal .bid-list {

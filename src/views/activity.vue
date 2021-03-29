@@ -8,7 +8,12 @@
       <div class="user-info flex justify-around">
         <div class="flex flex-col justify-between">
           <h2>{{ user.fullname }}</h2>
-          <h4>Joined at <span class="created-at">{{ user.createdAt | moment("MMMM Do, HH:mm") }}</span></h4>
+          <h4>
+            Joined at
+            <span class="created-at">{{
+              user.createdAt | moment("MMMM YYYY")
+            }}</span>
+          </h4>
         </div>
         <div class="flex flex-col justify-between">
           <h3>
@@ -17,11 +22,11 @@
 
           <!-- <h4>2</h4> -->
           <h3>
-            Likes: <span>{{ carsLikedToShow.length }}</span>
+            My favorites: <span>{{ carsLikedToShow.length }}</span>
           </h3>
 
           <h3>
-            Comments: <span>{{ carsCommentedToShow.length }}</span>
+            Comments: <span>{{ carsCommentsToShow.length }}</span>
           </h3>
         </div>
       </div>
@@ -62,11 +67,14 @@
               </p>
             </div>
           </div>
+          <div v-if="timeLeftRaw(car) <= 10000" class="inner-timer">
+            {{ Math.floor(timeLeftRaw(car) / 1000) }}
+          </div>
         </li>
       </ul>
     </div>
 
-    <div class="flex flex-col own-car-container">
+    <div class="flex flex-col bid-car-container">
       <h2>My bids</h2>
       <ul class="clean-list flex justify-between minilist-container">
         <li
@@ -102,6 +110,9 @@
                 Last bid <span>{{ lastBid(car) }}</span>
               </p>
             </div>
+          </div>
+          <div v-if="timeLeftRaw(car) <= 10000" class="inner-timer">
+            {{ Math.floor(timeLeftRaw(car) / 1000) }}
           </div>
         </li>
       </ul>
@@ -142,9 +153,37 @@
               </p>
             </div>
           </div>
+          <div v-if="timeLeftRaw(car) <= 10000" class="inner-timer">
+            {{ Math.floor(timeLeftRaw(car) / 1000) }}
+          </div>
         </li>
       </ul>
     </div>
+    <!-- <div>
+      <h3>Comments:</h3>
+      <ul class="comments-list clean-list">
+        <li
+          v-for="comment in carsCommentsToShow"
+          :key="comment.id"
+          @click="userProfile(comment.by._id)"
+        >
+          <div class="flex align-center bid-by">
+            <avatar
+              :size="28"
+              :username="comment.by.fullname"
+              :src="comment.by.imgUrl"
+              class="pointer"
+            >
+            </avatar>
+            <p>{{ comment.by.fullname }}</p>
+            <span>{{ comment.createdAt | moment("calendar") }}</span>
+          </div>
+          <div class="comment-txt flex align-center">
+            {{ comment.txt }}
+          </div>
+        </li>
+      </ul>
+    </div> -->
   </section>
   <!-- <div v-else class="activity-container">
     <h1>No such page...</h1>
@@ -163,6 +202,8 @@
 import { showMsg } from '../services/eventBus.service.js'
 import { carService } from '../services/car.service.js'
 import { userService } from '../services/user.service.js'
+import avatar from 'vue-avatar'
+
 var moment = require("moment");
 var momentDurationFormatSetup = require("moment-duration-format");
 
@@ -201,15 +242,19 @@ export default {
       sortCars?.sort((car1, car2) => { return car1.auction.createdAt - car2.auction.createdAt })
       return sortCars;
     },
-    carsCommentedToShow() {
+    carsCommentsToShow() {
+      const allComments = []
       var carsCommented = this.userCars.filter(car => {
         var comments = car.comments.filter(comment => {
+          if (comment.by._id === this.userId) {
+            allComments.push(comment)
+          }
           return comment.by._id === this.userId
         })
         car.myComments = comments
         return comments.length
       })
-      return carsCommented;
+      return allComments;
     },
     carsBidedToShow() {
       var carsBided = this.userCars.filter(car => {
@@ -223,7 +268,7 @@ export default {
           return bid.by._id === this.userId
         })
         var sortBids = JSON.parse(JSON.stringify(bids)) || null
-        sortBids?.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
+        sortBids?.sort((bid1, bid2) => { return bid2.price - bid1.price })
         car.auction.myBids = sortBids
         return sortBids.length
       })
@@ -273,9 +318,8 @@ export default {
       })
     },
     isLastBid(car) {
-      console.log('car.auction.myBids[0].price :', car.auction.myBids[0].price )
-      console.log('car.auction.bids[0].price:', car.auction.bids[0].price)
-      return car.auction.myBids[0].price >= car.auction.bids[0].price ? '' : 'danger'
+      const lastBid = carService.getLastBid(car)
+      return car.auction.myBids[0].price < lastBid ? 'danger' : 'success'
     },
     openDetails(carId) {
       this.$router.push(`/car/details/${carId}`)
@@ -303,9 +347,17 @@ export default {
         }
       })
     },
+    timeLeftRaw(car) {
+      const diff = car.auction.createdAt + car.auction.duration - this.now
+      if (diff <= 0) return 'Finished'
+      return diff
+    },
+    userProfile(userId) {
+      this.$router.push(`/activity/${userId}`)
+    },
   },
   components: {
-    // carList,
+    avatar
   },
   async created() {
     try {

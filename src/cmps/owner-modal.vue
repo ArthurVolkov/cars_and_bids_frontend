@@ -8,7 +8,7 @@
     <h3 class="flex align-center">
       With highest bid by 
       <avatar
-        :size="28"
+        :size="40"
         :username="car.auction.bids[0].by.fullname"
         :src="car.auction.bids[0].by.imgUrl"
       ></avatar
