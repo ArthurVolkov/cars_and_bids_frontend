@@ -99,6 +99,11 @@ async function removeLike(like) {
     return httpService.delete(`car/like/${like.carId}`)
 }
 
+async function changeTime(carId) {
+    return await httpService.post('car/time', carId)
+}
+
+
 async function save(car) {
     if (car._id) {
         return await httpService.put('car', car)
