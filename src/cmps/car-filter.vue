@@ -132,9 +132,10 @@ export default {
     }
   },
   created() {
-    // this.filterBy = JSON.parse(JSON.stringify(this.$store.getters.filterBy));
-    this.filterBy = { byYears: this.filterBy.byYears, ...this.$store.getters.filterBy };
-    // if (!this.filterBy.sortBy) this.filterBy.sortBy = 'ending-soon' //////////////////////
+    this.filterBy = { byYears: this.filterBy.byYears, sortBy: this.filterBy.sortBy,...this.$store.getters.filterBy };
+    // this.filterBy = { byYears: this.$store.getters.filterBy.byYears, sortBy: this.$store.getters.filterBy.sortBy,...this.$store.getters.filterBy };
+
+// if (!this.filterBy.sortBy) this.filterBy.sortBy = 'ending-soon' //////////////////////
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.yearsRangeIsOpen = false

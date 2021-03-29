@@ -164,6 +164,7 @@ export default {
   created() {
     //this.filterDebounce = debounce(this.setFilter, 1000);
     this.$store.commit({ type: 'setFilterName', name: '' })
+    // this.$store.commit({ type: 'setSort', sortBy: 'ending-soon' })
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target)) {
         this.yearsRangeIsOpen = false
