@@ -50,25 +50,23 @@
   </div>
 </template>
 
-
-
 <script>
 import { carService } from "@/services/car.service.js";
 import avatar from 'vue-avatar'
 var moment = require("moment");
-
-
-
 
 export default {
   name: "bid-info",
   props: {
     car: {
       type: Object,
-      bidToShow: null
     },
   },
   computed: {
+    bidToShow() { 
+      const bids = JSON.parse(JSON.stringify(this.car.auction.bids))
+      return bids.sort((bid1, bid2) => { return bid2.price - bid1.price })[0]
+    },
     lastBid() {
       return this.bidToShow?.price.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
     },
@@ -76,11 +74,6 @@ export default {
       return this.car.auction.startPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
 
     }
-    // bidToShow() {
-    //   // return this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
-    //   const bids = this.car.auction.bids.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })
-    //   return bids[0]
-    // },
   },
   methods: {
     userProfile(userId) {
@@ -96,9 +89,6 @@ export default {
          console.log('Can`t refresh time:', err);
        }
     }
-  },
-  created() {
-    this.bidToShow = this.car.auction.bids?.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })[0]
   },
   components: {
     avatar

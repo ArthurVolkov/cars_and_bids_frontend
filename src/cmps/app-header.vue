@@ -120,7 +120,6 @@
             >
               Activites
             </button>
-            <!-- <router-link to="/activity" :class="isBlocked">Activites</router-link> -->
           </div>
         </div>
         <button
@@ -137,7 +136,6 @@
       <winner-modal v-if="winnerCar" :car="winnerCar"></winner-modal>
     </transition>
     <transition name="fade">
-      <!-- <owner-modal ></owner-modal> -->
       <owner-modal v-if="ownerCar" :car="ownerCar"></owner-modal>
     </transition>
   </div>
@@ -145,11 +143,9 @@
 
 <script>
 
-
 import avatar from 'vue-avatar'
 import winnerModal from './winner-modal.vue'
 import ownerModal from './owner-modal.vue'
-// import { showMsg } from '../services/eventBus.service.js'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faBars, faUserCircle, faBell, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 library.add(faBars, faUserCircle, faBell, faCaretDown, faCaretUp)
@@ -167,8 +163,7 @@ export default {
       openNotifications: false,
       openCollapsingBtns: false,
       newMsgCount: 0,
-      msgCount: this.$store.getters.userMsgs.length,
-      // winnerModalOpen: false,
+      // msgCount: 0,
       winnerCar: null,
       ownerCar: null
     }
@@ -178,7 +173,6 @@ export default {
       return this.windowTop && this.isHomeRout ? 'dark' : ''
     },
     loggedInUser() {
-      // return this.$store.getters.loggedinUser ? true : false
       return this.$store.getters.loggedinUser ? this.$store.getters.loggedinUser : false
     },
     collapsing() {
@@ -214,7 +208,6 @@ export default {
     async logout() {
       try {
         await this.$store.dispatch({ type: 'logout' })
-        // showMsg('logged out success')
         this.$message({
           showClose: true,
           message: 'Logged out successfuly',
@@ -222,7 +215,6 @@ export default {
         });
 
       } catch (err) {
-        // showMsg('Cannot logout', 'danger')
         this.$message({
           showClose: true,
           message: 'Cannot logout',
@@ -231,14 +223,12 @@ export default {
       }
     },
     async newMsg(msg) {
-      await this.$store.dispatch({ type: 'addUserMsg', msg })
-      //console.log('USER NEW MSGS:', this.$store.getters.userMsgs)
-      // console.log(this.msgCount)
-      console.log(this.$store.getters.userMsgs.length)
-      if (this.msgCount < this.$store.getters.userMsgs.length) {
-        this.newMsgCount++
-        this.msgCount = this.$store.getters.userMsgs.length
-      }
+      const isNewMsg = await this.$store.dispatch({ type: 'addUserMsg', msg })
+      // if (this.msgCount < this.$store.getters.userMsgs.length) {
+      console.log('LLLLL',isNewMsg)
+      if (isNewMsg) this.newMsgCount++
+        // this.msgCount = this.$store.getters.userMsgs.length
+      // }
     },
     getMsgData(msg) {
       if (msg.type === 'bid') {
@@ -253,9 +243,6 @@ export default {
       this.openNotifications = false
     },
     timesUp(car) {
-      // console.log('timesUp car.owner_id:', car.owner._id)
-      // console.log('this.loggedInUser._id:', this.loggedInUser._id)
-      // alert(car._id)
       car.auction.bids.sort((bid1, bid2) => { return bid2.price - bid1.price })
       if (car.auction.bids[0]?.by._id === this.loggedInUser._id) {
         this.winnerCar = car
@@ -277,19 +264,15 @@ export default {
           message: 'Please login first',
           type: 'warning'
         });
-        // this.$router.push('/login')
       } else if (this.$route.path !== `/activity/${this.loggedInUser._id}`) {
-        // console.log(this.$route);
         this.$router.push(`/activity/${this.loggedInUser._id}`)
       }
     }
   },
   watch: {
     $route(route) {
-      // console.log('route:', route)
       this.isHomeRout = (route.path === '/') ? true : false
       this.filterName = this.$store.getters.filterBy.name
-      //this.filterBy = this.$store.getters.filterBy;
     },
   },
   async created() {

@@ -42,15 +42,20 @@ export const userStore = {
             }
         },
         async addUserMsg( {state}, {msg}) {
-            if (msg.type === 'car') state.msgs.unshift(msg)
-            else if (state.user){
+            //if (msg.type === 'car') state.msgs.unshift(msg)
+            // else 
+            if (state.user){
                 const userCars = await carService.queryUserCars(state.user._id);
                 console.log('MY CARS:',userCars)
                 const carFound = userCars.find(car=>{
                     return car._id === msg.carId                
                 })
-                if (carFound && msg.by._id !== state.user._id) state.msgs.unshift(msg)
+                if (msg.by._id !== state.user._id) {
+                    if (carFound) state.msgs.unshift(msg)
+                    return carFound
+                } else return false
             }
+            return false
         },
         async signUp(context, { user }) {
             console.log('user in store signUp:', user)
