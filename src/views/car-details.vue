@@ -8,7 +8,7 @@
       </h3>
     </div>
 
-    <div class="details-img-container details-img-grid">
+    <div v-if="!mobileQuery" class="details-img-container details-img-grid">
       <!-- <img :src="getImgUrl(car.imgUrls[0])" alt="" /> -->
       <img
         v-for="(img, idx) in car.imgUrls"
@@ -17,6 +17,17 @@
         alt=""
       />
     </div>
+
+    <el-carousel
+      v-else
+      trigger="click"
+      :autoplay="false"
+      indicator-position="none"
+    >
+      <el-carousel-item v-for="(img, idx) in car.imgUrls" :key="idx">
+        <img :src="getImgUrl(img)" alt="" />
+      </el-carousel-item>
+    </el-carousel>
 
     <div class="details-bid-info flex align-center justify-between">
       <div class="flex align-center">
@@ -92,7 +103,11 @@
       </form>
 
       <ul class="comments-list clean-list">
-        <li v-for="comment in commentsToShow" :key="comment.id" @click="userProfile(comment.by._id)">
+        <li
+          v-for="comment in commentsToShow"
+          :key="comment.id"
+          @click="userProfile(comment.by._id)"
+        >
           <div class="flex align-center bid-by">
             <avatar
               :size="28"
@@ -214,6 +229,9 @@ export default {
     },
     blowing() {
       return this.timeLeftRaw <= 60000 ? 'blowing' : ''
+    },
+    mobileQuery() {
+      return this.$store.getters.windowWidth >= 600 ? false : true
     }
   },
 
@@ -341,7 +359,7 @@ export default {
         if (idx >= 0) this.isLiked = true
       }
     },
-    userProfile(userId){
+    userProfile(userId) {
       this.$router.push(`/activity/${userId}`)
     },
     someOneAddBid(bid) {

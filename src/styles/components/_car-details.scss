@@ -304,6 +304,21 @@
         animation-timing-function: linear;
         animation-iteration-count: infinite;
     }
+    .el-carousel {
+        width: 100%;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        .el-carousel__container {
+            height: 250px;
+        }
+    }
+
+    .img-container {
+        overflow: hidden;
+        img {
+            border-radius: 6px;
+        }
+    }
 }
 
 .comments-container {

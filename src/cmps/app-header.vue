@@ -49,36 +49,36 @@
           >
             <font-awesome-icon icon="bell" class="main-info-icon" />
           </el-badge>
+          <ul v-if="openNotifications" class="clean-list user-msg-container">
+            <div v-if="userMsgs && userMsgs.length" class="">
+              <li
+                v-for="(msg, idx) in userMsgs"
+                @click="msgClicked(msg)"
+                :key="idx"
+                class="user-msg flex align-center"
+              >
+                <avatar
+                  :size="28"
+                  :username="msg.by.fullname"
+                  :src="msg.by.imgUrl"
+                ></avatar>
+                <div>
+                  <h6>
+                    <span>New</span> {{ msg.type }} <span>added on</span>
+                    {{ msg.vendor }} {{ msg.model }}
+                    {{ msg.year }}
+                    <div>
+                      {{ msg.by.fullname }},
+                      <span>{{ msg.createdAt | moment("calendar") }}</span>
+                    </div>
+                  </h6>
+                  <p>{{ getMsgData(msg) }}</p>
+                </div>
+              </li>
+            </div>
+            <h3 v-else>No new messeges</h3>
+          </ul>
         </button>
-        <ul v-if="openNotifications" class="clean-list user-msg-container">
-          <div v-if="userMsgs && userMsgs.length" class="">
-            <li
-              v-for="(msg, idx) in userMsgs"
-              @click="msgClicked(msg)"
-              :key="idx"
-              class="user-msg flex align-center"
-            >
-              <avatar
-                :size="28"
-                :username="msg.by.fullname"
-                :src="msg.by.imgUrl"
-              ></avatar>
-              <div>
-                <h6>
-                  <span>New</span> {{ msg.type }} <span>added on</span>
-                  {{ msg.vendor }} {{ msg.model }}
-                  {{ msg.year }}
-                  <div>
-                    {{ msg.by.fullname }},
-                    <span>{{ msg.createdAt | moment("calendar") }}</span>
-                  </div>
-                </h6>
-                <p>{{ getMsgData(msg) }}</p>
-              </div>
-            </li>
-          </div>
-          <h3 v-else>No new messeges</h3>
-        </ul>
 
         <div
           class="account-options-btn flex justify-between align-center pointer"
