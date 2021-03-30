@@ -49,7 +49,8 @@ export const carService = {
     saveBid,
     saveLike,
     removeLike,
-    getLastBid
+    getLastBid,
+    changeTime
 }
 
 async function query(filterBy) {
