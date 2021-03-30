@@ -33,7 +33,7 @@
           <p>{{ car.owner.fullname }}</p>
         </div>
         <div class="flex align-center">
-          <h4>Ending</h4>
+          <h4 @click="refreshTime()">Ending</h4>
           <p>
             {{
               (car.auction.createdAt + car.auction.duration)
@@ -53,7 +53,7 @@
 
 
 <script>
-// import { carService } from "@/services/car.service.js";
+import { carService } from "@/services/car.service.js";
 import avatar from 'vue-avatar'
 var moment = require("moment");
 
@@ -86,6 +86,16 @@ export default {
     userProfile(userId) {
       this.$router.push(`/activity/${userId}`)
     },
+    async refreshTime() {
+       console.log('refreshTime:')
+       try {
+         const refreshed = await carService.changeTime(this.car._id)
+         console.log('refreshed:', refreshed)
+         
+       } catch (err) {
+         console.log('Can`t refresh time:', err);
+       }
+    }
   },
   created() {
     this.bidToShow = this.car.auction.bids?.sort((bid1, bid2) => { return bid2.createdAt - bid1.createdAt })[0]

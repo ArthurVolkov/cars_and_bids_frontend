@@ -309,10 +309,6 @@
 .comments-container {
     width: 100%;
     margin-top: 30px;
-    h3 {
-        font-family: Roboto-bold;
-        font-weight: 800;
-    }
     .add-comment {
         border: 1px solid $clr3;
         border-radius: 10px;
@@ -350,17 +346,15 @@
         height: 5px;
     }
     &::-webkit-scrollbar-thumb {
-        background: linear-gradient(14deg, #abb0b2 14%, #505556 65%);
+        box-shadow: inset 7px 6px 12px #f0f0f0;
+
         border-radius: 10px;
     }
     &::-webkit-scrollbar-thumb:hover {
-        background: linear-gradient(13deg, #d31027 14%, #ff2800 64%);
+        background: linear-gradient(13deg, #abb0b2cb 14%, #505556cc 64%);
     }
     &::-webkit-scrollbar-track {
-        background: $clr1;
-
-        // border-radius: 10px;
-        box-shadow: inset 7px 6px 12px #f0f0f0;
+        background: linear-gradient(13deg, #abb0b2cb 14%, #505556cc 64%);
     }
 }
 

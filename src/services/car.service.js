@@ -101,7 +101,10 @@ async function removeLike(like) {
 }
 
 async function changeTime(carId) {
-    return await httpService.post('car/time', carId)
+    console.log('carId in service:', carId)
+    var res =  await httpService.post('car/time', {carId})
+    console.log('res:  in service', res)
+    // return await httpService.post('car/time', carId)
 }
 
 
