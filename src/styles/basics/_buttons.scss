@@ -45,7 +45,7 @@ button.filter-btn {
     outline: none;
     width: 120px;
     font-weight: 500;
-    font-size: 0.8em;
+    font-size: 0.9em;
     color: $clr3;
     &:hover {
         // border-color: $clr3;
@@ -64,7 +64,7 @@ button.filter-btn {
 button.round-main.bid {
     height: 50px;
     padding: 5px 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     border: none;
     border-radius: 0 2em 2em 0;
     outline: none;
@@ -113,9 +113,7 @@ button.round-main.go {
         min-width: 118px;
     }
     @include for-normal-layout {
-        // border-radius: 0 3em 3em 0;
-        border-radius: 5rem;
-
+        border-radius: 0 3em 3em 0;
     }
 }
 

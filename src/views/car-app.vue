@@ -1,6 +1,6 @@
 <template>
   <section class="car-app flex flex-col">
-    <car-filter @setFilter="setFilter" @setSort="setSort"></car-filter>
+    <car-filter></car-filter>
     <car-list
       :cars="carsToShow"
     ></car-list>

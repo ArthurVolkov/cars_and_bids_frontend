@@ -89,7 +89,7 @@
             }
         }
         & > :first-child > :first-child {
-            margin-inline-end: 10px;
+            margin: 0 10px;
             color: $clr11;
             font-size: 1.5em;
         }
@@ -139,7 +139,7 @@
         .bid-info-timer {
             position: absolute;
             z-index: -1;
-            border-radius: 5rem 0 0 5rem;
+            border-radius: 5rem;
             background-color: $clr6;
             top: 0;
             right: 0;
@@ -197,6 +197,14 @@
             font-size: 1.1rem;
             h1 {
                 margin-bottom: -15px;
+                color: $clr6;
+
+                &.danger {
+                    color: $clr6;
+                }
+                &.success {
+                    color: green;
+                }
             }
             & > :first-child {
                 // width: 60%;
@@ -331,7 +339,7 @@
     margin-top: 30px;
     .add-comment {
         border: 1px solid $clr3;
-        border-radius: 10px;
+        border-radius: 6px;
         margin-bottom: 30px;
 
         textarea {
@@ -339,7 +347,7 @@
             border: none;
             resize: none;
             outline: none;
-            border-radius: 10px;
+            border-radius: 6px;
             padding: 10px;
         }
 
@@ -351,7 +359,8 @@
             font-size: 1.2em;
             font-weight: 600;
             padding: 0 30px;
-            border-radius: 0 10px 10px 0;
+            border-radius: 0 6px 6px 0;
+            margin: -1px;
         }
     }
 }
@@ -420,7 +429,7 @@
             position: relative;
             border: none;
             outline: none;
-            font-size: 1.5em;
+            font-size: 1.3em;
             padding: 0;
             margin: 1px;
             &::before {
@@ -435,7 +444,7 @@
             background: $grad1;
             border-radius: 6px;
             color: $clr11;
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: 600;
             margin: -1px -1px -1px 2px;
         }
