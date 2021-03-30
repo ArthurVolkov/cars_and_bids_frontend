@@ -192,7 +192,6 @@ export default {
           this.isLiked = true
         }
       }
-      console.log('LIKE:', this.isLiked)
     },
     someOneAddBid(bid) {
       if (bid.carId === this.car._id) this.car.auction.bids.unshift(bid)

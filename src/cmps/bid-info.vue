@@ -63,8 +63,9 @@ export default {
     },
   },
   computed: {
-    bidToShow() {
-      return this.car.auction.bids?.sort((bid1, bid2) => { return bid2.price - bid1.price })[0]
+    bidToShow() { 
+      const bids = JSON.parse(JSON.stringify(this.car.auction.bids))
+      return bids.sort((bid1, bid2) => { return bid2.price - bid1.price })[0]
     },
     lastBid() {
       return this.bidToShow?.price.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
