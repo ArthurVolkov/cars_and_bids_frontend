@@ -101,7 +101,6 @@ button.round-main.go {
     margin-inline-end: -1px;
     margin-inline-start: 20px;
     border-radius: 5rem 0 0 5rem;
-    border-radius: 5rem;
     .main-info-icon * {
         color: white;
     }
@@ -114,7 +113,9 @@ button.round-main.go {
         min-width: 118px;
     }
     @include for-normal-layout {
-        border-radius: 0 3em 3em 0;
+        // border-radius: 0 3em 3em 0;
+        border-radius: 5rem;
+
     }
 }
 
