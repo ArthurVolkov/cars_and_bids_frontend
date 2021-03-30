@@ -17,7 +17,9 @@
         // }
         position: relative;
         height: 50px;
-        margin-bottom: -14px;
+        img {
+            width: auto;
+        }
     }
 
     .el-input {
@@ -26,6 +28,7 @@
     }
     .msgs-open-btn {
         font-size: 1.1rem;
+        position: relative;
         sup {
             background-color: $clr6;
             font-size: 0.7rem;
@@ -147,11 +150,11 @@
 
     .user-msg-container {
         position: absolute;
-        top: 55px;
-        right: 0;
+        top: 40px;
+        right: -73px;
         background-color: white;
         box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.9);
-        border-radius: 6px 0 0 6px;
+        border-radius: 6px;
         width: 360px;
         padding: 20px 10px;
         margin: 0;

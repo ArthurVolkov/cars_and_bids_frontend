@@ -4,7 +4,7 @@
     .car-filter {
         position: relative;
         display: flex;
-        padding: 10px 5px;
+        padding: 10px 0;
         border-radius: 10px;
         margin-bottom: 20px;
         // div > *:not(.el-slider)*:not(.years-range) {
@@ -19,13 +19,15 @@
 
         .btn-container {
             flex-grow: 1;
-            margin-inline-end: 10px;
+            // margin-inline-end: 10px;
             margin-bottom: 10px;
             * {
                 margin-inline-end: 10px;
             }
             @include for-normal-layout {
                 margin-bottom: 0;
+                margin-inline-end: 10px;
+
             }
         }
 
@@ -73,6 +75,10 @@
             z-index: 20;
         }
 
+        // overflow-y: auto;
+
+        @include for-narrow-layout {
+        }
         @include for-normal-layout {
             flex-direction: row;
         }
