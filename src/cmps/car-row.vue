@@ -73,11 +73,8 @@ export default {
       return this.cars.slice(this.pageIdx, this.pageIdx + this.rowSize)
     },
     rowSize() {
-      // return this.$store.getters.windowWidth >= 785 ? false : true
       const width = this.$store.getters.windowWidth
-      console.log('width:', width)
       if (width >= 908) return 3
-      // else if (width >= 730) return 3
       else if (width >= 627) return 2
       else return 1
 

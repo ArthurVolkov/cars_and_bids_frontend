@@ -21,7 +21,6 @@ export const userStore = {
     mutations: {
         toggleLogin(state, {isShown}) {
             state.loginShown = isShown
-            console.log('state.loginShown:', state.loginShown)
         },
         setLoggedinUser(state, { user }) {
             state.user = user;
@@ -32,7 +31,6 @@ export const userStore = {
             state.msgs = []           
             if (state.user) { 
                 const userCars = await carService.queryUserCars(state.user._id);
-                console.log('USER CARS:',userCars)
                 userCars.forEach(car => {
                     car.msgs?.forEach(msg=>{
                         if (msg.by._id !== state.user._id) state.msgs.push(msg)
@@ -46,7 +44,6 @@ export const userStore = {
             // else 
             if (state.user){
                 const userCars = await carService.queryUserCars(state.user._id);
-                console.log('MY CARS:',userCars)
                 const carFound = userCars.find(car=>{
                     return car._id === msg.carId                
                 })
@@ -58,7 +55,6 @@ export const userStore = {
             return false
         },
         async signUp(context, { user }) {
-            console.log('user in store signUp:', user)
             try {
                 const signupedUser = await userService.signUp(user)
                 context.commit({ type: 'setLoggedinUser', user: signupedUser })
@@ -69,7 +65,6 @@ export const userStore = {
 
         },
         async login(context, { user }) {
-            console.log('user in store login:', user)
             try {
                 const loggedinUser = await userService.login(user)
                 context.commit({ type: 'setLoggedinUser', user: loggedinUser })
@@ -80,12 +75,10 @@ export const userStore = {
 
         },
         async logout(context) {
-            console.log('store logout:')
             try {
                 const logout = await userService.logout()
                 context.commit({ type: 'setLoggedinUser', user: null })
                 context.state.msgs = []
-                console.log('logout:', logout)
                 return logout
             } catch (err) {
                 throw err

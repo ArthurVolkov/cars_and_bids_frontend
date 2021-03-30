@@ -55,13 +55,7 @@ export const carStore = {
         },
         setFilterName(state, { name }) {
             state.filterBy.name = name;
-            console.log(state.filterBy)
         },
-        // setPage(state, { page }) {
-        //     console.log('page:', page)
-        //     console.log('filterBy:', state.filterBy)
-        //     state.filterBy.pageIdx = page - 1
-        // },
         setSort(state, { sortBy }) {
             state.filterBy.sortBy = sortBy
         },
@@ -101,7 +95,7 @@ export const carStore = {
             try {
                 return await carService.saveComment(comment)
             } catch (err) {
-                console.log('Store: Cannot save review', err);
+                console.log('Store: Cannot save comment', err);
                 throw new Error('Cannot save review');
             }
         },
@@ -109,7 +103,7 @@ export const carStore = {
             try {
                 return await carService.saveBid(bid)
             } catch (err) {
-                console.log('Store: Cannot save review', err);
+                console.log('Store: Cannot save bid', err);
                 throw new Error('Cannot save review');
             }
         },

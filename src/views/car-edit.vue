@@ -174,7 +174,6 @@
           >
           </el-input>
         </div>
-        <!-- TODO: check that adress exist and fetch lat lang -->
         <div class="flex flex-col justify-center">
           <label for="e-set-address">Address</label>
           <el-input
@@ -263,9 +262,7 @@ export default {
       this.models = dataService.getCars(this.carToEdit.vendor);
     },
     async saveCar() {
-      console.log("Saving...", this.carToEdit);
       try {
-        // this.$store.dispatch({ type: "getLoggedinUser" });
         if (!this.$store.getters.loggedinUser) {
           this.$store.commit("toggleLogin", { isShown: true });
         } else {
@@ -277,7 +274,6 @@ export default {
           try {
             await this.$store.dispatch({ type: "loadCars" });
           } catch (err) {
-            // showMsg("Cannot load cars", "danger");
             this.$message({
               showClose: true,
               message: 'Can not load cars',
@@ -286,7 +282,6 @@ export default {
           }
         }
       } catch (err) {
-        // showMsg("Cannot save cars", "danger");
         this.$message({
           showClose: true,
           message: 'Can not save cars',
@@ -308,7 +303,6 @@ export default {
           this.carToEdit = car;
         });
       } catch (err) {
-        // showMsg("Cannot load car", "danger");
         this.$message({
           showClose: true,
           message: 'Can not load car',

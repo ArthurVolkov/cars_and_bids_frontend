@@ -393,7 +393,6 @@ export default {
   },
   watch: {
     "$route.params.carId"(id) {
-      console.log("Changed to", id);
       this.loadCar();
     },
   },

@@ -64,8 +64,6 @@ async function query(filterBy) {
 
     var queryStr = (!filterBy) ? '' : `?name=${currFiletr.name}&bodyStyles=${currFiletr.bodyStyles}&vendors=${currFiletr.vendors}&years=${currFiletr.byYears}&pageIdx=${currFiletr.pageIdx}&pageSize=${currFiletr.pageSize}&sortBy=${currFiletr.sortBy}`
     const data = await httpService.get(`car${queryStr}`)
-    console.log('currFiletr.sortBy:', currFiletr.sortBy)
-    console.log('DATA:',data)
     return data
 }
 
@@ -86,8 +84,6 @@ async function saveComment(comment) {
 }
 
 async function saveBid(bid) {
-    // console.log('bid:', bid)
-    // var bid = await httpService.post('car/bid', bid)
     return await httpService.post('car/bid', bid)
 }
 
@@ -101,10 +97,8 @@ async function removeLike(like) {
 }
 
 async function changeTime(carId) {
-    console.log('carId in service:', carId)
     var res =  await httpService.post('car/time', {carId})
-    console.log('res:  in service', res)
-    // return await httpService.post('car/time', carId)
+    return res
 }
 
 

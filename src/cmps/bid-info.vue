@@ -72,7 +72,6 @@ export default {
     },
     startPrice() {
       return this.car.auction.startPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
-
     }
   },
   methods: {
@@ -80,11 +79,8 @@ export default {
       this.$router.push(`/activity/${userId}`)
     },
     async refreshTime() {
-       console.log('refreshTime:')
        try {
-         const refreshed = await carService.changeTime(this.car._id)
-         console.log('refreshed:', refreshed)
-         
+         const refreshed = await carService.changeTime(this.car._id)        
        } catch (err) {
          console.log('Can`t refresh time:', err);
        }
