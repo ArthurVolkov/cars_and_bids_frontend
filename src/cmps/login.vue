@@ -105,7 +105,6 @@ export default {
       return this.isRegistration ? 'Login' : 'Registration'
     },
     loggedinUser() {
-      //console.log('this.$store.getters.loggedinUser:', this.$store.getters.loggedinUser)
       return this.$store.getters.loggedinUser
     },
     isAdmin() {
@@ -155,7 +154,6 @@ export default {
       try {
         await this.$store.dispatch({ type: "login", user: this.user });
         await this.$store.dispatch({ type: 'getUserMsgs' });
-        console.log('USER MSGS:', this.$store.getters.userMsgs)
         this.$message({
           showClose: true,
           message: 'Logged in',
@@ -178,37 +176,9 @@ export default {
     closeLogin() {
       this.$store.commit('toggleLogin', { isShown: false })
     },
-    // getUserData() {
-    //   this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' },
-    //     user => {
-    //       this.personalID = user.id;
-    //       this.email = user.email;
-    //       this.name = user.name;
-    //       this.picture = user.picture.data.url;
-    //       console.log(this.personalID)
-    //       console.log(this.email)
-    //       console.log(this.name)
-    //       console.log(this.picture)
-    //     }
-    //   )
-    // },
-    // sdkLoaded(payload) {
-    //   this.isConnected = payload.isConnected
-    //   this.FB = payload.FB
-    //   if (this.isConnected) this.getUserData()
-    // },
-    // onLogin() {
-    //   this.isConnected = true
-    //   this.getUserData()
-    // },
-    // onLogout() {
-    //   this.isConnected = false;
-    // }
     saveImg(imgUrl) {
       this.user.imgUrl = imgUrl
-      console.log('imgUrl in login:', imgUrl)
     },
-
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt2M = file.size / 1024 / 1024 < 2;

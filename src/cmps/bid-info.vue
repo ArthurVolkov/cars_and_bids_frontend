@@ -80,11 +80,8 @@ export default {
       this.$router.push(`/activity/${userId}`)
     },
     async refreshTime() {
-       console.log('refreshTime:')
        try {
-         const refreshed = await carService.changeTime(this.car._id)
-         console.log('refreshed:', refreshed)
-         
+         const refreshed = await carService.changeTime(this.car._id)        
        } catch (err) {
          console.log('Can`t refresh time:', err);
        }

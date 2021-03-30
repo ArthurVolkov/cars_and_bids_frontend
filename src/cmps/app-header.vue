@@ -224,11 +224,7 @@ export default {
     },
     async newMsg(msg) {
       const isNewMsg = await this.$store.dispatch({ type: 'addUserMsg', msg })
-      // if (this.msgCount < this.$store.getters.userMsgs.length) {
-      console.log('LLLLL',isNewMsg)
       if (isNewMsg) this.newMsgCount++
-        // this.msgCount = this.$store.getters.userMsgs.length
-      // }
     },
     getMsgData(msg) {
       if (msg.type === 'bid') {
@@ -251,7 +247,6 @@ export default {
         }, 7000);
       } else if (car.owner._id === this.loggedInUser._id) {
         this.ownerCar = car
-        console.log('this.ownerCar:', this.ownerCar)
         setTimeout(() => {
           this.ownerCar = null
         }, 7000);
@@ -285,11 +280,6 @@ export default {
     })
     socketService.on('cars newMsg', this.newMsg)
     socketService.on('cars time', this.timesUp)
-    try {
-      await this.$store.dispatch({ type: 'getUserMsgs' });
-    } catch (err) {
-      console.log('Cannot load Messeges', err);
-    }
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll)

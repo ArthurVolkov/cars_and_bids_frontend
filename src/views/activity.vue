@@ -222,7 +222,6 @@ export default {
       return this.$route.params.userId;
     },
     carsOwnerToShow() {
-      console.log('this.userCars:', this.userCars)
       var carsOwner = this.userCars.filter(car => {
         return car.owner._id === this.userId
       })
@@ -293,7 +292,6 @@ export default {
       } finally {
         this.isLoading = false
       }
-      // console.log('userCars:', this.userCars)
     },
     getImgUrl(pic) {
       if (!pic.includes('images')) {
@@ -366,7 +364,6 @@ export default {
       socketService.on('details changeLike', this.someOneChangeLike)
       const userId = this.$route.params.userId
       this.user = await userService.getById(userId)
-      console.log('this.user:', this.user)
       await this.loadUserCars()
     } catch (err) {
       console.log('can`t load user cars', err);

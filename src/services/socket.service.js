@@ -68,10 +68,3 @@ function createDummySocketService() {
   }
   return socketService
 }
-
-
-// Basic Tests
-// function cb(x) {console.log(x)}
-// socketService.on('baba', cb)
-// socketService.emit('baba', 'DATA')
-// socketService.off('baba', cb)
