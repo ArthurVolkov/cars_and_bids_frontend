@@ -49,52 +49,8 @@
         </el-option>
       </el-select>
     </div>
-
-    <!-- <button @click="yearsRangeIsOpen = !yearsRangeIsOpen" class="filter-btn">
-      Years
-    </button>
-    <div v-if="yearsRangeIsOpen" class="block years-range">
-      <el-slider
-        v-model="filterBy.byYears"
-        range
-        :min="1970"
-        :max="2021"
-        :marks="marks"
-      >
-        >
-      </el-slider>
-    </div>
-
-    <el-select
-      v-model="filterBy.bodyStyles"
-      placeholder="Body styles"
-      class="body-style"
-    >
-      <el-option
-        v-for="item in bodyStyles"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select>
-
-    <el-select
-      v-model="filterBy.vendors"
-      placeholder="Vendors"
-      multiple
-      collapse-tags
-      class="vendor"
-    >
-      <el-option
-        v-for="item in vendors"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
-    </el-select> -->
     <el-input
+      @change="findCars"
       placeholder='Try "Audi S6"'
       v-model="filterName"
       ref="search"

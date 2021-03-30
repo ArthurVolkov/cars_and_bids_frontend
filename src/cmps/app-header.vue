@@ -18,15 +18,17 @@
           class="collapsing-btn-container flex align-center"
           :class="collapsing"
         >
-          <el-input
-            v-if="!isDark"
-            @focus="setFilterFocus"
-            @input="setFilterName"
-            placeholder="Search for car"
-            v-model="filterName"
-            clearable
-          >
-          </el-input>
+          <transition name="fade">
+            <el-input
+              v-if="!isDark"
+              @focus="setFilterFocus"
+              @input="setFilterName"
+              placeholder="Search for car"
+              v-model="filterName"
+              clearable
+            >
+            </el-input>
+          </transition>
           <div @click.stop="openCollapsingBtns = false">
             <router-link to="/car" class="btn">Explore</router-link>
           </div>
@@ -225,9 +227,9 @@ export default {
     async newMsg(msg) {
       const isNewMsg = await this.$store.dispatch({ type: 'addUserMsg', msg })
       // if (this.msgCount < this.$store.getters.userMsgs.length) {
-      console.log('LLLLL',isNewMsg)
+      console.log('LLLLL', isNewMsg)
       if (isNewMsg) this.newMsgCount++
-        // this.msgCount = this.$store.getters.userMsgs.length
+      // this.msgCount = this.$store.getters.userMsgs.length
       // }
     },
     getMsgData(msg) {

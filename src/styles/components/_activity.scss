@@ -131,10 +131,14 @@
     align-self: center;
     // margin-inline-end: 20px; //////////////////////
     padding: 10px;
+    margin-bottom: 20px;
 
     h3 {
         font-weight: 800;
         font-size: 1rem;
+    }
+    h4 {
+        overflow: hidden;
     }
     span {
         font-family: Roboto-bold;
