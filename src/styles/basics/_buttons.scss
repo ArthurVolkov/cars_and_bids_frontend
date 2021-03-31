@@ -45,10 +45,13 @@ button.filter-btn {
     outline: none;
     width: 120px;
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 14px;
     color: $clr3;
+    text-align: start;
+    padding: 0 13px;
+
     &:hover {
-        // border-color: $clr3;
+        border-color: $clr3;
     }
 }
 // button.filter-btn {

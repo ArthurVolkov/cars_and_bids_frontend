@@ -88,11 +88,8 @@ textarea {
     }
 }
 
-.el-input {
+.el-input input {
     font-family: Roboto;
-    * {
-        text-align: center;
-    }
 }
 
 .el-input.is-focus .el-input__inner {
