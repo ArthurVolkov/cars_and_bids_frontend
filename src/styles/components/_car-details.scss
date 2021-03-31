@@ -139,7 +139,7 @@
         .bid-info-timer {
             position: absolute;
             z-index: -1;
-            border-radius: 5rem;
+            border-radius: 5rem 0 0 5rem;
             background-color: $clr6;
             top: 0;
             right: 0;
