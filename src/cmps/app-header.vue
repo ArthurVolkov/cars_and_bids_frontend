@@ -18,15 +18,17 @@
           class="collapsing-btn-container flex align-center"
           :class="collapsing"
         >
-          <el-input
-            v-if="!isDark"
-            @focus="setFilterFocus"
-            @input="setFilterName"
-            placeholder="Search for car"
-            v-model="filterName"
-            clearable
-          >
-          </el-input>
+          <transition name="fade">
+            <el-input
+              v-if="!isDark"
+              @focus="setFilterFocus"
+              @input="setFilterName"
+              placeholder="Search for car"
+              v-model="filterName"
+              clearable
+            >
+            </el-input>
+          </transition>
           <div @click.stop="openCollapsingBtns = false">
             <router-link to="/car" class="btn">Explore</router-link>
           </div>

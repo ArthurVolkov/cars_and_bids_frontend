@@ -44,7 +44,7 @@ body {
 
 h1,
 h2 {
-    font-family: Roboto-Bold;
+    font-family: Montserrat;
     margin: 0;
     font-weight: 600;
 }
@@ -52,7 +52,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: Roboto;
+    font-family: Montserrat;
     margin: 0;
     font-weight: 600;
 }
@@ -82,11 +82,33 @@ img {
 textarea {
     textarea {
         resize: none;
+        ::placeholder {
+            font-family: Roboto;
+        }
     }
 }
 
-input {
+.el-input {
     font-family: Roboto;
+    * {
+        text-align: center;
+    }
+}
+
+.el-input.is-focus .el-input__inner {
+    border-color: $clr6;
+}
+.el-input__inner:focus {
+    border-color: $clr6 !important;
+}
+
+.el-slider__runway,
+.el-slider__bar {
+    background-color: $clr6;
+    color: $clr6 !important;
+    .el-slider__button-wrapper * {
+        border-color: $clr6;
+    }
 }
 
 // button.place-bid-btn {
@@ -112,21 +134,16 @@ a {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s;
+    transition: opacity 1s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
 }
 
-.slide-fade-enter-active {
-    transition: all 0.3s ease;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s 0.1s;
 }
-.slide-fade-leave-active {
-    transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
-    // transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
-    // transform: translateY(30px);
+.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
     opacity: 0;
 }

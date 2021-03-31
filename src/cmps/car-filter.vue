@@ -40,7 +40,7 @@
         <el-select
           v-model="filterBy.vendors"
           @change="setFilter"
-          placeholder="vendors"
+          placeholder="Vendors"
           multiple
           collapse-tags
         >

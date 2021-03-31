@@ -16,7 +16,9 @@
         // div >* :not(.el-slider) {
         //     min-height: 100%;
         // }
-
+        >*:first-child {
+            max-width: 50%;
+        }
         .btn-container {
             flex-grow: 1;
             // margin-inline-end: 10px;
@@ -58,9 +60,9 @@
         .el-input__inner {
             border-radius: 2em;
         }
-        .el-input.is-focus .el-input__inner {
-            border-color: $clr6;
-        }
+        // .el-input.is-focus .el-input__inner {
+        //     border-color: $clr6;
+        // }
 
         .years-range {
             position: absolute;

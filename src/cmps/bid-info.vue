@@ -14,7 +14,7 @@
           </avatar>
           <p>{{ bidToShow.by.fullname }}</p>
         </div>
-        <h1>{{ lastBid }}</h1>
+        <h1 :class="isLastBid">{{ lastBid }}</h1>
       </div>
       <div v-else class="flex flex-col">
         <h3>No bids for this car yet, start price is</h3>
@@ -63,7 +63,7 @@ export default {
     },
   },
   computed: {
-    bidToShow() { 
+    bidToShow() {
       const bids = JSON.parse(JSON.stringify(this.car.auction.bids))
       return bids.sort((bid1, bid2) => { return bid2.price - bid1.price })[0]
     },
@@ -72,19 +72,23 @@ export default {
     },
     startPrice() {
       return this.car.auction.startPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
-
-    }
+    },
+    isLastBid() {
+      const userId = this.$store.getters.loggedinUser._id
+      
+      return this.car.auction.bids[0].by._id === userId ? 'success' : 'danger'
+    },
   },
   methods: {
     userProfile(userId) {
       this.$router.push(`/activity/${userId}`)
     },
     async refreshTime() {
-       try {
-         const refreshed = await carService.changeTime(this.car._id)        
-       } catch (err) {
-         console.log('Can`t refresh time:', err);
-       }
+      try {
+        const refreshed = await carService.changeTime(this.car._id)
+      } catch (err) {
+        console.log('Can`t refresh time:', err);
+      }
     }
   },
   components: {
